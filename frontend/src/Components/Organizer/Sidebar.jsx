@@ -66,12 +66,12 @@ function SidebarItems (){
           <>
             <Link key={key} to={item.linkTo}>
               <ListItem onClick={handleCloseSidebar}
-                className={`pl-6 w-full rounded-none py-4 focus:bg-orange-50 focus:text-orange-500 hover:bg-orange-50 hover:text-orange-500 `}
+                className={`group pl-6 w-full rounded-none py-4 focus:bg-orange-50 focus:text-orange-500 hover:bg-orange-50 hover:text-orange-500 `}
               >
                 <ListItemPrefix>
-                  <item.icon className="h-5 w-5" />
+                  <item.icon className="h-5 w-5 group-hover:scale-105 group-hover:translate-x-1 transition-transform duration-200 ease-in" />
                 </ListItemPrefix>
-                <p>{item.label}</p>
+                <p className="group-hover:translate-x-1 transition-transform duration-200 ease-in">{item.label}</p>
                 {item.hasSuffix && (
                   <ListItemSuffix >
                     <Chip
@@ -102,8 +102,8 @@ const Sidebar = () => {
     <>
       <div
         className={`${
-          isOpen ? "w-80 fixed top-0 md:block" : "hidden md:sticky"
-        } w-80 md:inline-block md:top-0 bg-white border-r-2`}
+          isOpen ? "w-80 fixed top-0  md:block" : "hidden md:sticky"
+        } w-80 md:w-64 md:inline-block md:top-0 bg-white border-r-2 `}
       >
         {/* Content div starts */}
         <div className="md:hidden relative p-4 ">
