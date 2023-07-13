@@ -1,19 +1,31 @@
-import { Outlet } from "react-router-dom"
-import Sidebar from "../Components/Organizer/Sidebar"
-import { Navbar } from "../Components/Common"
+import { Outlet } from "react-router-dom";
+import { Navbar } from "../Components/Common";
+import { Submenu, Sidebar } from "../Components/Organizer";
 
 const Organizers = () => {
   return (
-    <div className="grid w-full border-2 border-purple-400 border-solid ">
-      <Navbar/>
+    <div className="h-screen w-full border-solid ">
+      <Navbar />
+
       <div className="flex">
-      <Sidebar/>
-      <div className="w-full h-screen border-2 border-green-500 border-solid">
-      <Outlet/>
-      </div>
+        {/* Mobile view */}
+        <div className="absolute md:hidden">
+          <Sidebar /> 
+        </div>
+        {/* Screen larger than medium */}
+        <div className="block">
+          <Sidebar /> 
+        </div>
+
+        <div className="w-full">
+          <Submenu />
+          <div className="h-screen px-6 py-4 ">
+            <Outlet />
+          </div>
+        </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Organizers
+export default Organizers;

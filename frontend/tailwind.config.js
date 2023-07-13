@@ -8,7 +8,8 @@ export default withMT({
   ],
   theme: {
     extend: {
-    }
+      
+    },
   },
   plugins: [],
 })

@@ -3,6 +3,8 @@ import { PlayerRoutes } from "./Routes/PlayersRoutes";
 import { OrganizerRoutes } from "./Routes/OrganizersRoutes";
 import Discover from "./Layouts/Discover"
 import ErrorPage from "./error-page"
+import { Provider } from "react-redux";
+import store from "./redux/store";
 
 const router = createBrowserRouter([
   {
@@ -17,7 +19,9 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <RouterProvider router={router}/>
+    <Provider store={store}>
+      <RouterProvider router={router}/>
+    </Provider>
   );
 }
 
