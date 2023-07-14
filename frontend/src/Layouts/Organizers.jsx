@@ -4,7 +4,7 @@ import { Submenu, Sidebar } from "../Components/Organizer";
 
 const Organizers = () => {
   return (
-    <div className="h-screen w-full border-solid ">
+    <div className="h-auto w-full border-solid ">
       <Navbar />
 
       <div className="flex">
@@ -17,9 +17,9 @@ const Organizers = () => {
           <Sidebar /> 
         </div>
 
-        <div className="w-full">
+        <div className="w-full h-auto">
           <Submenu />
-          <div className="h-screen px-6 py-4 bg-gray-50">
+          <div className="px-6 py-4 bg-gray-50">
             <Outlet />
           </div>
         </div>
