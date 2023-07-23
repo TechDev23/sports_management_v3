@@ -63,8 +63,8 @@ function SidebarItems (){
         className={`bg-white shadow-xl md:shadow-none h-screen mt-4`}
       > 
         {sidebarItems.map((item, key) => (
-          <>
-            <Link key={key} to={item.linkTo}>
+          <div key={key} >
+            <Link  to={item.linkTo}>
               <ListItem onClick={handleCloseSidebar}
                 className={`group pl-6 w-full rounded-none py-4 focus:bg-orange-50 focus:text-orange-500 hover:bg-orange-50 hover:text-orange-500 `}
               >
@@ -85,7 +85,7 @@ function SidebarItems (){
                 )}
               </ListItem>
             </Link>
-          </>
+            </div>
         ))}
       </Card>
       </>

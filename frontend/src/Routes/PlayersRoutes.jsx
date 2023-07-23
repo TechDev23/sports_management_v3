@@ -1,16 +1,33 @@
-import Dashboard from "../Components/Organizer/Dashboard";
 import Players from "../Layouts/Players";
 import ErrorPage from "../error-page";
-
+import { Login, Register, PlayerProfile, RequireAuth } from '../Pages/Player/index'
+import UploadDocs from "../Components/Player/UploadDocs";
 
 export const PlayerRoutes =  {
     path: "player/",
-    element: <Players />,
+    element:<Players />,
     errorElement: <ErrorPage/>,
     children:[
         {
-            path: "dashboard",
-            element: <Dashboard />,
+            path: "login",
+            element: <Login />, 
         },
+        {
+            path: "register",
+            element: <Register />,
+        },
+        {
+            element:<RequireAuth allowedRoles={['player']}/>,
+            children:[
+                {
+                    path:'me',
+                    element:<PlayerProfile/>
+                },
+                {
+                    path:'docs',
+                    element:<UploadDocs/>
+                }
+            ]
+        }
     ]
 }

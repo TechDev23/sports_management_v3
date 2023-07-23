@@ -91,7 +91,6 @@ function TournamentsUpdate() {
         {/* Single item starts */}
         {tuItems.map((item, index) => 
           (
-            <>
             <div key={index} className={`bg-${item.color}-50 flex-1 rounded-xl flex flex-col items-start pt-6 pl-5 gap-4`}>
               <div className="flex items-center justify-center gap-2">
                 <div className={`rounded-full ${item.iconBg} w-10 h-10 flex items-center justify-center text-white text-xl`}>
@@ -102,7 +101,6 @@ function TournamentsUpdate() {
               <h1 className={`${item.textColor} text-4xl pl-2 font-bold`}>{item.heading}</h1>
               <p className={`${item.textColor} text-sm`}>{item.subheading}</p>
             </div>
-            </>
           )
         )}
         {/* Single item ends */}
@@ -152,7 +150,6 @@ function GamesUpdate(){
         {/* Single item starts */}
         {guItems.map((item, index) => 
           (
-            <>
             <div key={index} className={`${item.bgColor} flex-1 rounded-xl flex flex-col items-start pt-6 pl-5 gap-4`}>
               <div className="flex items-center justify-center gap-2">
                 <div className={`rounded-full ${item.iconBg} w-10 h-10 flex items-center justify-center text-white text-xl`}>
@@ -164,7 +161,6 @@ function GamesUpdate(){
               <h1 className={` text-2xl pl-2 font-bold`}>{item.heading}</h1>
               <p className={` text-sm`}>{item.subheading}</p>
             </div>
-            </>
           )
         )}
         {/* Single item ends */}

@@ -3,9 +3,9 @@ import { Navbar } from "../Components/Common"
 
 const Players = () => {
   return (
-    <div className="grid w-full border-2 border-purple-400 border-solid ">
+    <div className="grid w-full ">
     <Navbar/>
-    <div className="w-full h-screen border-2 border-green-500 border-solid">
+    <div className="w-full h-screen ">
         <Outlet/>
     </div>
   </div>
