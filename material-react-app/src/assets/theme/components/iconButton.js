@@ -28,4 +28,4 @@ const iconButton = {
   },
 };
 
-export default ton;
+export default iconButton;

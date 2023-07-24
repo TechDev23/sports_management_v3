@@ -5,6 +5,6 @@
 
 @layer base{
     body{
-        @apply mx-auto max-w-screen-2xl scroll-smooth;
+        /* @apply  max-w-screen scroll-smooth; */
     }
 }

@@ -221,8 +221,8 @@ function NavWithoutUser (){
     );
   }, []);
   return(
-<Navbar className="mx-auto px-4 py-2 shadow-none border-solid border-gray-200 border-b-2 rounded-none">
-      <div className="flex items-center justify-between text-blue-gray-900">
+<Navbar className="min-w-screen px-4 py-2 shadow-none border-solid border-gray-200 border-b-2 rounded-none">
+      <div className=" flex items-center justify-between text-blue-gray-900">
         <Typography
           as="a"
           href="#"
