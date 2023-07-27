@@ -1,23 +1,7 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable react/function-component-definition */
-/**
-=========================================================
-* Material Dashboard 2 React - v2.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
 
 // Material Dashboard 2 React components
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
@@ -30,65 +14,58 @@ import {Icon} from "@mui/material";
 import team2 from "assets/images/team-2.jpg";
 import team3 from "assets/images/team-3.jpg";
 import team4 from "assets/images/team-4.jpg";
-
+import { useGetDocMutation } from "redux/api/userApi";
+import moment from"moment";
+import { useApproveDocMutation } from "redux/api/userApi";
 
 export default function data() {
 
 
   const avatars = [team2, team3, team4];
+  const [getDoc, { isLoading, isError, error, isSuccess }] =
+    useGetDocMutation();
+  const [approveDoc, { isLoading:isDocApproved, isError:isApproveDocErr, isSuccess:isApproveDocSuccess }] =
+  useApproveDocMutation();
+  const [rowData, setRowData] = useState([]);
 
-  const [rowData, setRowData] = useState([
-    {
-      user: 'John Michael',
-      email: 'john@creative-tim.com',
-      requested: '23/04/18',
-      
-    },
-    {
-      user: 'Alexa Liras',
-      email: 'alexa@creative-tim.com',
-      requested: '11/01/19',
-      
-    },
-    {
-      user: 'Laurent Perrier',
-      email: 'laurent@creative-tim.com',
-      requested: '19/09/17',
-      
-    },
-    {
-      user: 'Michael Levi',
-      email: 'michael@creative-tim.com',
-      requested: '24/12/08',
-      
-    },
-    {
-      user: 'Richard Gran',
-      email: 'richard@creative-tim.com',
-      requested: '04/10/21',
-      
-    },
-    {
-      user: 'Miriam Eric',
-      email: 'miriam@creative-tim.com',
-      requested: '14/09/20',
-      
-    },
-  ]);
-
-  const urlToOpen = "https://www.google.com";
-  const handleDocView = () => {
-
-    window.open(urlToOpen, "_blank");
+  const handleDocView = (url) => {
+    console.log(url)
+    window.open(url, "_blank");
   }
 
-  const handleApprove = () => {
-
-    // handling the acceptance of documents
-
-
-    console.log("User is approved")
+  const handleApprove = async({docId, userId}) => {
+    try {
+      const userData = await approveDoc({ user_type: 'player', docId, userId }).unwrap();
+      console.log(userData)
+      if(isApproveDocSuccess)    
+        window.location.reload(false);
+    }
+    catch(err){
+      console.log(`Error while approving doc ${err}`)
+    }
   }
+
+  useEffect(()=>{
+    const getAllDocs = async()=> {
+      try {
+        const userData = await getDoc({ user_type: 'player' }).unwrap();
+        console.log(userData)
+        setRowData(userData.data);
+      }
+      catch(err){
+        console.log(`Error while fetching all docs ${err}`)
+      }
+    }
+
+    if (!isApproveDocSuccess) {
+      // Clear previous userData from the UI before fetching new data
+      setRowData([]);
+      getAllDocs();
+    }
+    getAllDocs()
+  },[isApproveDocSuccess])
+
+  
 
   const handleSentBack = () => {
 
@@ -132,7 +109,8 @@ export default function data() {
     rows: rowData.map((row, index) => (
 
       {
-      author: <Author image={team2} name={row.user} email={row.email} />,
+      author: <Author image={team2} name={row.document_type}/>,
+      // author: <Author image={team2} name={row.user} email={row.email} />,
       // function: <Job title="Manager" description="Organization" />,
       status: (
         <MDBox ml={-1}>
@@ -141,18 +119,18 @@ export default function data() {
       ),
       requested: (
         <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-          <p>{row.requested}</p>
+          <p>{moment(row.createdAt).format('DD/MM/YYYY')}</p>
         </MDTypography>
       ),
       documents: (
-        <IconButton size="small" aria-label="document" color="inherit" onClick={handleDocView}>
+        <IconButton size="small" aria-label="document" color="inherit" onClick={()=>handleDocView(row.document_url)}>
           <Icon fontSize="small">description</Icon>
         </IconButton>
       ),
       action: (
-        <div>
-          <MDBadge badgeContent="Approve" color="success" variant="gradient" size="lg" onClick={handleApprove} />
-          <MDBadge badgeContent="Sent Back" color="error" variant="gradient" size="lg" onClick={handleSentBack} />
+        <div className="flex flex-row">
+          <MDBadge badgeContent="Approve" color="success" variant="gradient" size="lg" onClick={()=>handleApprove({userId : row.user_id, docId : row.id})} />
+          <MDBadge badgeContent="Sent Back" color="error" variant="gradient" size="lg" onClick={handleSentBack} className="cursor-pointer" />
         </div>
       ),
     }

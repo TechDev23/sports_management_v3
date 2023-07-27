@@ -47,6 +47,8 @@ import Register from "auth/register";
 import { AuthContext } from "context";
 import UserProfile from "layouts/user-profile";
 import UserManagement from "layouts/user-management";
+import { store } from "redux/store";
+import { Provider } from "react-redux";
 // import MetaTags from 'react-meta-tags'
 
 // import MetaTags from 'react-meta-tags'
@@ -197,7 +199,9 @@ export default function App() {
           />
           <meta
             itemProp="image"
-            content=""
+            content=""admin/documents?user_type=player
+admin/documents?user_type=player
+
           />
           <meta name="twitter:card" content="product" />
           <meta name="twitter:site" content="@KCPD" />
@@ -242,6 +246,7 @@ export default function App() {
 
       {direction === "rtl" ? (
         <CacheProvider value={rtlCache}>
+          <Provider store={store}>
           <ThemeProvider theme={darkMode ? themeDarkRTL : themeRTL}>
             <CssBaseline />
             {layout === "dashboard" && (
@@ -267,8 +272,10 @@ export default function App() {
               <Route path="*" element={<Navigate to="/dashboard" />} />
             </Routes>
           </ThemeProvider>
+          </Provider>
         </CacheProvider>
       ) : (
+        <Provider store={store}>
         <ThemeProvider theme={darkMode ? themeDark : theme}>
           <CssBaseline />
           {layout === "dashboard" && (
@@ -315,6 +322,7 @@ export default function App() {
             <Route path="*" element={<Navigate to="/dashboard" />} />
           </Routes>
         </ThemeProvider>
+        </Provider>
       )}
     </>
   );
