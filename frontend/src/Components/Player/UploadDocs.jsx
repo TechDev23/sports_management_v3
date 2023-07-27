@@ -7,7 +7,7 @@ import { storage } from "../../firebase";
 import { BiSolidFilePng } from 'react-icons/bi';
 import { BiSolidFilePdf } from 'react-icons/bi';
 import { BiSolidFileTxt } from 'react-icons/bi';
-
+import Cookies from "universal-cookie";
 import upload from '../../assets/images/upload.png'
 import Select from "react-select";
 import {
@@ -25,6 +25,28 @@ export default function UploadDocs() {
   const [docList, setDocList] = React.useState([]);
   const [progress, setProgress] = React.useState(0);
 
+  const navigate = useNavigate();
+  const cookie = new Cookies()
+  const tokn = cookie.get('jwt_auth_token')
+  console.log(tokn)
+
+    const [docId, setDocId] = useState("");
+    const [docName, setDocName] = useState("");
+    const [allow, setAllow] = useState(false);
+    const [display, setDisplay] = useState(false);
+
+    const handleDocChange = (e) => {
+        setDocName(e.label);
+        setDocId(e.value);
+        setAllow(true);
+        console.log("document", docName, docId);
+      };
+
+
+    const [file, setFile] = useState();
+    const [dragging, setDragging] = useState(false);
+
+
   const allDocsRef = ref(storage, "player/");
 
   const uploadDocs = () => {
@@ -37,7 +59,7 @@ export default function UploadDocs() {
     uploadBytesResumable(docRef, docUpload).on(
       "state_changed",
       (snapshot) => {
-          setProgress((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+          setProgress(Math.floor((snapshot.bytesTransferred / snapshot.totalBytes) * 100));
         console.log("Upload is " + progress + "% done");
       },
       (error) => {
@@ -59,11 +81,11 @@ export default function UploadDocs() {
   const [uploadDoc, { isLoading:isSavingToDb }] = useUploadDocMutation()
   const saveToDB = async()=>{
     try {
-        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTAzODc1NDgsInN1YiI6Im9tQGdtYWlsLmNvbSJ9.2vM-WCobuPlzz3saNpn4XsPYrcfTrIWv4pwmFQtKW5c'
+        const token =tokn
         const data = {
             user_type: "player",
-            user_id: 7,
-            document_type: "aadhar",
+            user_id: 1,
+            document_type: docName,
             document_url: imgUrl,
             token
           }
@@ -76,24 +98,7 @@ export default function UploadDocs() {
   }
 
 
-  const navigate = useNavigate();
-
-    const [docId, setDocId] = useState("");
-    const [docName, setDocName] = useState("");
-    const [allow, setAllow] = useState(false);
-    const [display, setDisplay] = useState(false);
-
-    const handleDocChange = (e) => {
-        setDocName(e.label);
-        setDocId(e.value);
-        setAllow(true);
-        console.log("document", docName, docId);
-      };
-
-
-    const [file, setFile] = useState();
-    const [dragging, setDragging] = useState(false);
-
+  
 
 
     const handleDrop = (event) => {
@@ -239,7 +244,7 @@ export default function UploadDocs() {
                             <div className='w-full flex flex-row justify-between items-center space-x-3'>
                             
                                 <p className='text-xs'>{docUpload.name}</p>
-                                <div className={`hidden sm:block h-2 w-full  rounded-lg ${progress < 30 ? "bg-gray-400 w-[30%]" : progress < 60 ? "bg-yellow-400 w-[60%]" : progress < 80 ? "bg-pink-300 w-[80%]" : progress <= 100 ? "bg-green-500 w-full": ""}`}></div>
+                                <div className={`hidden sm:block h-2 w-full  rounded-lg ${progress < 30 ? "bg-gray-400 w-[30%]" : progress < 60 ? "bg-yellow-400 w-[60%]" : progress < 80 ? "bg-green-300 w-[80%]" : progress <= 100 ? "bg-green-500 w-full": ""}`}></div>
                                 <p className={`md:block text-xs ${progress < 30 ? "text-gray-400" : progress < 60 ? "text-yellow-400" : progress < 80 ? "text-green-300" : progress == 100 ? "text-green-500": ""}`} >{progress}%</p>
 
                             </div>

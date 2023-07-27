@@ -49,6 +49,9 @@ import UserProfile from "layouts/user-profile";
 import UserManagement from "layouts/user-management";
 import { store } from "redux/store";
 import { Provider } from "react-redux";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+
 // import MetaTags from 'react-meta-tags'
 
 // import MetaTags from 'react-meta-tags'
@@ -246,6 +249,7 @@ admin/documents?user_type=player
 
       {direction === "rtl" ? (
         <CacheProvider value={rtlCache}>
+          <ToastContainer/>
           <Provider store={store}>
           <ThemeProvider theme={darkMode ? themeDarkRTL : themeRTL}>
             <CssBaseline />
@@ -276,6 +280,8 @@ admin/documents?user_type=player
         </CacheProvider>
       ) : (
         <Provider store={store}>
+          <ToastContainer/>
+
         <ThemeProvider theme={darkMode ? themeDark : theme}>
           <CssBaseline />
           {layout === "dashboard" && (

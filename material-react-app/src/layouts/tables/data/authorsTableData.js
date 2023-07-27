@@ -17,6 +17,7 @@ import team4 from "assets/images/team-4.jpg";
 import { useGetDocMutation } from "redux/api/userApi";
 import moment from"moment";
 import { useApproveDocMutation } from "redux/api/userApi";
+import { toast } from "react-toastify";
 
 export default function data() {
 
@@ -36,9 +37,7 @@ export default function data() {
   const handleApprove = async({docId, userId}) => {
     try {
       const userData = await approveDoc({ user_type: 'player', docId, userId }).unwrap();
-      console.log(userData)
-      if(isApproveDocSuccess)    
-        window.location.reload(false);
+        toast.success("User document approved")
     }
     catch(err){
       console.log(`Error while approving doc ${err}`)

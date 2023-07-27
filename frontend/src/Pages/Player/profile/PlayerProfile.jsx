@@ -20,9 +20,9 @@ export default function PlayerProfile() {
       {
         user && 
         <>
-        <div className="flex justify-center items-center">
+        <div className="flex justify-center items-center flex-col">
           <p>Name: {user?.name}</p>
-          <Link to={'/player/docs'}>upload documents</Link>
+          <Link className="text-sm text-blue-700 underline" to={'/player/docs'}>upload documents</Link>
         </div>
         </>
       }
