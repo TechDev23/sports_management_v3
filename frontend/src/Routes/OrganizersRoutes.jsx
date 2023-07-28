@@ -25,9 +25,9 @@ export const OrganizerRoutes = {
     {
       element: <Organizers />,
       children: [
-        {
-          element: <RequireAuth allowedRoles={["organizer"]} />,
-          children: [
+        // {
+          // element: <RequireAuth allowedRoles={["organizer"]} />,
+          // children: [
             {
               path: "me",
               element: <OrganizerProfile />,
@@ -36,8 +36,8 @@ export const OrganizerRoutes = {
               path: "dashboard",
               element: <Dashboard />,
             },
-          ],
-        },
+          // ],
+        // },
       ],
     },
   ],

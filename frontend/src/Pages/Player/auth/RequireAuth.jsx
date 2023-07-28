@@ -12,7 +12,7 @@ const RequireAuth = ({ allowedRoles })=> {
   return (allowedRoles.includes('player') && token) ? 
     <Outlet />
    : 
-    <Navigate to='/player/login' state={{ from: location }} replace />
+    <Navigate to='/user/login' state={{ from: location }} replace />
   ;
 };
 

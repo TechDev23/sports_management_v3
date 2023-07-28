@@ -1,5 +1,7 @@
+import React, { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 
-import React from "react";
+
 import {
   Navbar,
   Collapse,
@@ -35,6 +37,8 @@ import {
   LifebuoyIcon,
   PowerIcon
 } from "@heroicons/react/24/outline";
+import { BiBook, BiHome } from "react-icons/bi";
+import { FiInfo } from "react-icons/fi";
 
  
 const colors = {
@@ -110,6 +114,8 @@ const navListMenuItems = [
   },
 ];
  
+
+
 function NavListMenu() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
@@ -187,7 +193,31 @@ function NavListMenu() {
  
 function NavList() {
   return (
-    <List className="mt-4 mb-6 p-0 lg:mt-0 lg:mb-0 lg:flex-row lg:p-1">
+    <List className="mt-4 mb-6 p-0 space-x-2 lg:mt-0 lg:mb-0 lg:flex-row lg:p-1">
+      <Typography
+        as="a"
+        href="#"
+        variant="small"
+        color="blue-gray"
+        className="font-normal"
+      >
+        <ListItem className=" flex flex-row justify-center items-center gap-x-2 py-2 pr-4">
+          <BiHome className="h-[18px] w-[18px]" />
+          Home
+        </ListItem>
+      </Typography>
+      <Typography
+        as="a"
+        href="#"
+        variant="small"
+        color="blue-gray"
+        className="font-normal"
+      >
+        <ListItem className="flex items-center gap-2 py-2 pr-4">
+          <FiInfo className="h-[18px] w-[18px]" />
+          About us
+        </ListItem>
+      </Typography>
       <Typography
         as="a"
         href="#"
@@ -197,10 +227,25 @@ function NavList() {
       >
         <ListItem className="flex items-center gap-2 py-2 pr-4">
           <CubeTransparentIcon className="h-[18px] w-[18px]" />
-          Blocks
+          Features
         </ListItem>
       </Typography>
+      <Typography
+        as="a"
+        href="#"
+        variant="small"
+        color="blue-gray"
+        className="font-normal"
+      >
+        <ListItem className="flex items-center gap-2 py-2 pr-4">
+          <BiBook className="h-[18px] w-[18px]" />
+          Blog
+        </ListItem>
+      </Typography>
+      
+        {/**
       <NavListMenu />
+       
       <Typography
         as="a"
         href="#"
@@ -212,7 +257,10 @@ function NavList() {
           <UserCircleIcon className="h-[18px] w-[18px]" />
           Account
         </ListItem>
+
       </Typography>
+      
+        */}
     </List>
   );
 }
@@ -304,6 +352,12 @@ function ProfileMenu() {
 
 
 function NavWithoutUser (){
+
+
+const navigate = useNavigate();
+const { pathname } = useLocation();
+const [loggedIn , setLoggedIn] = useState(true);
+
   const [openNav, setOpenNav] = React.useState(false);
  
   React.useEffect(() => {
@@ -313,28 +367,37 @@ function NavWithoutUser (){
     );
   }, []);
   return(
-<Navbar className="min-w-screen px-4 py-2 shadow-none border-solid border-gray-200 border-b-2 rounded-none">
-      <div className=" flex items-center justify-between text-blue-gray-900">
+    !pathname == "/user/login" && !pathname == "/user/register" &&
+
+<Navbar className="min-w-full px-4 py-2 shadow-none border-solid border-gray-200 border-b-2 rounded-none">
+      <div className="flex items-center justify-between text-blue-gray-900">
         <Typography
           as="a"
           href="#"
           variant="h6"
           className="mr-4 cursor-pointer py-1.5 lg:ml-2"
         >
-          Material Tailwind
+          G-Sort
         </Typography>
         <div className="hidden lg:block">
           <NavList />
         </div>
-        <div className="hidden gap-2 lg:flex">
-          <Button variant="text" size="sm" color="blue-gray">
-            Sign In
-          </Button>
-          <Button variant="gradient" size="sm">
-            Sign Up
-          </Button>
-          <ProfileMenu/>
-        </div>
+
+        {
+          !loggedIn ? (
+            <ProfileMenu/>
+          ) : (
+            <div className="hidden gap-2 lg:flex">
+              <Button variant="text" size="sm" color="blue-gray" onClick={()=> navigate("/login")}>
+                Sign In
+              </Button>
+              <Button variant="gradient" size="sm" onClick={() => navigate("/register")}>
+                Sign Up
+              </Button>
+            </div>
+          )
+        }
+
         <IconButton
           variant="text"
           color="blue-gray"
@@ -347,6 +410,8 @@ function NavWithoutUser (){
             <Bars3Icon className="h-6 w-6" strokeWidth={2} />
           )}
         </IconButton>
+
+        
       </div>
       <Collapse open={openNav}>
         <NavList />
