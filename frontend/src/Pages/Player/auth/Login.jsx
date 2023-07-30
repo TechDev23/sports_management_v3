@@ -333,7 +333,7 @@ function Login() {
           <p className="text-gray-600 text-normal text-2xl text-center mt-8">
             Don't have an account?{" "}
             <Link
-              to="/signin"
+              to="/user/register"
               style={{ fontSize: "2rem", color: "orange" }}
               className="underline font-normal text-3xl flex items-center justify-center"
             >

@@ -1,15 +1,33 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import backgroundImage from "../../../assets/images/sports6.jpg";
+import google from "../../../assets/images/google.png"
+import apple from "../../../assets/images/apple.png"
 import { FaGoogle, FaApple } from "react-icons/fa";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useRegisterUserMutation } from "../../../redux/api/authApi";
 import { useDispatch } from "react-redux";
-import { Input, Spinner } from "@material-tailwind/react";
+import { Spinner } from "@material-tailwind/react";
 import { toast } from "react-toastify";
 import { useRegisterOrganizerMutation } from "../../../redux/api/organizerAuthApi";
 
-function Register() {
+
+
+
+//  Priyanshu imports
+
+import {
+  Card,
+  Input,
+  Checkbox,
+  Button,
+  Typography,
+} from "@material-tailwind/react";
+
+//////////////////////////
+
+
+const Register = () => {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -115,8 +133,12 @@ function Register() {
   };
 
   return (
+
+    
+
     <section
-      className="text-gray-600 font-poppins"
+      className="text-gray-600 font-poppins min-h-screen min-w-screen p-5"
+      
       style={{
         backgroundImage: `url(${backgroundImage})`,
         backgroundSize: "cover",
@@ -125,29 +147,39 @@ function Register() {
         minHeight: "100vh",
       }}
     >
-      <div className="container px-5 py-24 mx-auto flex flex-wrap items-start justify-center">
-        <div className="lg:w-3/5 md:w-1/2 md:pr-16 lg:pr-0 pr-0">
-          {/* <img src={game} alt="Image 1" className="w-full" /> */}
+    <p className="text-black font-bold text-3xl absolute top-2">G-Sport</p>
+
+      <div className="py-5 flex flex-col  md:flex-row w-full h-full items-center justify-center">
+        <div className="bg-blue-200 w-full h-full mb-5 md:mb-0 lg:w-3/5 md:w-1/2 md:pr-16 lg:pr-0">
+          {/* <img src={game} alt="Image 1" className="w-full" />
+          <p className="text-black font-bold text-3xl">G-Sport</p> */}
         </div>
-        <div className="lg:w-2/6 md:w-1/2 bg-white bg-opacity-30 rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0 hover:scale-[1.05]">
-          <h2 className="text-gray-900 text-3xl text-center font-bold title-font mb-5">
+
+        <div className="lg:w-1/3 md:w-1/2 bg-white bg-opacity-100 rounded-lg p-8 flex flex-col justify-center items-center w-full xl:my-10 shadow-xl">
+
+          <h2 className="text-gray-900 text-xl sm:text-2xl lg:text-3xl text-center font-bold title-font mb-5">
             Create an Account
           </h2>
-          <div className="flex justify-center mb-4">
+          <div className="flex justify-between  mb-4">
             <button
               onClick={handleGoogleSignIn}
-              className="mr-32 hover:text-orange-500 hover:shadow-lg"
+              className="mr-28 hover:text-orange-500"
             >
-              <FaGoogle size={24} />
+              <div className="h-10 w-10 overflow-hidden">
+                <img src={google} className="h-full w-full cover"/>
+              </div>
             </button>
             <Link
               onClick={handleAppleSignIn}
               className="hover:text-orange-500 hover:shadow-lg"
             >
-              <FaApple size={24} />
+              <div className="h-12 w-14 overflow-hidden">
+                <img src={apple} className="h-full w-full cover"/>
+              
+              </div>
             </Link>
           </div>
-          <div className="relative mb-4">
+          <div className="relative mb-4 w-full">
             <label
               htmlFor="full-name"
               className="leading-7 text-sm text-gray-600"
@@ -164,7 +196,7 @@ function Register() {
               placeholder="Enter your full name"
             />
           </div>
-          <div className="relative mb-4">
+          <div className="relative mb-4 w-full">
             <label htmlFor="email" className="leading-7 text-sm text-gray-600">
               Email
             </label>
@@ -183,7 +215,7 @@ function Register() {
               <p className="text-xs text-orange-500 mt-1">{emailError}</p>
             )}
           </div>
-          <div className="relative mb-4">
+          <div className="relative mb-4 w-full">
             <label
               htmlFor="phone-number"
               className="leading-7 text-sm text-gray-600"
@@ -205,7 +237,7 @@ function Register() {
               <p className="text-xs text-orange-500 mt-1">{phoneNumberError}</p>
             )}
           </div>
-          <div className="relative mb-4">
+          <div className="relative mb-4 w-full">
             <label
               htmlFor="password"
               className="leading-7 text-sm text-gray-600"
@@ -240,25 +272,32 @@ function Register() {
             )}
           </div>
           <button
-            className="flex items-center justify-center text-white bg-white bg-opacity-40 hover:bg-orange-300  border-0 py-2 px-8 focus:outline-none rounded text-lg"
+            className="w-full flex items-center justify-center text-white bg-orange-400  hover:bg-orange-500  border-0 py-2 px-8 focus:outline-none rounded-3xl text-lg"
             onClick={handleSignUp}
           >
             {isLoading ? <Spinner /> : "Sign up"}
           </button>
 
-          <p className="text-gray-600 text-normal text-2xl text-center mt-8">
-            Been here before?{" "}
+          <div className="flex flex-row text-sm justify-center items-center space-x-2 mt-3">
+              <p className="text-gray-600 text-normal  text-center">
+              Been here before?{" "}
+            </p>
             <Link
-              to="/organizer/login"
-              style={{ fontSize: "2rem", color: "orange" }}
-              className="underline font-normal text-3xl flex items-center justify-center "
-            >
-              Login
+                to="/user/login"
+                className="underline font-normal flex items-center justify-center text-blue-600"
+                >
+                Login
             </Link>
-          </p>
+          </div>
+          
+
+        
+
         </div>
       </div>
     </section>
+
+
   );
 }
 
