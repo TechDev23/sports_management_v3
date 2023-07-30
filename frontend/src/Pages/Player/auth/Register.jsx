@@ -121,6 +121,12 @@ import { useRegisterUserMutation } from "../../../redux/api/authApi";
 import { useDispatch } from "react-redux";
 import { Input, Spinner } from "@material-tailwind/react";
 import { toast } from "react-toastify";
+import {
+  getAuth,
+  RecaptchaVerifier,
+  signInWithPhoneNumber,
+} from "firebase/auth";
+import app from "../../../firebase";
 
 function Register() {
   const [fullName, setFullName] = useState("");
@@ -167,12 +173,12 @@ function Register() {
     let isValid = true;
 
     if (!validateEmail(email)) {
-      setEmailError('Enter a valid email !');
+      setEmailError("Enter a valid email !");
       isValid = false;
     }
 
     if (!validatePhoneNumber(phoneNumber)) {
-      setPhoneNumberError('Enter a valid phone number !');
+      setPhoneNumberError("Enter a valid phone number !");
       isValid = false;
     }
 
@@ -195,13 +201,12 @@ function Register() {
           mobile_number: phoneNumber,
         }).unwrap();
         console.log(userData);
-        toast.success(userData?.message)
-        navigate('/player/login')
+        toast.success(userData?.message);
+        navigate("/player/login");
       } catch (error) {
         // console.log("error", error?.data?.detail)
-        toast.error(error?.data.detail)
+        toast.error(error?.data.detail);
       }
-      
     }
   };
 
@@ -233,6 +238,34 @@ function Register() {
     window.open("https://appleid.apple.com/", "_blank", "width=500,height=600");
   };
 
+  // Mobile verification started
+  const auth = getAuth(app);
+  function onCaptchaVerify() {
+    window.recaptchaVerifier = new RecaptchaVerifier(auth, "sign-in-button", {
+      size: "invisible",
+      callback: (response) => {
+        // reCAPTCHA solved, allow signInWithPhoneNumber.
+        onSignInSubmit();
+      },
+    });
+  }
+
+  function onSignInSubmit() {
+    const phoneNumber = getPhoneNumberFromUserInput();
+    const appVerifier = window.recaptchaVerifier;
+    signInWithPhoneNumber(auth, phoneNumber, appVerifier)
+      .then((confirmationResult) => {
+        // SMS sent. Prompt user to type the code from the message, then sign the
+        // user in with confirmationResult.confirm(code).
+        window.confirmationResult = confirmationResult;
+        // ...
+      })
+      .catch((error) => {
+        // Error; SMS not sent
+        // ...
+      });
+  }
+  // Mobile verification ended
   return (
     <section
       className="text-gray-600 font-poppins"

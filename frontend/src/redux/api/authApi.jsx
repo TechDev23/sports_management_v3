@@ -13,7 +13,7 @@ export const authApi = createApi({
       query(data) {
         return {
           url: 'players/register',
-          method: 'POST',
+          method: 'post',
           body: data,
         };
       },
