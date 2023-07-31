@@ -5,6 +5,7 @@ export default function Discover ()  {
   return (
     <div className="min-h-full">
         <Navbar/>
+        {/* something */}
       <div className="w-full h-full">
           <Outlet/>
       </div>

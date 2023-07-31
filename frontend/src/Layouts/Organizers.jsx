@@ -5,7 +5,7 @@ import { Submenu, Sidebar } from "../Components/Organizer";
 const Organizers = () => {
   return (
     <div className="h-auto w-full border-solid ">
-      {/* <Navbar /> */}
+      <Navbar />
 
       <div className="flex">
         {/* Mobile view */}

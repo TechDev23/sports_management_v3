@@ -1,4 +1,6 @@
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
+import { userApi } from '../../redux/api/userApi';
+import { useAppSelector } from '../../redux/store';
 import Cookies from 'universal-cookie'
 
 const RequireAuth = ({ allowedRoles })=> {
@@ -7,8 +9,7 @@ const RequireAuth = ({ allowedRoles })=> {
 
   const token = cookie.get('jwt_auth_token')
 
-  return (allowedRoles.includes('organizer') && true
-  ) ? 
+  return (allowedRoles.includes('player') && token) ? 
     <Outlet />
    : 
     <Navigate to='/user/login' state={{ from: location }} replace />

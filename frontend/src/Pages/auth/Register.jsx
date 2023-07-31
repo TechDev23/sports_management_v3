@@ -1,123 +1,12 @@
-// import { useState, useRef, useEffect } from "react";
-// import { useNavigate } from "react-router-dom";
-
-// import { useDispatch } from "react-redux";
-// // import { selectCurrentToken, setCredentials } from "../../../redux/features/userSlice";
-// import { useRegisterUserMutation } from "../../../redux/api/authApi";
-// import { Button, Input } from "@material-tailwind/react";
-
-// const initialValues = {
-//   name: "",
-//   email: "",
-//   password: "",
-//   dob: "",
-// };
-
-// const Register = () => {
-//   const errRef = useRef();
-//   const [values, setValues] = useState(initialValues);
-
-//   const [errMsg, setErrMsg] = useState("");
-//   const navigate = useNavigate();
-
-//   const [registerUser, { isLoading, isError, error, isSuccess }] =
-//   useRegisterUserMutation();
-//   const dispatch = useDispatch();
-
-//   const handleInputChange = (e) => {
-//     const { name, value } = e.target;
-//     setValues({
-//       ...values,
-//       [name]: value,
-//     });
-//   };
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     const { name, email: email_id, dob, password} = values
-//     try {
-//       const userData = await registerUser({name, email_id, dob, password, mobile_number:"1234523"}).unwrap() // unwrap allows us to use try catch
-//       // dispatch(setCredentials({ ...userData, user})); // saving the user name and getting access token
-//       console.log(userData)
-//       setValues(initialValues)
-//     } catch (error) {
-//       if (!error?.status) {
-//         setErrMsg("No server Response");
-//       } else if (error?.status === 400) {
-//         setErrMsg(error?.data?.detail);
-//       } else if (error?.status === 401) {
-//         setErrMsg(error?.data?.detail);
-//       } else {
-//         setErrMsg("Login faild");
-//       }
-//       errRef.current.focus();
-//     }
-//   };
-
-//   const content =  (
-//     <section className="login">
-//       <p
-//         ref={errRef}
-//         className={errMsg ? "errmsg" : "offscreen"}
-//         aria-live="assertive"
-//       >
-//         {errMsg}
-//       </p>
-
-//       <h1>Player Login</h1>
-
-//       <form onSubmit={handleSubmit}>
-//         <label htmlFor="username">Username:</label>
-//         <Input
-//           type="text"
-//           name="name"
-//           value={values.name}
-//           onChange={handleInputChange}
-//           autoComplete="on"
-//           required
-//         />
-//         <label htmlFor="email">Email:</label>
-//         <Input
-//           type="text"
-//           name="email"
-//           value={values.email}
-//           onChange={handleInputChange}
-//           autoComplete="on"
-//           required
-//         />
-//         <label htmlFor="dob">dob</label>
-//         <Input
-//           type="date"
-//           name="dob"
-//           value={values.dob}
-//           onChange={handleInputChange}
-//           autoComplete="on"
-//           required
-//         />
-//         <label htmlFor="password">Password:</label>
-//         <Input
-//           type="text"
-//           name="password"
-//           onChange={handleInputChange}
-//           value={values.password}
-//           required
-//         />
-//         <Button type="submit">{isLoading ? "...loading" : "sign up"}</Button>
-//       </form>
-//     </section>
-//   );
-
-//   return content;
-// };
-
-// export default Register;
-
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import backgroundImage from "../../../assets/images/sports6.jpg";
+import backgroundImage from "../../assets/images/sports6.jpg"
 import { FaGoogle, FaApple } from "react-icons/fa";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { useRegisterUserMutation } from "../../../redux/api/authApi";
+
+import { useRegisterUserMutation } from "../../redux/api/authApi";
+
+
 import { useDispatch } from "react-redux";
 import { Input, Spinner } from "@material-tailwind/react";
 import { toast } from "react-toastify";
@@ -126,7 +15,8 @@ import {
   RecaptchaVerifier,
   signInWithPhoneNumber,
 } from "firebase/auth";
-import app from "../../../firebase";
+
+import app from "../../firebase";
 
 function Register() {
   const [fullName, setFullName] = useState("");
@@ -137,6 +27,7 @@ function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const [emailError, setEmailError] = useState("");
   const [phoneNumberError, setPhoneNumberError] = useState("");
+  const [verifyOtp, setVerifyOtp] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [registerUser, { isLoading, isError, error, isSuccess }] =
     useRegisterUserMutation();
@@ -155,6 +46,9 @@ function Register() {
     setPhoneNumber(event.target.value);
     setPhoneNumberError("");
   };
+  const handleVerifyOtpChange = (event) => {
+    setVerifyOtp(event.target.value);
+  };
 
   const handleDateOfBirthChange = (e) => {
     setDateOfBirth(e.target.value);
@@ -170,6 +64,8 @@ function Register() {
   };
 
   const handleSignUp = async () => {
+
+    // navigate("/organizer/dashboard")
     let isValid = true;
 
     if (!validateEmail(email)) {
@@ -238,37 +134,58 @@ function Register() {
     window.open("https://appleid.apple.com/", "_blank", "width=500,height=600");
   };
 
-  // Mobile verification started
+  // ? Mobile verification started
   const auth = getAuth(app);
-  function onCaptchaVerify() {
-    window.recaptchaVerifier = new RecaptchaVerifier(auth, "sign-in-button", {
+  const onCaptchaVerify=() =>{
+    window.recaptchaVerifier = new RecaptchaVerifier(auth, "recaptcha-container", {
       size: "invisible",
       callback: (response) => {
         // reCAPTCHA solved, allow signInWithPhoneNumber.
-        onSignInSubmit();
       },
-    });
+    }, auth);
   }
 
-  function onSignInSubmit() {
-    const phoneNumber = getPhoneNumberFromUserInput();
+  const onSignInSubmit = ()=> { // user input
+
+    onCaptchaVerify()
     const appVerifier = window.recaptchaVerifier;
-    signInWithPhoneNumber(auth, phoneNumber, appVerifier)
+    const phoneNum ="+91"+ phoneNumber
+    signInWithPhoneNumber(auth, phoneNum, appVerifier)
       .then((confirmationResult) => {
         // SMS sent. Prompt user to type the code from the message, then sign the
         // user in with confirmationResult.confirm(code).
         window.confirmationResult = confirmationResult;
-        // ...
+        alert("otp sent");
       })
       .catch((error) => {
-        // Error; SMS not sent
-        // ...
+        console.log(`SMS not sent ${error}`);
       });
   }
-  // Mobile verification ended
+
+  const verifyCode=()=> {
+    const code = verifyOtp;
+    if(code.length === 6 ){
+      confirmationResult
+      .confirm(code)
+      .then((result) => {
+        // User signed in successfully.
+        const user = result.user;
+        console.log("user from verify otp code", user)
+        // ...
+        alert('verification done')
+      })
+      .catch((error) => {
+        // User couldn't sign in (bad verification code?)
+        // ...
+        alert('invalid otp', error)
+      });
+    }
+    
+  }
+  //  Mobile verification ended
   return (
     <section
-      className="text-gray-600 font-poppins"
+      className="text-gray-600 font-poppins bg-gray-200"
       style={{
         backgroundImage: `url(${backgroundImage})`,
         backgroundSize: "cover",
@@ -279,22 +196,21 @@ function Register() {
     >
       <div className="container px-5 py-24 mx-auto flex flex-wrap items-start justify-center">
         <div className="lg:w-3/5 md:w-1/2 md:pr-16 lg:pr-0 pr-0">
-          {/* <img src={game} alt="Image 1" className="w-full" /> */}
         </div>
-        <div className="lg:w-2/6 md:w-1/2 bg-white bg-opacity-30 rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0 hover:scale-[1.05]">
+        <div className="lg:w-2/6 md:w-1/2 bg-white rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0">
           <h2 className="text-gray-900 text-3xl text-center font-bold title-font mb-5">
             Create an Account
           </h2>
           <div className="flex justify-center mb-4">
             <button
               onClick={handleGoogleSignIn}
-              className="mr-32 hover:text-orange-500 hover:shadow-lg"
+              className="mr-32 hover:text-orange-500"
             >
               <FaGoogle size={24} />
             </button>
             <Link
               onClick={handleAppleSignIn}
-              className="hover:text-orange-500 hover:shadow-lg"
+              className="hover:text-orange-500"
             >
               <FaApple size={24} />
             </Link>
@@ -357,6 +273,36 @@ function Register() {
               <p className="text-xs text-orange-500 mt-1">{phoneNumberError}</p>
             )}
           </div>
+          <div id="recaptcha-container"></div>
+          <button
+            className="flex items-center justify-center text-white  bg-orange-300  border-0 py-2 px-8 focus:outline-none rounded text-lg"
+            onClick={onSignInSubmit}
+          >
+            send otp
+          </button>
+          <div className="relative mb-4">
+            <label
+              htmlFor="verify-otp"
+              className="leading-7 text-sm text-gray-600"
+            >
+              Enter OTP
+            </label>
+            <input
+              type="text"
+              id="verify-otp"
+              name="verify-otp"
+              className={`w-full bg-white rounded-full border border-indigo-500 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out`}
+              value={verifyOtp}
+              onChange={handleVerifyOtpChange}
+              placeholder="Enter otp"
+            />
+          </div>
+          <button
+            className="flex items-center justify-center text-white  bg-orange-300  border-0 py-2 px-8 focus:outline-none rounded text-lg"
+            onClick={verifyCode}
+          >
+            Verify otp
+          </button>
           <div className="relative mb-4">
             <div className="flex flex-col">
               <label

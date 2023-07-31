@@ -10,7 +10,9 @@ export default function PlayerProfile() {
   const content = (
       <section className="welcome">
           <h1>{welcome}</h1>
-          <p className="underline hover:text-blue-400"><Link to="/welcome">Go to the welcome</Link></p>
+          <p className="underline hover:text-blue-400">
+            Common Profile Page
+          </p>
       </section>
   )
 

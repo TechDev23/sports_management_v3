@@ -1,7 +1,9 @@
+
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import QRCode from "qrcode.react";
-import backgroundImage from "../../../assets/images/sports6.jpg";
+import { useLoginUserMutation } from "../../redux/api/authApi";
+import backgroundImage  from "../../assets/images/sports6.jpg";
 import { useNavigate } from "react-router-dom";
 import { Spinner } from "@material-tailwind/react";
 import { toast } from "react-toastify";
@@ -9,10 +11,9 @@ import { useDispatch } from "react-redux";
 
 import Cookies from 'universal-cookie'
 import jwt from 'jwt-decode'
-import { useLoginOrganizerMutation } from "../../../redux/api/organizerAuthApi";
 
-const Login = () => {
-  const cookie = new Cookies();
+function Login() {
+  const cookie = new Cookies()
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -20,8 +21,8 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const [registerOrganizer, { isLoading, isError, error, isSuccess }] =
-  useLoginOrganizerMutation();
+  const [loginUser, { isLoading, isError, error, isSuccess }] =
+    useLoginUserMutation();
   const navigate = useNavigate();
   const dispatch = useDispatch()
 
@@ -45,15 +46,16 @@ const Login = () => {
 
   const handleSignIn = async () => {
     try {
-      const orgData = await registerOrganizer({ email_id: email, password }).unwrap();
-      console.log(orgData);
-      const decoded = jwt(orgData?.access_token)
-      console.log("decoded", decoded)
-      cookie.set("jwt_auth_token", orgData.access_token, {
-        expires: new Date(decoded.exp*1000)
+      const userData = await loginUser({ email_id: email, password }).unwrap();
+      const decoded = jwt(userData.access_token)
+      cookie.set("jwt_auth_token", userData.access_token, {
+        expires: new Date(decoded.exp * 1000)
       })
-      toast.success(orgData?.message);
-      navigate("/organizer/me");
+      // console.log(isSuccess)
+      if(isSuccess){
+        toast.success(userData?.message);
+        navigate("/player/me");
+      }
     } catch (error) {
       // console.log("error", error?.data?.detail);
       toast.error(error?.data?.detail);
@@ -72,14 +74,13 @@ const Login = () => {
   };
 
   const handleFormSubmit = (event) => {
-    console.log("clicked")
     event.preventDefault();
     let isValid = true;
 
-    // if (!validateEmail(email)) {
-    //   setEmailError("Enter a valid email!");
-    //   isValid = false;
-    // }
+    if (!validateEmail(email)) {
+      setEmailError("Enter a valid email!");
+      isValid = false;
+    }
 
     // if (!validatePassword(password)) {
     //   setPasswordError(
@@ -95,8 +96,7 @@ const Login = () => {
 
   return (
     <section
-      className="text-gray-600 font-poppins min-h-screen min-w-screen p-5"
-
+      className="text-gray-600 body-font"
       style={{
         backgroundImage: `url(${backgroundImage})`,
         backgroundSize: "cover",
@@ -104,32 +104,24 @@ const Login = () => {
         backgroundAttachment: "fixed",
         minHeight: "100vh",
       }}
-
     >
-    <p className=" text-black font-bold text-3xl absolute top-2">G-Sport</p>
-
-      <div className="py-5  flex flex-col md:flex-row items-center justify-center md:space-x-5">
-
-
-        <div className="mb-5 md:mb-0 md:block lg:w-3/5 md:w-1/2 md:pr-16 lg:pr-0 pr-0">
-          <div className="hidden md:block border-t-4 border-gray-400 w-full mb-4"></div>
-          <h1 className="hidden md:block font-bold text-sm lg:text-4xl  text-blue-gray-800">
+      <div className="container px-5 py-24 mx-auto flex flex-wrap items-start justify-center">
+        <div className="lg:w-3/5 md:w-1/2 md:pr-16 lg:pr-0 pr-0 mt-32">
+          <div className="mt-4 border-t-4 border-gray-400 w-full mb-4"></div>
+          <h1 className="title-font font-bold text-5xl text-gray-400">
             A sports Enthusiast is here, Hi !
           </h1>
-          <p className="hidden md:block leading-relaxed mt-4 text-sm lg:text-4xl text-blue-gray-800">
+          <p className="leading-relaxed mt-4  text-gray-400">
             Welcome to a platform that brings transparency in the world of
             sports and tournaments
           </p>
-          <div className="hidden md:block  mt-4 border-t-4 border-gray-400 w-full"></div>
+          <div className="mt-4 border-t-4 border-gray-400 w-full"></div>
         </div>
-
-
-
-        <div className="lg:w-2/6 md:w-1/2 bg-white bg-opacity-100 rounded-lg p-8 flex flex-col justify-center items-center w-full xl:my-10 shadow-xl">
-          <h2 className="text-gray-900 text-xl sm:text-2xl lg:text-3xl font-bold title-font mb-2 text-center">
+        <div className="lg:w-2/6 md:w-1/2 bg-white bg-opacity-30 rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0 hover:scale-[1.05]">
+          <h2 className="text-gray-900 text-3xl font-bold title-font mb-5 text-center">
             Sign In
           </h2>
-          <div className="relative mb-4 w-full">
+          <div className="relative mb-4">
             <label htmlFor="email" className="leading-7 text-sm text-gray-600">
               Email
             </label>
@@ -146,7 +138,7 @@ const Login = () => {
               <p className="text-xs text-orange-500 mt-1">{emailError}</p>
             )}
           </div>
-          <div className="relative mb-4 w-full">
+          <div className="relative mb-4">
             <label
               htmlFor="password"
               className="leading-7 text-sm text-gray-600"
@@ -216,7 +208,7 @@ const Login = () => {
               <p className="text-xs text-orange-500 mt-1">{passwordError}</p>
             )}
           </div>
-          <div className="relative mb-4 flex items-start justify-start w-full">
+          <div className="relative mb-4">
             <label htmlFor="remember-me" className="flex items-center">
               <input
                 type="checkbox"
@@ -228,33 +220,29 @@ const Login = () => {
               <span className="text-sm text-gray-600">Remember Me</span>
             </label>
           </div>
-          <div className="text-center w-full">
-            <button onClick={handleFormSubmit} className="flex items-center justify-center w-full text-white bg-orange-400 hover:bg-orange-500  border-0 py-2 px-8 focus:outline-none rounded-3xl text-lg">
+          <div className="text-center mb-4">
+            <button onClick={handleFormSubmit} className="flex items-center justify-center w-full text-white bg-white bg-opacity-40 hover:bg-orange-300  border-0 py-2 px-8 focus:outline-none rounded text-lg">
               {isLoading ? <Spinner/> : "Log in"}
             </button>
           </div>
-          <div className="mt-3 text-center">
-            <p className="text-sm text-gray-500">
+          <div className="mt-4 text-center">
+            <p className="text-sm text-gray-500 mt-2">
               or scan the code from application
             </p>
-            <div className="mt-3 flex flex-col items-center">
+            <div className="mt-4 flex flex-col items-center">
               <QRCode value="Your QR code data" size={128} />
             </div>
           </div>
-
-          <div className="flex flex-col sm:flex-row text-sm justify-center items-center space-x-2 mt-3">
-          
-            <p className="text-gray-600 text-normal text-center">
-              Don't have an account?{" "}
-            </p>
+          <p className="text-gray-600 text-normal text-2xl text-center mt-8">
+            Don't have an account?{" "}
             <Link
               to="/user/register"
-              className="underline font-normal flex items-center justify-center text-blue-600"
+              style={{ fontSize: "2rem", color: "orange" }}
+              className="underline font-normal text-3xl flex items-center justify-center"
             >
               Sign up
             </Link>
-          
-          </div>
+          </p>
         </div>
       </div>
     </section>

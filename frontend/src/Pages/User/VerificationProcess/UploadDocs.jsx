@@ -1,14 +1,16 @@
 import { Button, Input, Spinner } from "@material-tailwind/react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import React, {useState} from "react";
-import { storage } from "../../firebase";
+import { storage } from "../../../firebase";
 
 
 import { BiSolidFilePng } from 'react-icons/bi';
 import { BiSolidFilePdf } from 'react-icons/bi';
 import { BiSolidFileTxt } from 'react-icons/bi';
 import Cookies from "universal-cookie";
-import upload from '../../assets/images/upload.png'
+
+import upload from "../../../assets/images/upload.png"
+
 import Select from "react-select";
 import {
   ref,
@@ -18,7 +20,7 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import { toast } from "react-toastify";
-import { useUploadDocMutation } from "../../redux/api/userApi";
+import { useUploadDocMutation } from "../../../redux/api/userApi";
 export default function UploadDocs() {
   const [docUpload, setDocUpload] = React.useState(null);
   const [imgUrl, setImgUrl] = React.useState(null);
@@ -273,7 +275,11 @@ export default function UploadDocs() {
               )
             }
         </div>
-       
+        <Link to={"/user/verify-photo"}>
+        <p className="text-2xl font-bold text-blue-400 underline">
+            Verify Photo
+        </p>
+        </Link>
        </div>
         </div>
         </div>

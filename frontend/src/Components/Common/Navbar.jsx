@@ -367,7 +367,7 @@ const [loggedIn , setLoggedIn] = useState(true);
     );
   }, []);
   return(
-    !pathname == "/user/login" && !pathname == "/user/register" &&
+    // !pathname == "/user/login" && !pathname == "/user/register" &&
 
 <Navbar className="min-w-full px-4 py-2 shadow-none border-solid border-gray-200 border-b-2 rounded-none">
       <div className="flex items-center justify-between text-blue-gray-900">
@@ -384,7 +384,7 @@ const [loggedIn , setLoggedIn] = useState(true);
         </div>
 
         {
-          !loggedIn ? (
+          loggedIn ? (
             <ProfileMenu/>
           ) : (
             <div className="hidden gap-2 lg:flex">

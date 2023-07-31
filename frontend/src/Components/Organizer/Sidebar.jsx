@@ -60,7 +60,7 @@ function SidebarItems (){
   return (
     <>
     <Card
-        className={`bg-white shadow-xl md:shadow-none h-screen mt-4`}
+        className={`bg-white shadow-xl md:shadow-none h-full`}
       > 
         {sidebarItems.map((item, key) => (
           <div key={key} >
