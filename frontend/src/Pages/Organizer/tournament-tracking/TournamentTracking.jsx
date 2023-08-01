@@ -83,7 +83,7 @@ const TournamentTracking = () => {
     {renderStepContent()}
     
     
-    <div className="w-full flex flex-row px-4 justify-between">
+      <div className="w-full flex flex-row px-4 justify-between">
         <Button variant="outlined" onClick={handlePrev} color="orange" disabled={isFirstStep}>
           Prev
         </Button>
@@ -98,14 +98,13 @@ const TournamentTracking = () => {
 
 
 
-      <div className=" h-3/4 w-44 flex-grow">
+      <div className=" h-5/5 w-44 flex-grow">
         <Stepper
           activeStep={activeStep}
           isLastStep={(value) => setIsLastStep(value)}
           isFirstStep={(value) => setIsFirstStep(value)}
-          // className={`h-[500px] flex flex-col space-y-2`}
-          // activeLineClassName="bg-orange-400 flex flex-col"
-          className='flex flex-col space-y-12'
+          className={`h-[500px] flex flex-col space-y-2`}
+          activeLineClassName="bg-orange-400 flex flex-col"
         >
           <Step
             activeClassName="bg-orange-500 shadow-none scale-105"
@@ -136,7 +135,7 @@ const TournamentTracking = () => {
                 color={activeStep === 1 ? "orange" : "gray"}
                 className="text-center text-xs"
               >
-                Invite
+                Collaborators
               </Typography>
             </div>
           </Step>
@@ -178,13 +177,13 @@ const TournamentTracking = () => {
             onClick={() => setActiveStep(4)}
           >
             <CogIcon className="h-5 w-5" />
-            <div className="absolute -bottom-6 w-28 text-center">
+            <div className="absolute -bottom-10 w-28 text-center">
               <Typography
                 variant="paragraph"
                 color={activeStep === 4 ? "orange" : "gray"}
                 className="text-center text-xs"
               >
-                Go Live
+                Participant Invite Code
               </Typography>
             </div>
           </Step>

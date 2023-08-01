@@ -2,7 +2,11 @@
 
 const Step3 = () => {
   return (
-    <div>Step3</div>
+    <div>
+    <p className="text-3xl font-bold">
+        Step 3
+    </p>
+    </div>
   )
 }
 

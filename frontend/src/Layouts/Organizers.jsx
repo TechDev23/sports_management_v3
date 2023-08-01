@@ -21,7 +21,7 @@ const Organizers = () => {
 
         {/**
           <Submenu /> */}
-          <div className="w-full h-full border-2 border-blue-400 p-5 bg-gray-50">
+          <div className="w-full h-full  p-5 bg-gray-50">
             <Outlet />
           </div>
         </div>
