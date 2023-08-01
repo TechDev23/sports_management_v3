@@ -1,8 +1,9 @@
 import Organizers from "../Layouts/Organizers";
-import Discover from "../Layouts/Homepage";
 import ErrorPage from "../error-page";
 
 import { Dashboard } from "../Components/Organizer";
+
+import TournamentTracking from "../Pages/Organizer/tournament-tracking/TournamentTracking";
 
 export const OrganizerRoutes = {
   path: "o/",
@@ -17,6 +18,11 @@ export const OrganizerRoutes = {
               path: "dashboard",
               element: <Dashboard />,
             },
+            {
+              path: "tournament-tracking",
+              element: <TournamentTracking/>
+            }
+
           // ],
         // },
   ],
