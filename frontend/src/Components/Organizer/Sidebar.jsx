@@ -103,7 +103,7 @@ const Sidebar = () => {
       <div
         className={`${
           isOpen ? "w-80 fixed top-0  md:block" : "hidden md:sticky"
-        } w-80 md:w-64 md:inline-block md:top-0 bg-white border-r-2 `}
+        } w-80 md:w-64 md:inline-block md:top-0 bg-white `}
       >
         {/* Content div starts */}
         <div className="md:hidden relative p-4 ">

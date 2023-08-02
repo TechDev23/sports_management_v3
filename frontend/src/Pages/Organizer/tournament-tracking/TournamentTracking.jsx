@@ -74,36 +74,57 @@ const TournamentTracking = () => {
         }
       };
 
+      
+  const handleAutoSave = () => {
+    console.log('Auto-Save triggered!');
+    // console.log('Organization Name:', organizationName);
+    // console.log('Organization Description:', organizationDescription);
+    // console.log('Tournament Name:', tournamentName);
+    // console.log('Tournament Description:', tournamentDescription);
+    // console.log('Start Date:', startDate);
+    // console.log('End Date:', endDate);
+  };
+
 
   return (
-    <div className="w-full min-h-full flex flex-row ">
+    <div className="w-full min-h-full flex flex-col-reverse md:flex-row md:space-x-5">
 
-    <div className="min-h-full w-4/5  flex flex-col items-center justify-between border-2 border-blue-400">
+    <div className="mt-4 md:mt-0 md:border-none border-t-2 bg-white min-h-full w-full md:w-full  flex flex-col items-center justify-between">
     
-    {renderStepContent()}
+      {renderStepContent()}
     
     
-      <div className="w-full flex flex-row px-4 justify-between">
-        <Button variant="outlined" onClick={handlePrev} color="orange" disabled={isFirstStep}>
+      <div className="flex justify-center my-4">
+      <button
+        className="bg-gray-300 hover:bg-gray-500 text-gray-800 py-2 px-4 rounded-lg"
+        onClick={handleAutoSave}
+      >
+        Auto Save All the Details
+      </button>
+    </div>
+      <div className="w-full flex flex-row px-4 justify-between space-x-2">
+        <Button className="bg-orange-500 hover:bg-orange-700 text-white w-[150px] py-2 px-4 rounded-lg" onClick={handlePrev} color="orange" disabled={isFirstStep}>
           Prev
         </Button>
-        <Button variant="outlined" onClick={handleNext} color="orange" disabled={isLastStep}>
-          Next
+        <Button className="bg-orange-500 hover:bg-orange-700 text-white w-[150px] py-2 px-4 rounded-lg" onClick={handleNext} color="orange" disabled={isLastStep}>
+          Proceed
         </Button>
       </div>
     
     
     </div>
 
+    
 
 
 
-      <div className=" h-5/5 w-44 flex-grow">
+
+      <div className=" h-5/5 w-full md:w-1/4 xl:w-1/5 items-center flex-grow  item-center justify-center sticky">
         <Stepper
           activeStep={activeStep}
           isLastStep={(value) => setIsLastStep(value)}
           isFirstStep={(value) => setIsFirstStep(value)}
-          className={`h-[500px] flex flex-col space-y-2`}
+          className={`w-full md:w-full  md:h-[500px] flex flex-row md:flex-col space-y-0 md:space-y-2`}
           activeLineClassName="bg-orange-400 flex flex-col"
         >
           <Step
@@ -113,11 +134,11 @@ const TournamentTracking = () => {
           >
             <UserIcon className="h-5 w-5" />
             
-            <div className="absolute -bottom-10 text-center">
+            <div className="absolute -bottom-16  text-center">
               <Typography
                 variant="paragraph"
                 color={activeStep === 0 ? "orange" : "gray"}
-                className="text-center text-xs"
+                className="text-center text-xs hidden md:block"
               >
                 Organisational Details
               </Typography>
@@ -133,7 +154,7 @@ const TournamentTracking = () => {
               <Typography
                 variant="paragraph"
                 color={activeStep === 1 ? "orange" : "gray"}
-                className="text-center text-xs"
+                className="text-center text-xs hidden md:block"
               >
                 Collaborators
               </Typography>
@@ -149,7 +170,7 @@ const TournamentTracking = () => {
               <Typography
                 variant="paragraph"
                 color={activeStep === 2 ? "orange" : "gray"}
-                className="text-center text-xs"
+                className="text-center text-xs hidden md:block"
               >
                 Game Details
               </Typography>
@@ -165,7 +186,7 @@ const TournamentTracking = () => {
               <Typography
                 variant="paragraph"
                 color={activeStep === 3 ? "orange" : "gray"}
-                className="text-center text-xs"
+                className="text-center text-xs hidden md:block"
               >
                 Payment
               </Typography>
@@ -181,7 +202,7 @@ const TournamentTracking = () => {
               <Typography
                 variant="paragraph"
                 color={activeStep === 4 ? "orange" : "gray"}
-                className="text-center text-xs"
+                className="text-center text-xs hidden md:block"
               >
                 Participant Invite Code
               </Typography>
