@@ -47,7 +47,7 @@ const cards = [
                     cards.map((card, index) => (
                         <div key={index} className={`p-5 ${card.bgColor} rounded-lg space-y-5`}>
                             <div className='flex flex-row justify-between items-center'>
-                                <p className={`text-md`}>
+                                <p className={`text-md ${card.textColor}`}>
                                 {card.label}
                                 </p>
                                 <div className={`w-12 h-12 p-2 rounded-lg ${card.iconBg}`}>
