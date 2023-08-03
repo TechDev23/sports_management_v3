@@ -3,7 +3,10 @@ import ErrorPage from "../error-page";
 
 import { Dashboard } from "../Components/Organizer";
 
-import TournamentTracking from "../Pages/Organizer/tournament-tracking/TournamentTracking";
+import { 
+  TournamentTracking, 
+  Tournaments 
+} from "../Pages/Organizer/tournament-tracking";
 
 export const OrganizerRoutes = {
   path: "o/",
@@ -19,7 +22,11 @@ export const OrganizerRoutes = {
               element: <Dashboard />,
             },
             {
-              path: "tournament-tracking",
+              path: "tournaments",
+              element: <Tournaments/>
+            },
+            {
+              path: "new-tournament",
               element: <TournamentTracking/>
             }
 
