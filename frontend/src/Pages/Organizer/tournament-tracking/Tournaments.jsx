@@ -12,7 +12,7 @@ const cards = [
         icon: <HiDocumentText/>,
         iconBg: "bg-blue-500",
         bgColor: "bg-blue-100",
-        textColor: "text-blue-500"
+        textColor: "text-blue-50"
     },
     {
         label: "In Progress",
@@ -20,7 +20,7 @@ const cards = [
         desc: "",
         icon: "",
         iconBg: "bg-red-500",
-        bgColor: "bg-red-100",
+        bgColor: "bg-red-50",
         textColor: "text-red-500"
     },
     {
@@ -29,7 +29,7 @@ const cards = [
         desc: "+2 from yesterday",
         icon: "",
         iconBg: "bg-light-blue-500",
-        bgColor: "bg-light-blue-100",
+        bgColor: "bg-light-blue-50",
         textColor: "text-light-blue-500"
     },
 ];
