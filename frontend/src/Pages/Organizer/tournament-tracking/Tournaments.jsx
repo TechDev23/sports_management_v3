@@ -11,8 +11,8 @@ const cards = [
         desc: "+1 from yesterday",
         icon: <HiDocumentText/>,
         iconBg: "bg-blue-500",
-        bgColor: "bg-blue-100",
-        textColor: "text-blue-50"
+        bgColor: "bg-blue-50",
+        textColor: "text-blue-500"
     },
     {
         label: "In Progress",
@@ -36,18 +36,18 @@ const cards = [
 
 
   return (
-    <div className='w-full h-full flex flex-col space-x-5 space-y-5 border-2 border-red-500'>
+    <div className='w-full h-full flex flex-col gap-5 p-5 border-2 border-red-500'>
         <div>
             <p className='text-3xl font-bold '>Tournaments Tracking</p>
         </div>
         <div className='w-full h-full flex flex-row'>
-            <div className='w-4/5  h-full border-2 border-blue-400 px-5'>
-                <div className='grid grid-cols-3 gap-5 '>
+            <div className='w-4/5 dh-full'>
+                <div className='grid grid-cols-3 gap-5'>
                 {
                     cards.map((card, index) => (
-                        <div key={index} className={`p-5 ${card.bgColor} rounded-lg space-y-5`}>
+                        <div key={index} className={`p-5 ${card.bgColor} rounded-lg space-y-5 shadow-md`}>
                             <div className='flex flex-row justify-between items-center'>
-                                <p className={`text-md ${card.textColor}`}>
+                                <p className={`text-md`}>
                                 {card.label}
                                 </p>
                                 <div className={`w-12 h-12 p-2 rounded-lg ${card.iconBg}`}>
