@@ -19,7 +19,8 @@ import {
 import app from "../../firebase";
 
 function Register() {
-  const [fullName, setFullName] = useState("");
+  const [firstName, setfirstName] = useState("");
+  const [lastName, setlastName] = useState("");
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState(null);
@@ -33,8 +34,11 @@ function Register() {
     useRegisterUserMutation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const handleFullNameChange = (event) => {
-    setFullName(event.target.value);
+  const handlefirstNameChange = (event) => {
+    setfirstName(event.target.value);
+  };
+  const handleLastNameChange = (event) => {
+    setlastName(event.target.value);
   };
 
   const handleEmailChange = (event) => {
@@ -90,9 +94,8 @@ function Register() {
       // Perform sign up logic here
       try {
         const userData = await registerUser({
-          name: fullName,
+          first_name: firstName,
           email_id: email,
-          dob: dateOfBirth,
           password,
           mobile_number: phoneNumber,
         }).unwrap();
@@ -220,15 +223,32 @@ function Register() {
               htmlFor="full-name"
               className="leading-7 text-sm text-gray-600"
             >
-              Full Name
+              First Name
             </label>
             <input
               type="text"
-              id="full-name"
-              name="full-name"
+              id="first-name"
+              name="first-name"
               className="w-full bg-white rounded-full border border-indigo-500 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-              value={fullName}
-              onChange={handleFullNameChange}
+              value={firstName}
+              onChange={handlefirstNameChange}
+              placeholder="Enter your full name"
+            />
+          </div>
+          <div className="relative mb-4">
+            <label
+              htmlFor="full-name"
+              className="leading-7 text-sm text-gray-600"
+            >
+              Last Name
+            </label>
+            <input
+              type="text"
+              id="first-name"
+              name="first-name"
+              className="w-full bg-white rounded-full border border-indigo-500 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+              value={lastName}
+              onChange={handleLastNameChange}
               placeholder="Enter your full name"
             />
           </div>
@@ -303,25 +323,7 @@ function Register() {
           >
             Verify otp
           </button>
-          <div className="relative mb-4">
-            <div className="flex flex-col">
-              <label
-                htmlFor="date-of-birth"
-                className="leading-7 text-sm text-gray-600"
-              >
-                Date of Birth
-              </label>
-
-              <Input
-                type="date"
-                name="date-of-birth"
-                value={dateOfBirth}
-                onChange={handleDateOfBirthChange}
-                autoComplete="on"
-                required
-              />
-            </div>
-          </div>
+          
           <div className="relative mb-4">
             <label
               htmlFor="password"

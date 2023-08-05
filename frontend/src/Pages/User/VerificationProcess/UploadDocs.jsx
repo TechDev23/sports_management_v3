@@ -21,16 +21,16 @@ import {
 } from "firebase/storage";
 import { toast } from "react-toastify";
 import { useUploadDocMutation } from "../../../redux/api/userApi";
+import { useAppSelector } from "../../../redux/store";
 export default function UploadDocs() {
   const [docUpload, setDocUpload] = React.useState(null);
   const [imgUrl, setImgUrl] = React.useState(null);
-  const [docList, setDocList] = React.useState([]);
   const [progress, setProgress] = React.useState(0);
 
   const navigate = useNavigate();
   const cookie = new Cookies()
   const tokn = cookie.get('jwt_auth_token')
-  console.log(tokn)
+  const {id:user_id} = useAppSelector((state) => state.userState.user.data) || "";
 
     const [docId, setDocId] = useState("");
     const [docName, setDocName] = useState("");
@@ -85,8 +85,7 @@ export default function UploadDocs() {
     try {
         const token =tokn
         const data = {
-            user_type: "player",
-            user_id: 1,
+            user_id,
             document_type: docName,
             document_url: imgUrl,
             token
@@ -98,11 +97,6 @@ export default function UploadDocs() {
         console.log("error while saving docs to db",error)
     }
   }
-
-
-  
-
-
     const handleDrop = (event) => {
       event.preventDefault();
       setDragging(false);
@@ -112,7 +106,6 @@ export default function UploadDocs() {
         setFile(newFile);
         setDocUpload(newFile);
         setDisplay(true);
-        
       }
     };
     

@@ -1,19 +1,18 @@
-
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import QRCode from "qrcode.react";
 import { useLoginUserMutation } from "../../redux/api/authApi";
-import backgroundImage  from "../../assets/images/sports6.jpg";
+import backgroundImage from "../../assets/images/sports6.jpg";
 import { useNavigate } from "react-router-dom";
 import { Spinner } from "@material-tailwind/react";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 
-import Cookies from 'universal-cookie'
-import jwt from 'jwt-decode'
+import Cookies from "universal-cookie";
+import jwt from "jwt-decode";
 
 function Login() {
-  const cookie = new Cookies()
+  const cookie = new Cookies();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -24,7 +23,7 @@ function Login() {
   const [loginUser, { isLoading, isError, error, isSuccess }] =
     useLoginUserMutation();
   const navigate = useNavigate();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -47,15 +46,13 @@ function Login() {
   const handleSignIn = async () => {
     try {
       const userData = await loginUser({ email_id: email, password }).unwrap();
-      const decoded = jwt(userData.access_token)
+      const decoded = jwt(userData.access_token);
       cookie.set("jwt_auth_token", userData.access_token, {
-        expires: new Date(decoded.exp * 1000)
-      })
+        expires: new Date(decoded.exp * 1000),
+      });
       // console.log(isSuccess)
-      if(isSuccess){
-        toast.success(userData?.message);
-        navigate("/player/me");
-      }
+      toast.success(userData?.message);
+      // navigate("/user/main");
     } catch (error) {
       // console.log("error", error?.data?.detail);
       toast.error(error?.data?.detail);
@@ -221,8 +218,11 @@ function Login() {
             </label>
           </div>
           <div className="text-center mb-4">
-            <button onClick={handleFormSubmit} className="flex items-center justify-center w-full text-white bg-white bg-opacity-40 hover:bg-orange-300  border-0 py-2 px-8 focus:outline-none rounded text-lg">
-              {isLoading ? <Spinner/> : "Log in"}
+            <button
+              onClick={handleFormSubmit}
+              className="flex items-center justify-center w-full text-white bg-white bg-opacity-40 hover:bg-orange-300  border-0 py-2 px-8 focus:outline-none rounded text-lg"
+            >
+              {isLoading ? <Spinner /> : "Log in"}
             </button>
           </div>
           <div className="mt-4 text-center">

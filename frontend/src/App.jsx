@@ -5,17 +5,24 @@ import { UserRoutes } from "./Routes/UserRoutes";
 
 
 // import { RequireAuth } from "./Pages/auth";
-
-
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 // import { PlayerProfile, Register } from "./Pages/Player";
 
-// import { useEffect } from "react";
+import { store } from './redux/store';
 
 import Discover from "./Layouts/Homepage";
 import ErrorPage from "./error-page";
 import FeaturesPage from "./Pages/Explore/Features";
+import { setUser } from "./redux/features/userSlice";
+
+
+// check if user is stored in localhost
+const storedUserData = localStorage.getItem('userData');
+if (storedUserData) {
+  const parsedUserData = JSON.parse(storedUserData);
+  store.dispatch(setUser({ user: parsedUserData }));
+}
 
 const router = createBrowserRouter([
   // global routes
@@ -36,6 +43,7 @@ const router = createBrowserRouter([
   OrganizerRoutes,
   PlayerRoutes,
 ]);
+
 
 function App() {
   
