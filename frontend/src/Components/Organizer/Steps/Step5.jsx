@@ -3,7 +3,7 @@
 const Step5 = () => {
   return (
     <div>
-    <p className="text-3xl font-bold">
+    <p className=" text-blue-gray-700 text-3xl font-bold">
         Step 5
     </p>
     </div>

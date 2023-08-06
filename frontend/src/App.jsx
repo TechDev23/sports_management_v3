@@ -15,7 +15,12 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import Discover from "./Layouts/Homepage";
 import ErrorPage from "./error-page";
-import FeaturesPage from "./Pages/Explore/Features";
+
+import { 
+  AboutUsPage, 
+  BlogsPage, 
+  FeaturesPage 
+} from "./Pages/Explore";
 
 const router = createBrowserRouter([
   // global routes
@@ -27,6 +32,14 @@ const router = createBrowserRouter([
       {
         path: "features",
         element: <FeaturesPage/>
+      },
+      {
+        path: "about",
+        element: <AboutUsPage/>
+      },
+      {
+        path: "blogs",
+        element: <BlogsPage/>
       }
     ]
   },

@@ -248,7 +248,7 @@ function Register() {
               placeholder="Enter your email"
             />
             {emailError && (
-              <p className="text-xs text-orange-500 mt-1">{emailError}</p>
+              <p className=" text-blue-gray-700 text-xs text-orange-500 mt-1">{emailError}</p>
             )}
           </div>
           <div className="relative mb-4">
@@ -270,7 +270,7 @@ function Register() {
               placeholder="Enter your phone number"
             />
             {phoneNumberError && (
-              <p className="text-xs text-orange-500 mt-1">{phoneNumberError}</p>
+              <p className=" text-blue-gray-700 text-xs text-orange-500 mt-1">{phoneNumberError}</p>
             )}
           </div>
           <div id="recaptcha-container"></div>
@@ -353,7 +353,7 @@ function Register() {
               </button>
             </div>
             {passwordError && (
-              <p className="text-xs text-orange-500 mt-1">{passwordError}</p>
+              <p className=" text-blue-gray-700 text-xs text-orange-500 mt-1">{passwordError}</p>
             )}
           </div>
           <button
@@ -363,7 +363,7 @@ function Register() {
             {isLoading ? <Spinner /> : "Sign up"}
           </button>
 
-          <p className="text-gray-600 text-normal text-2xl text-center mt-8">
+          <p className=" text-blue-gray-700 text-gray-600 text-normal text-2xl text-center mt-8">
             Been here before?{" "}
             <Link
               to="/signin"

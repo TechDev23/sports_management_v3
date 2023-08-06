@@ -5,7 +5,7 @@ const Players = () => {
   return (
     <div className="grid w-full">
       <Navbar/>
-    <div className="w-full h-screen">
+    <div className="w-full h-full">
         <Outlet/>
     </div>
   </div>

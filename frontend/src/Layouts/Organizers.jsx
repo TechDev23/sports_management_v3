@@ -4,16 +4,16 @@ import { Sidebar } from "../Components/Organizer";
 
 const Organizers = () => {
   return (
-    <div className="h-screen w-screen border-solid ">
+    <div className="h-screen w-full border-solid ">
       <Navbar />
 
       <div className="flex h-full w-full">
         {/* Mobile view */}
-        <div className="absolute md:hidden ">
+        <div className="absolute md:hidden">
           <Sidebar /> 
         </div>
         {/* Screen larger than medium */}
-        <div className="block">
+        <div className=" block">
           <Sidebar /> 
         </div>
 

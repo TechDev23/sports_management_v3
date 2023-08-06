@@ -32,7 +32,7 @@ const sidebarItems = [
     hasSuffix: false,
   },
   {
-    linkTo: "tournament-tracking",
+    linkTo: "tournaments",
     icon: FolderIcon,
     label: "Tournament Tracking",
     hasSuffix: false,
@@ -58,9 +58,8 @@ function SidebarItems (){
     dispatch(closeSidebar());
   };
   return (
-    <>
     <Card
-        className={`bg-white shadow-xl md:shadow-none h-full`}
+        className={`bg-white shadow-xl md:shadow-none h-full `}
       > 
         {sidebarItems.map((item, key) => (
           <div key={key} >
@@ -71,7 +70,7 @@ function SidebarItems (){
                 <ListItemPrefix>
                   <item.icon className="h-5 w-5 group-hover:scale-105 group-hover:translate-x-1 transition-transform duration-200 ease-in" />
                 </ListItemPrefix>
-                <p className="group-hover:translate-x-1 transition-transform duration-200 ease-in">{item.label}</p>
+                <p className=" text-blue-gray-700 group-hover:translate-x-1 transition-transform duration-200 ease-in">{item.label}</p>
                 {item.hasSuffix && (
                   <ListItemSuffix >
                     <Chip
@@ -88,7 +87,6 @@ function SidebarItems (){
             </div>
         ))}
       </Card>
-      </>
   )
 }
 
@@ -99,11 +97,10 @@ const Sidebar = () => {
   };
   const isOpen = useSelector((state) => state.sidebar.isOpen);
   return (
-    <>
       <div
         className={`${
-          isOpen ? "w-80 fixed top-0  md:block" : "hidden md:sticky"
-        } w-80 md:w-64 md:inline-block md:top-0 bg-white `}
+          isOpen ? "w-80 fixed top-0 h-full md:block" : "hidden md:sticky h-full"
+        } w-80 md:w-64 md:inline-block md:top-0 bg-white border-r-2`}
       >
         {/* Content div starts */}
         <div className="md:hidden relative p-4 ">
@@ -114,7 +111,6 @@ const Sidebar = () => {
         </div>
         {/* Content div ends */}
       </div>
-    </>
   );
 };
 

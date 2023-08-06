@@ -209,7 +209,7 @@ export default function UploadDocs() {
         <div className='h-20 w-20 font-bold text-6xl text-orange-500 flex items-center justify-center'>
           <img src={upload} alt="store" className=""/>
         </div>
-          <p className="mb-2 text-center text-xs sm:text-sm text-gray-500">Drag and drop files here</p>
+          <p className=" text-blue-gray-700 mb-2 text-center text-xs sm:text-sm text-gray-500">Drag and drop files here</p>
           <div className={`${allow ? '' : 'hidden'}`}>
             <input
             type="file"
@@ -276,7 +276,7 @@ export default function UploadDocs() {
             }
         </div>
         <Link to={"/user/verify-photo"}>
-        <p className="text-2xl font-bold text-blue-400 underline">
+        <p className=" text-blue-gray-700 text-2xl font-bold text-blue-400 underline">
             Verify Photo
         </p>
         </Link>

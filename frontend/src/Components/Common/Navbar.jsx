@@ -421,8 +421,8 @@ const [loggedIn , setLoggedIn] = useState(true);
           </Button>
           <Button variant="gradient" size="sm" fullWidth>
             Sign Up
-          </Button> */}
-          <ProfileMenu />
+          </Button> 
+          <ProfileMenu />*/}
         </div>
       </Collapse>
     </Navbar>

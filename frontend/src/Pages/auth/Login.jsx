@@ -111,7 +111,7 @@ function Login() {
           <h1 className="title-font font-bold text-5xl text-gray-400">
             A sports Enthusiast is here, Hi !
           </h1>
-          <p className="leading-relaxed mt-4  text-gray-400">
+          <p className=" text-blue-gray-700 leading-relaxed mt-4  text-gray-400">
             Welcome to a platform that brings transparency in the world of
             sports and tournaments
           </p>
@@ -135,7 +135,7 @@ function Login() {
               placeholder="Enter your email"
             />
             {emailError && (
-              <p className="text-xs text-orange-500 mt-1">{emailError}</p>
+              <p className=" text-blue-gray-700 text-xs text-orange-500 mt-1">{emailError}</p>
             )}
           </div>
           <div className="relative mb-4">
@@ -205,7 +205,7 @@ function Login() {
               </button>
             </div>
             {passwordError && (
-              <p className="text-xs text-orange-500 mt-1">{passwordError}</p>
+              <p className=" text-blue-gray-700 text-xs text-orange-500 mt-1">{passwordError}</p>
             )}
           </div>
           <div className="relative mb-4">
@@ -226,14 +226,14 @@ function Login() {
             </button>
           </div>
           <div className="mt-4 text-center">
-            <p className="text-sm text-gray-500 mt-2">
+            <p className=" text-blue-gray-700 text-sm text-gray-500 mt-2">
               or scan the code from application
             </p>
             <div className="mt-4 flex flex-col items-center">
               <QRCode value="Your QR code data" size={128} />
             </div>
           </div>
-          <p className="text-gray-600 text-normal text-2xl text-center mt-8">
+          <p className=" text-blue-gray-700 text-gray-600 text-normal text-2xl text-center mt-8">
             Don't have an account?{" "}
             <Link
               to="/user/register"

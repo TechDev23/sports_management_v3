@@ -89,7 +89,10 @@ const TournamentTracking = () => {
   return (
     <div className="w-full min-h-full flex flex-col-reverse md:flex-row md:space-x-5">
 
-    <div className="mt-4 md:mt-0 md:border-none border-t-2 bg-white min-h-full w-full md:w-full  flex flex-col items-center justify-between">
+    <div className="mt-4 md:mt-0  md:border-none border-t-2 bg-white px-4 min-h-full w-full md:w-full  flex flex-col items-center justify-between">
+      <p className=" text-blue-gray-700 text-3xl font-bold mt-4 lg:mt-0 w-full">
+        New Tournament
+      </p>
     
       {renderStepContent()}
     
@@ -102,6 +105,7 @@ const TournamentTracking = () => {
         Auto Save All the Details
       </button>
     </div>
+    
       <div className="w-full flex flex-row px-4 justify-between space-x-2">
         <Button className="bg-orange-500 hover:bg-orange-700 text-white w-[150px] py-2 px-4 rounded-lg" onClick={handlePrev} color="orange" disabled={isFirstStep}>
           Prev
@@ -114,12 +118,7 @@ const TournamentTracking = () => {
     
     </div>
 
-    
-
-
-
-
-      <div className=" h-5/5 w-full md:w-1/4 xl:w-1/5 items-center flex-grow  item-center justify-center sticky">
+      <div className=" h-5/5 w-full md:w-1/4 xl:w-1/5  items-center flex-grow  item-center justify-center sticky">
         <Stepper
           activeStep={activeStep}
           isLastStep={(value) => setIsLastStep(value)}
@@ -166,7 +165,7 @@ const TournamentTracking = () => {
             onClick={() => setActiveStep(2)}
           >
             <BuildingLibraryIcon className="h-5 w-5" />
-            <div className="absolute -bottom-6 w-24 text-center">
+            <div className="absolute -bottom-6  w-24 text-center">
               <Typography
                 variant="paragraph"
                 color={activeStep === 2 ? "orange" : "gray"}

@@ -11,6 +11,7 @@ import { UploadDocs, UploadImage, Profile } from "../Pages/User";
 import { PlayerRoutes } from "./PlayersRoutes"
 import { OrganizerRoutes } from "./OrganizersRoutes";
 import VProgress from "../Pages/User/VerificationProcess/VProgress";
+import ComplexNavbar from "../Pages/User/Profile/Profile";
 
 // import RequireAuth from "../Pages/Organizer/index";
 
@@ -47,6 +48,10 @@ export const UserRoutes = {
                     path: 'main',
                     element: <MainScreen/>
                 },
+                {
+                    path: 'profile',
+                    element: <ComplexNavbar/>
+                }
                 
             ],
             
