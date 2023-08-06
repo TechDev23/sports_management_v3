@@ -1,55 +1,57 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { userApi } from './userApi';
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { userApi } from "./userApi";
+import { setUser } from "../features/userSlice";
 
-const BASE_URL = 'http://127.0.0.1:8000'
+const BASE_URL = "http://127.0.0.1:8000";
 
 export const authApi = createApi({
-  reducerPath: 'authApi',
+  reducerPath: "authApi",
   baseQuery: fetchBaseQuery({
     baseUrl: `${BASE_URL}/`,
   }),
   endpoints: (builder) => ({
-    registerUser:builder.mutation({
+    registerUser: builder.mutation({
       query(data) {
         return {
-          url: 'players/register',
-          method: 'post',
+          url: "users/register",
+          method: "POST",
           body: data,
         };
       },
     }),
-    loginUser:builder.mutation({
-      query(credentials) {
+    loginUser: builder.mutation({
+      query(data) {
         return {
-          url: `players/login`,
-          method: 'post',
-          body: credentials,
-          // credentials:'include'
+          url: `users/login`,
+          method: "post",
+          body: data
         };
       },
-      // once user logged in automatically fetch user profile getMe endpoint
+      transformResponse: (result) => result, // This property allows us to manipulate the data returned by a query or mutation before it hits the cache.
       async onQueryStarted(args, { dispatch, queryFulfilled }) {
         try {
-          await queryFulfilled;
-          await dispatch(userApi.endpoints.getMe.initiate(args));
+          const { data } = await queryFulfilled;
+          dispatch(setUser({ user: data }));
+          // Save user data to localStorage
+          localStorage.setItem('userData', JSON.stringify(data));
         } catch (error) {
-          console.log(`Error while getMe ${error}`)
+          console.log(`Error while getMe ${error}`);
         }
       },
     }),
-    verifyEmail:builder.mutation({
+
+    verifyEmail: builder.mutation({
       query({ verificationCode }) {
         return {
           url: `verifyemail/${verificationCode}`,
-          method: 'GET',
+          method: "GET",
         };
       },
     }),
-    logoutUser:builder.mutation({
+    logoutUser: builder.mutation({
       query() {
         return {
-          url: 'logout',
-          // credentials: 'include',
+          url: "logout",
         };
       },
     }),

@@ -7,7 +7,6 @@ export const PlayerRoutes =  {
     element:<Players />,
     errorElement: <ErrorPage/>,
     children:[
-        
         {
             // element:<RequireAuth allowedRoles={['player']}/>,
             children:[

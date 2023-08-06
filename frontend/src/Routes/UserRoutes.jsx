@@ -1,6 +1,6 @@
 import Discover from "../Layouts/Homepage";
 import ErrorPage from "../error-page";
-import { Login, Register } from "../Pages/auth"
+import { Login, Reg, Register } from "../Pages/auth"
 // import { Login, Register } from "../Pages/Player";
 import MainScreen from "../Components/User/MainScreen.jsx";
 // import UploadDocs from "../Pages/User/VerificationProcess/UploadDocs";
@@ -27,7 +27,7 @@ export const UserRoutes = {
         },
         {
             path: "register",
-            element: <Register/>
+            element: <Reg/>
         },
         {
             // element: <RequireAuth allowedRoles={['user']}/>,

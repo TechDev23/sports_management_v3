@@ -10,27 +10,10 @@ export const userApi = createApi({
   }),
   tagTypes: ['User'],
   endpoints: (builder) => ({
-    getMe: builder.query({
-      query(data) {
-        return {
-          url: `/players/${data.email_id}`,
-        };
-      },
-      transformResponse: (result) =>result, // This property allows us to manipulate the data returned by a query or mutation before it hits the cache.
-      async onQueryStarted(args, { dispatch, queryFulfilled }) {
-        try {
-          const {data} = await queryFulfilled;
-          dispatch(setUser({user: data}));
-        } catch (error) {
-          console.log(`Error while getMe ${error}`)
-        }
-      },
-    }),
-
     getDoc: builder.mutation({
-      query(data) {
+      query() {
         return {
-          url: `admin/documents?user_type=${data.user_type}`,
+          url: `admin/documents`,
           method: 'get'
         };
       },
@@ -39,12 +22,12 @@ export const userApi = createApi({
     approveDoc: builder.mutation({
       query(data) {
         return {
-          url: `admin/documents?user_type=${data.user_type}&document_id=${data.docId}&user_id=${data.userId}`,
+          url: `admin/documents?document_id=${data.docId}&is_approve=${data.is_approve}&user_id=${data.userId}`,
           method: 'post'
         };
       },
     }),
-
+    
   }),
 });
 

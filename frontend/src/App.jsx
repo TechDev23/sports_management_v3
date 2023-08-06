@@ -5,13 +5,11 @@ import { UserRoutes } from "./Routes/UserRoutes";
 
 
 // import { RequireAuth } from "./Pages/auth";
-
-
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 // import { PlayerProfile, Register } from "./Pages/Player";
 
-// import { useEffect } from "react";
+// import { store } from './redux/store';
 
 import Discover from "./Layouts/Homepage";
 import ErrorPage from "./error-page";
@@ -49,6 +47,7 @@ const router = createBrowserRouter([
   OrganizerRoutes,
   PlayerRoutes,
 ]);
+
 
 function App() {
   

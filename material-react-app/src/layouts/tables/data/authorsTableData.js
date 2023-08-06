@@ -36,19 +36,27 @@ export default function data() {
 
   const handleApprove = async({docId, userId}) => {
     try {
-      const userData = await approveDoc({ user_type: 'player', docId, userId }).unwrap();
+      const userData = await approveDoc({ docId, userId, is_approve:true }).unwrap();
         toast.success("User document approved")
     }
     catch(err){
       console.log(`Error while approving doc ${err}`)
     }
   }
+  const handleReject = async({docId, userId}) => {
+    try {
+      const userData = await approveDoc({ docId, userId, is_approve:false }).unwrap();
+      toast.success("User document rejected")
+    }
+    catch(err){
+      console.log(`Error while rejecting doc ${err}`)
+    }
+  }
 
   useEffect(()=>{
     const getAllDocs = async()=> {
       try {
-        const userData = await getDoc({ user_type: 'player' }).unwrap();
-        console.log(userData)
+        const userData = await getDoc().unwrap();
         setRowData(userData.data);
       }
       catch(err){
