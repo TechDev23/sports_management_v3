@@ -9,20 +9,16 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 // import { PlayerProfile, Register } from "./Pages/Player";
 
-import { store } from './redux/store';
+// import { store } from './redux/store';
 
 import Discover from "./Layouts/Homepage";
 import ErrorPage from "./error-page";
-import FeaturesPage from "./Pages/Explore/Features";
-import { setUser } from "./redux/features/userSlice";
 
-
-// check if user is stored in localhost
-const storedUserData = localStorage.getItem('userData');
-if (storedUserData) {
-  const parsedUserData = JSON.parse(storedUserData);
-  store.dispatch(setUser({ user: parsedUserData }));
-}
+import { 
+  AboutUsPage, 
+  BlogsPage, 
+  FeaturesPage 
+} from "./Pages/Explore";
 
 const router = createBrowserRouter([
   // global routes
@@ -34,6 +30,14 @@ const router = createBrowserRouter([
       {
         path: "features",
         element: <FeaturesPage/>
+      },
+      {
+        path: "about",
+        element: <AboutUsPage/>
+      },
+      {
+        path: "blogs",
+        element: <BlogsPage/>
       }
     ]
   },

@@ -49,12 +49,9 @@ const Step1 = () => {
   ]
 
   return (
-    <div className=" container mx-auto bg-gray-50">
-      <p className="text-3xl font-bold mt-4 lg:mt-0 text-center">
-        New Tournament
-      </p>
+    <div className=" container mx-auto">
       <div className='w-full h-fit bg-orange-500 flex flex-col lg:flex-row space-y-4 lg:space-y-0 lg:space-x-5 items-center justify-end p-1 rounded-lg text-center mt-4'>
-        <p className='font-semibold text-gray-50 xl:mr-32 text-sm md:text-normal mt-2 lg:mt-0'>Replicate Previous Tournament</p>
+        <p className=' font-semibold text-gray-50 xl:mr-28 text-md md:text-normal mt-2 lg:mt-0'>Replicate Previous Tournament</p>
 
         <Select 
         options={options} 
@@ -66,7 +63,7 @@ const Step1 = () => {
 
       <div className=" mt-2 md:mt-4 lg:mt-6 w-full sm:w-4/4 lg:w-full py-2 md:py-5 rounded-lg flex flex-col justify-center items-center">
         <div className="flex justify-center">
-          <p className="text-2xl  md:text-3xl font-bold text-center">Organisational Details</p>
+          <p className=" text-blue-gray-700 text-2xl  md:text-3xl font-bold text-center">Organisational Details</p>
         </div>
         <div className="mt-4">
           <div className="flex">
@@ -104,7 +101,7 @@ const Step1 = () => {
           </div>
 
           <div>
-            <p className="text-2xl md:text-3xl font-bold text-center mt-4">Tournament Details</p>
+            <p className=" text-blue-gray-700 text-2xl md:text-3xl font-bold text-center mt-4">Tournament Details</p>
           </div>
           <div className="flex mt-2">
             <div className="text-sm  w-full">
@@ -150,7 +147,7 @@ const Step1 = () => {
               />
             </div>
 
-            <p className="my-auto mx-4 text-normal text-gray-500">to</p>
+            <p className=" my-auto mx-4 text-normal text-gray-500">to</p>
 
             <div className="text-sm">
               <DatePicker

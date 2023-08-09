@@ -1,52 +1,36 @@
 import { HiOutlineDownload } from "react-icons/hi";
 import { BiSearch } from "react-icons/bi";
-import { AiOutlineControl } from "react-icons/ai";
+// import { AiOutlineControl } from "react-icons/ai";
+import { IoMdOptions } from "react-icons/io";
 import { MdNewLabel } from "react-icons/md";
 import { BsPlayFill, BsCheck2Circle } from "react-icons/bs";
 import { IoIosArrowUp } from 'react-icons/io'
 // import FaMoneyBillTrendUp from 'react-icons/fa'
 
-const Dashboard = () => {
-  return (
-    <div className="h-full">
-      <HeaderConent />
-      <div className="grid gap-6 grid-cols-8 mt-8">
-        <div className="col-span-5 h-72 w-full bg-white shadow-md rounded-lg flex gap-2 flex-col ">
-          <TournamentsUpdate />
-        </div>
-        <div className="w-full col-span-3 bg-white shadow-md h-72 rounded-lg"> bar chart</div>
-        <div className="col-span-3 bg-white shadow-md h-72 rounded-lg">pie chart</div>
-        <div className="col-span-5 bg-white shadow-md h-72 rounded-lg">
-          <GamesUpdate />
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export default Dashboard;
 
 function HeaderConent() {
   return (
-    <div className="grid grid-cols-4 md:grid-cols-8 gap-2 items-center font-poppins text-sm">
-      <h1 className="col-span-full md:col-span-3 text-3xl font-bold font-poppins">
+    <div className="grid grid-cols-4 md:grid-cols-8 gap-2 items-center justify-between  text-sm">
+      <h1 className="text-blue-gray-700 col-span-full md:col-span-3 text-3xl font-bold ">
         Dashboard
       </h1>
+
       <div className="bg-gray-100 col-span-2 md:col-span-3 h-full w-full rounded-lg flex items-center justify-center gap-2 px-4">
-        <BiSearch className="text-gray-700" />
+        <BiSearch className="text-blue-gray-700" />
         <input
           placeholder="search"
-          className="w-full h-full bg-gray-100 font-poppins !outline-none"
+          className="w-full h-full bg-gray-100  !outline-none"
         />
       </div>
-      <div className="md:col-span-1 bg-gray-100 hover:bg-gray-200 text-gray-700 flex gap-2 h-full rounded-lg hover:cursor-pointer items-center justify-center ">
+      <div className="md:col-span-1 bg-gray-100 hover:bg-gray-200 text-blue-gray-700 flex gap-2 h-full rounded-lg hover:cursor-pointer items-center justify-center ">
         {" "}
         <HiOutlineDownload /> Download
       </div>
-      <div className="md:col-span-1 bg-gray-100 hover:bg-gray-200 text-gray-700 flex items-center justify-center w-max px-4 text-xl h-full rounded-lg hover:cursor-pointer">
-        <AiOutlineControl />
+      <div className="md:col-span-1 bg-gray-100 hover:bg-gray-200 text-blue-gray-700 flex items-center justify-center w-max px-2 text-xl h-full rounded-lg hover:cursor-pointer">
+      <IoMdOptions className='w-7 h-7 p-1 rounded-md' onClick={()=>{}}/>
       </div>
-    </div>
+
+      </div>
   );
 }
 
@@ -81,17 +65,12 @@ function TournamentsUpdate() {
     },
   ];
   return (
-    <>
-      <div className="p-2">
-        <h1 className="font-poppins capitalize font-semibold text-lg px-2 mt-1">
-          tournament updates
-        </h1>
-      </div>
-      <div className="h-auto flex-1 flex gap-2 p-3 font-poppins">
+    <div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-5 flex-grow py-4">
         {/* Single item starts */}
         {tuItems.map((item, index) => 
           (
-            <div key={index} className={`bg-${item.color}-50 flex-1 rounded-xl flex flex-col items-start pt-6 pl-5 gap-4`}>
+            <div key={index} className={`bg-${item.color}-50 flex-1 flex-grow rounded-lg space-y-5  flex flex-col items-start py-5 pl-5 gap-4 shadow-md `}>
               <div className="flex items-center justify-center gap-2">
                 <div className={`rounded-full ${item.iconBg} w-10 h-10 flex items-center justify-center text-white text-xl`}>
                   <item.icon/>
@@ -105,7 +84,7 @@ function TournamentsUpdate() {
         )}
         {/* Single item ends */}
       </div>
-    </>
+    </div>
   );
 }
 
@@ -140,17 +119,12 @@ function GamesUpdate(){
     },
   ];
   return (
-    <>
-      <div className="p-2">
-        <h1 className="font-poppins capitalize font-semibold text-lg px-2 mt-1">
-          game updates
-        </h1>
-      </div>
-      <div className="h-60 flex-1 flex gap-2 p-3 font-poppins">
+    <div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 flex-grow py-4">
         {/* Single item starts */}
         {guItems.map((item, index) => 
           (
-            <div key={index} className={`${item.bgColor} flex-1 rounded-xl flex flex-col items-start pt-6 pl-5 gap-4`}>
+            <div key={index} className={`${item.bgColor} flex-1 rounded-lg shadow-md flex flex-col items-start py-5 pl-5 gap-4`}>
               <div className="flex items-center justify-center gap-2">
                 <div className={`rounded-full ${item.iconBg} w-10 h-10 flex items-center justify-center text-white text-xl`}>
                   <item.icon/>
@@ -165,6 +139,37 @@ function GamesUpdate(){
         )}
         {/* Single item ends */}
       </div>
-    </>
+      </div>
   )
 }
+
+
+
+const Dashboard = () => {
+  return (
+    <div className="h-full">
+      <HeaderConent />
+      <div className="w-full grid grid-cols-5 mt-4">
+        <div className="w-full col-span-5 md:col-span-3 md:grid-cols-3 xl:col-span-4 gap-5">
+        <h1 className="text-blue-gray-700 capitalize font-semibold text-lg ">
+          tournament updates
+        </h1>
+            <TournamentsUpdate />
+          
+          <h1 className="text-blue-gray-700 capitalize font-semibold text-lg px-2 ">
+            game updates
+          </h1>
+          <GamesUpdate />
+        
+        </div>
+        <div className="w-full col-span-5 md:col-span-2 xl:col-span-1 p-4 space-y-4 mt-5">
+        {/** <div className="w-full col-span-3 bg-white shadow-md h-56 rounded-lg"> World Map</div> */}
+          <div className="w-full col-span-3 bg-white shadow-md h-56 rounded-lg"> bar chart</div>
+          <div className="col-span-3 bg-white shadow-md h-56 rounded-lg">pie chart</div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Dashboard;
