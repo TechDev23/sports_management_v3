@@ -66,7 +66,7 @@ const Step4 = () => {
       }
       
       
-      <Card className="w-full max-w-[28rem]  h-[38rem]">
+      <Card className="w-full max-w-[28rem]  h-[36rem]">
         <CardHeader
           color=""
           floated={false}
@@ -164,7 +164,7 @@ const Step4 = () => {
                   </Typography>
                 </form>
               </TabPanel>
-              <TabPanel value="RazorPay" className="p-0">
+              <TabPanel value="RazorPay" className="p-0 h-full">
                 <form className="mt-12 flex flex-col gap-4">
                   <div>
                     <Typography
@@ -187,7 +187,7 @@ const Step4 = () => {
                   </Typography>
                 </form>
               </TabPanel>
-              <TabPanel value="paypal" className="p-0">
+              <TabPanel value="paypal" className="p-0 h-full">
                 <form className="mt-12 flex flex-col gap-4">
                   <div>
                     <Typography

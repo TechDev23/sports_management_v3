@@ -87,13 +87,13 @@ const TournamentTracking = () => {
 
 
   return (
-    <div className="w-full min-h-full flex flex-col-reverse md:flex-row md:space-x-5">
+    <div className="w-full h-full flex flex-col-reverse md:flex-row md:space-x-5">
 
     <div className="mt-4 md:mt-0  md:border-none border-t-2 bg-white px-4 min-h-full w-full md:w-full  flex flex-col items-center justify-between">
       <p className=" text-blue-gray-700 text-3xl font-bold mt-4 lg:mt-0 w-full">
         New Tournament
       </p>
-    
+      
       {renderStepContent()}
     
     
@@ -114,11 +114,9 @@ const TournamentTracking = () => {
           Proceed
         </Button>
       </div>
-    
-    
     </div>
 
-      <div className=" h-5/5 w-full md:w-1/4 xl:w-1/5  items-center flex-grow  item-center justify-center sticky">
+      <div className="border-2 border-red-400 h-5/5 w-full md:w-1/4 xl:w-1/5  items-center flex-grow  item-center justify-center sticky">
         <Stepper
           activeStep={activeStep}
           isLastStep={(value) => setIsLastStep(value)}
