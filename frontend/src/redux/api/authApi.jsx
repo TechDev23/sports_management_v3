@@ -31,7 +31,7 @@ export const authApi = createApi({
       async onQueryStarted(args, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
-          dispatch(setUser({ user: data }));
+          dispatch(setUser({ user: data, token: data.access_token }));
           // Save user data to localStorage
           localStorage.setItem('userData', JSON.stringify(data));
         } catch (error) {
