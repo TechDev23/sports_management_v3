@@ -212,7 +212,7 @@ export default function Rosters() {
   };
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 min-h-screen">
       <div>
         <Button
           onClick={handleCreateFixtures}

@@ -19,13 +19,14 @@ export default function Details() {
   console.log(tourDetails);
 
   return (
-    <div className="h-full w-full">
+    <div className="h-full w-full min-h-screen">
       <div>
         <p className="text-gray-900 font-bold text-xl"> </p>
       </div>
 
       <div className="h-full flex flex-col">
         <textarea
+         
           className="flex-grow w-full h-full border border-gray-500 px-4 py-2 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200"
           placeholder="Enter details..."
           rows={10}
