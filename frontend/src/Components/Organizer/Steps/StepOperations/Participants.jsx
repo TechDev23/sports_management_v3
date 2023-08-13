@@ -99,7 +99,7 @@ export default function Participants() {
 
   return (
 <>
-    <div className="w-full">
+    <div className="w-full min-h-screen">
         <Typography variant="h4">Teams</Typography>
       <div className="flex gap-4">
         <Button color="orange" size="sm" variant="text" className="border-none outline-none" onClick={()=>fetchData()}>All</Button>

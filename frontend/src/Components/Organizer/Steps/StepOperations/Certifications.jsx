@@ -15,7 +15,7 @@ export default function Certifications() {
     };
 
     return (
-        <div className="text-center pt-8">
+        <div className="text-center pt-2 min-h-screen">
             <button
                 className="text-gray-900 text-bold text-2xl border-2 rounded-md shadow-lg focus:ring-2 focus:ring-orange-200 px-8 transition duration-100 ease-in-out hover:text-white hover:bg-orange-200"
                 onClick={toggleWinnerDetails}
