@@ -11,6 +11,7 @@ import {
   CardBody,
   CardFooter,
 } from "@material-tailwind/react";
+import { Link } from "react-router-dom";
 
 
 
@@ -28,15 +29,15 @@ export default function MainScreen() {
     <div className="w-full bg-white">
       
       
-      <div className="container mx-auto mt-16 px-4 flex flex-col items-center">
-        <Typography variant="h1" color="blue-gray" className="text-center">
+      <div className="container mx-auto mt-5 px-4 flex flex-col items-center">
+        <Typography variant="h1" color="blue-gray" className="text-center text-3xl lg:text-3xl xl:text-4xl">
           Enter your Arena
         </Typography>
         <Typography variant="h6" className="text-center font-normal text-gray-600">
           Play to win / Build your game
         </Typography>
-        <div className="container mx-auto mt-12 px-4 flex flex-col lg:flex-row lg:justify-center lg:items-start lg:gap-32">
-        <Card className="bg-gray-900 w-full max-w-[20rem] p-8 transition-all hover:scale-[1.05] mb-16">
+        <div className="container mx-auto mt-8 px-4 flex flex-col lg:flex-row justify-center items-center lg:justify-center lg:items-start lg:gap-32">
+        <Card className="bg-gray-900 w-full max-w-[20rem] p-8 transition-all hover:scale-[1.05] mb-10">
         <div className="bg-blue-500 h-4 w-full absolute left-0 top-0 rounded-t-lg"></div>
           <CardHeader
             floated={false}
@@ -93,7 +94,7 @@ export default function MainScreen() {
               </li>
             </ul>
           </CardBody>
-          <CardFooter className="mt-12 p-0">
+          <CardFooter className="mt-10 p-0">
             <Button
               size="lg"
               
@@ -163,7 +164,8 @@ export default function MainScreen() {
               </li>
             </ul>
           </CardBody>
-          <CardFooter className="mt-12 p-0">
+          <CardFooter className="mt-10 p-0">
+          <Link to={"/o/dashboard"}>
             <Button
               size="lg"
               
@@ -173,6 +175,7 @@ export default function MainScreen() {
             >
               Enter
             </Button>
+            </Link>
           </CardFooter>
         </Card>
         </div>

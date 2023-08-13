@@ -1,5 +1,6 @@
 import Players from "../Layouts/Players";
 import ErrorPage from "../error-page";
+import { Dashboard } from "../Pages/Player";
 import UploadDocs from "../Pages/User/VerificationProcess/UploadDocs";
 
 export const PlayerRoutes =  {
@@ -13,6 +14,10 @@ export const PlayerRoutes =  {
                 {
                     path:'docs',
                     element:<UploadDocs/>
+                },
+                {
+                    path: 'dashboard',
+                    element: <Dashboard/>
                 }
             ]
         }
