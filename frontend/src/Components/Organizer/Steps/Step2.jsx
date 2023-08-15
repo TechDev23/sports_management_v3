@@ -66,7 +66,11 @@ const Step2 = () => {
             />
         </div>
         <div className=''>
-          <Button color='orange'>Send Invite</Button>
+          <Button 
+            onClick={()=> {}}
+            color='orange'
+            >Send Invite
+          </Button>
         </div>
       </div>
       <div className="w-full">
@@ -90,7 +94,7 @@ const Step2 = () => {
 
         <div className='w-full lg:w-1/2 p-4 space-y-4'>
           <div className='border-2 flex justify-between lg:px-8 py-2  rounded-xl'>
-            <p className='text-blue-gray-700 text-sm lg:text-xl font-semibold'>Enable / disbale code</p>
+            <p className='text-blue-gray-700 text-sm lg:text-xl font-semibold'>Enable / disable code</p>
             
             <Switch
               id="custom-switch-component"

@@ -1,6 +1,16 @@
 
 // import { Input, Select, Option, ButtonGroup, Button, Textarea } from "@material-tailwind/react";
 import { useState } from "react";
+import copy from "../../../assets/icons/copy.png";
+import check from "../../../assets/icons/check.png"
+
+import QRCode from 'qrcode.react';
+import { 
+  Input, 
+  Button, 
+  Switch, 
+  IconButton
+} from '@material-tailwind/react';
 
 import { 
   Rosters, 
@@ -17,9 +27,25 @@ import {
   Tab,
   TabPanel,
 } from "@material-tailwind/react";
+import { useNavigate } from "react-router-dom";
 
 
 export default function Step5() {
+
+  const navigate = useNavigate();
+
+  const [textToCopy, setTextToCopy] = useState("Text to be copied");
+  const [copySuccess, setCopySuccess] = useState(false);
+
+  const handleCopyClick = async () => {
+    try {
+      await navigator.clipboard.writeText(textToCopy);
+      setCopySuccess(true);
+    } catch (error) {
+      console.error('Error copying text:', error);
+    }
+  };
+
   const data = [
     {
       label: "DETAILS",
@@ -51,30 +77,128 @@ export default function Step5() {
   
   return (
     <div className="w-full h-full mt-3">
-      <div className="my-5 min-w-100% min-h-full flex flex-row">
-        <Tabs value="details" className="w-full">
-          <TabsHeader
-            className="min-w-full text-sm flex flex-row items-center justify-center bg-orange-600 p-1 rounded-md lg:mb-4 space-x-1 sm:space-x-1 text-white hover:text-orange-600 focus:text-orange-400"
-            indicatorProps={{
-              className:
-                "hover:shadow-lg rounded-md bg-orange-600 hover:text-orange-600 focus:bg-white focus:text-orange-400",
-            }}
-          >
-            {data.map(({ label, value }) => (
-              <Tab key={value} value={value} className="text-white text-sm  px-0.5">
-                {label}
-              </Tab>
-            ))}
-          </TabsHeader>
-          <TabsBody className="">
-            {data.map(({ value, desc }) => (
-              <TabPanel key={value} value={value}>
-                <div className="w-full">{desc}</div>
-              </TabPanel>
-            ))}
-          </TabsBody>
-        </Tabs>
+      
+    <div className='w-full flex flex-col lg:flex-row gap-4 '>
+      
+    <div className='w-full lg:w-1/2 lg:border-r-2 p-4 items-center justify-center  space-y-4'>
+      <div>
+        <p className='text-blue-gray-700 text-xl font-semibold text-center '>Share code / Invite Link</p>
       </div>
+      <div className='w-full flex items-center justify-center '>
+        {textToCopy && <QRCode value={textToCopy} />}
+      </div>
+    </div>
+
+    <div className='w-full lg:w-1/2  space-y-4'>
+      <div className='border-2 flex justify-between px-2 lg:px-8 py-2  rounded-xl'>
+        <p className='text-blue-gray-700 text-sm lg:text-xl font-semibold'>Enable / disable code</p>
+        
+        <Switch
+          id="custom-switch-component"
+          ripple={false}
+          className="h-full w-full checked:bg-[#ff9800]"
+          containerProps={{
+            className: "w-11 h-6",
+          }}
+          circleProps={{
+            className: "before:hidden left-0.5 border-none",
+          }}
+          onChange={()=>{
+            // enable disable function of code
+          }}
+        />
+      </div>
+      <div className='space-y-4'>
+          <p className='text-blue-gray-700 text-sm lg:text-xl font-semibold'>Share this link :</p>
+          <div className='flex flex-col sm:flex-row gap-4  items-center w-full '>
+          <Input disabled 
+            value={textToCopy}
+            className="w-2/5"
+          />
+            <button
+              onClick={handleCopyClick} 
+              className='w-24 h-12  px-4 transition-all' 
+            >{copySuccess ? 
+              <img
+              className="h-10 w-10  object-cover object-center p-1"
+              src={check}
+              alt="Copied"
+            /> : 
+            <img
+            className="h-10 w-10 object-cover object-center p-2 rounded-lg bg-gray-100"
+            src={copy}
+            alt="copy"
+            onClick={()=>{}}
+          />
+          }</button>
+          </div>
+
+      
+      </div>
+    </div>
+
+  </div>
+  <div className='w-full p-2 flex items-center justify-center gap-5 border-y mt-4'>
+    <div className='item-center flex flex-col items-center justify-center '>
+        <img
+        className="h-10 w-10 rounded-full object-cover object-center border cursor-pointer"
+        src="https://cdn-icons-png.flaticon.com/128/10449/10449817.png"
+        alt="Embed"
+        onClick={()=>{}}
+        
+        />
+      <p className='hidden lg:block text-blue-gray-700'>Embed</p>
+    </div>
+    <div className='item-center flex flex-col items-center justify-center '>
+      <img
+        className="h-10 w-10 rounded-full object-cover object-center  cursor-pointer"
+        src="https://cdn-icons-png.flaticon.com/128/4494/4494494.png"
+        alt="Whatsapp"
+        onClick={()=>{}}
+      />
+      <p className='hidden lg:block text-blue-gray-700'>Whatsapp</p>  
+    </div>
+    <div className='item-center flex flex-col items-center justify-center  cursor-pointer'>
+      <img
+        className="h-10 w-10 rounded-full object-cover object-center"
+        src="https://cdn-icons-png.flaticon.com/128/3670/3670032.png"
+        alt="Facebook"
+        onClick={()=>{}}
+      />
+      <p className='hidden lg:block text-blue-gray-700'>Facebook</p>
+    </div>
+    <div className='item-center flex flex-col items-center justify-center  cursor-pointer'>
+      <img
+        className="h-10 w-10 rounded-full object-cover object-center"
+        src="https://cdn-icons-png.flaticon.com/128/3670/3670211.png"
+        alt="Twitter"
+        onClick={()=>{}}
+      />
+      <p className=' hidden lg:block text-blue-gray-700'>Twitter</p>
+    </div>
+    <div className='item-center flex flex-col items-center justify-center cursor-pointer'>
+      <img
+        className="h-10 w-10 rounded-full object-cover object-center"
+        src="https://cdn-icons-png.flaticon.com/128/552/552486.png"
+        alt="Email"
+        onClick={()=>{}}
+      />
+      <p className='hidden lg:block text-blue-gray-700'>Email</p>
+    </div>
+  </div>
+    <div className="w-full flex justify-center lg:justify-end mt-4">
+    
+      <div className='border-2 w-fit flex flex-col sm:flex-row items-center gap-4 lg:px-8 p-2  rounded-xl'>
+        <p className='text-blue-gray-700 text-sm lg:text-lg font-semibold text-center'>The tournament will now be available at  
+          <span className="text-orange-500"> In-progress </span> 
+        section</p>
+        <Button 
+            onClick={()=> navigate("/o/tournaments")}
+            color='orange'
+            >Done
+        </Button>
+      </div>
+    </div>
     </div>
   );
 }
