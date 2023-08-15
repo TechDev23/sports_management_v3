@@ -171,7 +171,7 @@ export function Table() {
               const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
  
               return (
-                <tr key={org} className="hover:bg-gray-100 transition-all cursor-pointer"  onClick={() => navigate("/o/new-tournament")}>
+                <tr key={org} className="hover:bg-gray-100 transition-all cursor-pointer"  onClick={() => navigate("/o/current")}>
                   <td className={classes}>
                     <div className="flex items-center gap-3">
                       <Avatar src={img} alt={org} size="sm" />

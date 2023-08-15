@@ -9,6 +9,9 @@ import {
 } from '@material-tailwind/react';
 import Select from "react-select";
 
+import check from "../../../assets/icons/check.png"
+import copy from "../../../assets/icons/copy.png"
+
 const Step2 = () => {
 
   const [textToCopy, setTextToCopy] = useState("Text to be copied");
@@ -118,11 +121,22 @@ const Step2 = () => {
                   value={textToCopy}
                   className="w-2/5"
                 />
-                <IconButton
-                  onClick={handleCopyClick} 
-                  className='w-full p-2 px-4' 
-                  color='orange'
-                >{copySuccess ? ' Copied ' : ' Copy '}</IconButton>
+                <button
+              onClick={handleCopyClick} 
+              className='w-24 h-12  px-4 transition-all' 
+            >{copySuccess ? 
+              <img
+              className="h-10 w-10  object-cover object-center p-1"
+              src={check}
+              alt="Copied"
+            /> : 
+            <img
+            className="h-10 w-10 object-cover object-center p-2 rounded-lg bg-gray-100"
+            src={copy}
+            alt="copy"
+            onClick={()=>{}}
+          />
+          }</button>
               </div>
 
           

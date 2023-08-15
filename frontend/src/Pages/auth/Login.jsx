@@ -93,33 +93,36 @@ function Login() {
 
   return (
     <section
-      className="text-gray-600 body-font"
+      className="text-gray-600 body-font w-full h-full items-center justify-center"
       style={{
         backgroundImage: `url(${backgroundImage})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundAttachment: "fixed",
-        minHeight: "100vh",
+        minHeight: "92vh",
       }}
     >
-      <div className="container px-5 py-24 mx-auto flex flex-wrap items-start justify-center">
-        <div className="lg:w-3/5 md:w-1/2 md:pr-16 lg:pr-0 pr-0 mt-32">
+      <div className="px-5 flex  items-center justify-center md:py-10 w-full h-full">
+
+        <div className="hidden md:block lg:w-3/5 md:w-1/2 md:pr-16 lg:pr-0 pr-0">
           <div className="mt-4 border-t-4 border-gray-400 w-full mb-4"></div>
           <h1 className="title-font font-bold text-5xl text-gray-400">
             A sports Enthusiast is here, Hi !
           </h1>
-          <p className=" text-blue-gray-700 leading-relaxed mt-4  text-gray-400">
+          <p className="  leading-relaxed mt-4  text-gray-400">
             Welcome to a platform that brings transparency in the world of
             sports and tournaments
           </p>
           <div className="mt-4 border-t-4 border-gray-400 w-full"></div>
         </div>
-        <div className="lg:w-2/6 md:w-1/2 bg-white bg-opacity-30 rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0 hover:scale-[1.05]">
+
+
+        <div className="lg:w-2/6 md:w-1/2 bg-white rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0 shadow-xl">
           <h2 className="text-gray-900 text-3xl font-bold title-font mb-5 text-center">
             Sign In
           </h2>
           <div className="relative mb-4">
-            <label htmlFor="email" className="leading-7 text-sm text-gray-600">
+            <label htmlFor="email" className="leading-7 text-sm text-gray-700">
               Email
             </label>
             <input
@@ -132,13 +135,13 @@ function Login() {
               placeholder="Enter your email"
             />
             {emailError && (
-              <p className=" text-blue-gray-700 text-xs text-orange-500 mt-1">{emailError}</p>
+              <p className=" text-xs text-orange-500 mt-1">{emailError}</p>
             )}
           </div>
           <div className="relative mb-4">
             <label
               htmlFor="password"
-              className="leading-7 text-sm text-gray-600"
+              className="leading-7 text-sm text-gray-700"
             >
               Password
             </label>
@@ -202,7 +205,7 @@ function Login() {
               </button>
             </div>
             {passwordError && (
-              <p className=" text-blue-gray-700 text-xs text-orange-500 mt-1">{passwordError}</p>
+              <p className=" text-xs text-orange-500 mt-1">{passwordError}</p>
             )}
           </div>
           <div className="relative mb-4">
@@ -214,31 +217,32 @@ function Login() {
                 checked={rememberMe}
                 onChange={handleRememberMe}
               />
-              <span className="text-sm text-gray-600">Remember Me</span>
+              <span className="text-sm text-gray-700">Remember Me</span>
             </label>
           </div>
           <div className="text-center mb-4">
             <button
               onClick={handleFormSubmit}
-              className="flex items-center justify-center w-full text-white bg-white bg-opacity-40 hover:bg-orange-300  border-0 py-2 px-8 focus:outline-none rounded text-lg"
+              className="flex items-center justify-center w-full text-white bg-orange-400  hover:bg-orange-500  border-0 py-2 px-8 focus:outline-none rounded-lg text-lg"
             >
               {isLoading ? <Spinner /> : "Log in"}
             </button>
           </div>
           <div className="mt-4 text-center">
-            <p className=" text-blue-gray-700 text-sm text-gray-500 mt-2">
+            <p className=" text-sm text-gray-700 mt-2">
               or scan the code from application
             </p>
             <div className="mt-4 flex flex-col items-center">
               <QRCode value="Your QR code data" size={128} />
             </div>
           </div>
-          <p className=" text-blue-gray-700 text-gray-600 text-normal text-2xl text-center mt-8">
+          <p className="flex items-center justify-center gap-2  text-gray-700 text-normal text-sm text-center mt-8">
+            <span>
             Don't have an account?{" "}
+            </span>
             <Link
               to="/user/register"
-              style={{ fontSize: "2rem", color: "orange" }}
-              className="underline font-normal text-3xl flex items-center justify-center"
+              className="text-orange-500 font-normal text-sm no-underline flex items-center justify-center"
             >
               Sign up
             </Link>

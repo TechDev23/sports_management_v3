@@ -18,7 +18,7 @@ import {
   SetOperations, 
   Certifications, 
   Participants 
-} from "./StepOperations";
+} from "../InProgress/StepOperations";
 
 import {
   Tabs,

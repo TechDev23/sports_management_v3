@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 
 
 import {
@@ -269,22 +269,27 @@ const profileMenuItems = [
   {
     label: "My Profile",
     icon: UserCircleIcon,
+    link: "/user/profile"
   },
   {
     label: "Edit Profile",
     icon: Cog6ToothIcon,
+    link: "/user/profile"
   },
   {
     label: "Inbox",
     icon: InboxArrowDownIcon,
+    link: "/o/messages"
   },
   {
     label: "Help",
     icon: LifebuoyIcon,
+    link: "/about"
   },
   {
     label: "Sign Out",
     icon: PowerIcon,
+    link: ""
   },
 ];
  
@@ -317,9 +322,10 @@ function ProfileMenu() {
         </Button>
       </MenuHandler>
       <MenuList className="p-1">
-        {profileMenuItems.map(({ label, icon }, key) => {
+        {profileMenuItems.map(({ label, icon, link }, key) => {
           const isLastItem = key === profileMenuItems.length - 1;
           return (
+            <Link key={label} to={link}>
             <MenuItem
               key={label}
               onClick={closeMenu}
@@ -342,6 +348,12 @@ function ProfileMenu() {
                 {label}
               </Typography>
             </MenuItem>
+            
+            </Link>
+
+
+
+
           );
         })}
       </MenuList>
@@ -377,7 +389,7 @@ const [loggedIn , setLoggedIn] = useState(true);
           variant="h6"
           className="mr-4 cursor-pointer py-1.5 lg:ml-2"
         >
-          G-Sort
+          G-Sport
         </Typography>
         <div className="hidden lg:block">
           <NavList />
@@ -388,10 +400,10 @@ const [loggedIn , setLoggedIn] = useState(true);
             <ProfileMenu/>
           ) : (
             <div className="hidden gap-2 lg:flex">
-              <Button variant="text" size="sm" color="blue-gray" onClick={()=> navigate("/login")}>
+              <Button variant="text" size="sm" color="blue-gray" onClick={()=> navigate("/user/login")}>
                 Sign In
               </Button>
-              <Button variant="gradient" size="sm" onClick={() => navigate("/register")}>
+              <Button variant="gradient" color="orange" size="sm" onClick={() => navigate("/user/register")}>
                 Sign Up
               </Button>
             </div>

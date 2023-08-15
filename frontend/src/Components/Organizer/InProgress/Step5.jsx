@@ -2,13 +2,7 @@
 // import { Input, Select, Option, ButtonGroup, Button, Textarea } from "@material-tailwind/react";
 import { useState } from "react";
 
-import { 
-  Rosters, 
-  Details, 
-  SetOperations, 
-  Certifications, 
-  Participants 
-} from "./StepOperations";
+import { Rosters, Details, Participants, SetOperations, Certifications } from "./StepOperations";
 
 import {
   Tabs,
