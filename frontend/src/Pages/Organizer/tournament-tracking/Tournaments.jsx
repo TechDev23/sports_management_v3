@@ -78,10 +78,10 @@ const cards = [
     <div className='w-full h-full flex flex-col gap-5 '>
 
         <div className='flex flex-col sm:flex-row justify-between items-center gap-3'>
-            <p className='text-2xl md:text-3xl font-bold text-blue-gray-700'>Tournaments Tracking</p>
+            <p className='text-2xl md:text-2xl font-bold text-blue-gray-700'>Tournaments Tracking</p>
 
             <div className='xl:hidden items-center justify-center'>
-            <Link to={"/o/new-tournament"} className='w-full flex items-center justify-center'>
+            <Link to={"/o/new-tournament/step1"} className='w-full flex items-center justify-center'>
                 <Button color='orange' size='sm' className='w-full flex justify-center items-center'>
                     <BiPlus className='w-8 h-8'/><p className='text-md'>   New Tournament</p>
                 </Button>
@@ -137,7 +137,7 @@ const cards = [
             <div className='w-full hidden xl:w-1/5 space-y-4 h-full px-3 xl:flex flex-col items-center justify-center'>
 
             
-                <Link to={"/o/new-tournament"} className='w-full flex flex-col justify-center items-center'>
+                <Link to={"/o/new-tournament/step1"} className='w-full flex flex-col justify-center items-center'>
                     <div className='w-11/12 h-40  rounded-t-lg border'>
                         <NewTournamentCarousel/>
                     </div>

@@ -13,7 +13,7 @@ import {
 } from "@material-tailwind/react";
 
 
-export default function Step5() {
+export default function Step5Update() {
   const data = [
     {
       label: "DETAILS",
