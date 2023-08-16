@@ -1,6 +1,6 @@
 import { AiOutlineClose } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { closeSidebar, toggleSidebar } from "../../redux/SidebarSlice";
+import { closeSidebar, toggleSidebar } from "../../redux/features/SidebarSlice";
 import {
   Card,
   ListItem,

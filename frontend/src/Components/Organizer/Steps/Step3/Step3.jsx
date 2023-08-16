@@ -1,23 +1,11 @@
 import { useEffect, useState } from "react";
 import AddGame from './AddGame';
 import { Button } from "@material-tailwind/react";
-// import { fetchGames } from '../../redux/slices/Admin/adminActions'
-// import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const Step3 = () => {
 
-  // const dispatch = useDispatch();
-  // const adminState = useSelector((state)=>state.admin.fetchGames)
-  // const [adminFetchGames, setAdminFetchGames] = useState(adminState)
-
-  // useEffect(() => {
-  //   dispatch(fetchGames());
-  // }, [dispatch]);
-
-  // useEffect(()=>{
-  //   setAdminFetchGames(adminFetchGames)
-  // },[adminFetchGames])
-
+  const dispatch = useDispatch();
 
   const [gameCount, setGameCount] = useState(1); // State to track the number of games
 

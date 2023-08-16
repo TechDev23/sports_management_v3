@@ -12,18 +12,22 @@ import {
   CardFooter,
 } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
+import { selectCurrentUser } from "../../redux/features/userSlice";
+import { useSelector } from "react-redux";
+import { useAppSelector } from "../../redux/store";
 
 
 
 export default function MainScreen() {
-  
+  const currentUser =  useAppSelector((state) => state.userState.user);
+  console.log(currentUser)
 
-  React.useEffect(() => {
-    window.addEventListener(
-      "resize",
-      () => window.innerWidth >= 960 && setIsNavOpen(false)
-    );
-  }, []);
+  // React.useEffect(() => {
+  //   window.addEventListener(
+  //     "resize",
+  //     () => window.innerWidth >= 960 && setIsNavOpen(false)
+  //   );
+  // }, []);
 
   return (
     <div className="w-full bg-white">

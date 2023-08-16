@@ -48,7 +48,8 @@ function Login() {
       const userData = await loginUser({ email_id: email, password }).unwrap();
       const decoded = jwt(userData.access_token);
       cookie.set("jwt_auth_token", userData.access_token, {
-        expires: new Date(decoded.exp * 1000),
+        expires: new Date(decoded.exp * 10000),
+        path:"/"
       });
       // console.log(isSuccess)
       toast.success(userData?.message);

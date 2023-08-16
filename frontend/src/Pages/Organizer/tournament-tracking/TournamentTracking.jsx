@@ -90,21 +90,19 @@ const TournamentTracking = () => {
     <div className="w-full min-h-full flex flex-col-reverse md:flex-row md:space-x-5">
 
     <div className="mt-4 md:mt-0  md:border-none border-t-2 bg-white px-2 min-h-full w-full md:w-full  flex flex-col items-center justify-between">
-      <p className=" text-blue-gray-700 text-3xl font-bold my-4 lg:mt-0 w-full">
-        New Tournament
-      </p>
+      
       
       {renderStepContent()}
     
     
-      <div className="flex justify-center my-2">
+      {/* <div className="flex justify-center my-2">
       <button
         className="bg-gray-300 hover:bg-gray-500 text-gray-800 py-2 px-4 rounded-lg"
         onClick={handleAutoSave}
       >
         Auto Save All the Details
       </button>
-    </div>
+    </div> */}
     
       <div className="w-full flex flex-row px-4 justify-between space-x-2">
         <Button className="bg-orange-500 hover:bg-orange-700 text-white w-[150px] py-2 px-4 rounded-lg" onClick={handlePrev} color="orange" disabled={isFirstStep}>
