@@ -201,6 +201,22 @@ export default function Rosters() {
     setShow(true);
   };
 
+  const [buttonStates, setButtonStates] = useState(Array(21).fill(false));
+
+  const handleButtonClick = (index) => {
+    const newButtonStates = Array(21).fill(false);
+    newButtonStates[index] = true;
+    setButtonStates(newButtonStates);
+  };
+
+  const [buttonStates2, setButtonStates2] = useState(Array(21).fill(false));
+
+  const handleButtonClick2 = (index) => {
+    const newButtonStates = Array(21).fill(false);
+    newButtonStates[index] = true;
+    setButtonStates2(newButtonStates);
+  };
+
   return (
     <div className="flex flex-col gap-2 min-h-screen">
       {show ? (
@@ -234,28 +250,17 @@ export default function Rosters() {
           </div>
           <div className="w-full">
           <ButtonGroup color="orange">
-            <Button>1</Button>
-            <Button>2</Button>
-            <Button>3</Button>
-            <Button>4</Button>
-            <Button>5</Button>
-            <Button>6</Button>
-            <Button>7</Button>
-            <Button>8</Button>
-            <Button>9</Button>
-            <Button>10</Button>
-            <Button>11</Button>
-            <Button>12</Button>
-            <Button>13</Button>
-            <Button>14</Button>
-            <Button>15</Button>
-            <Button>16</Button>
-            <Button>17</Button>
-            <Button>18</Button>
-            <Button>19</Button>
-            <Button>20</Button>
-            <Button>21</Button>
-          </ButtonGroup>
+      {buttonStates.map((isActive, index) => (
+        <Button
+        className={isActive ? 'bg-white text-black border' : ''}
+          key={index}
+          variant={isActive ? 'contained' : 'outlined'}
+          onClick={() => handleButtonClick(index)}
+        >
+          {index + 1}
+        </Button>
+      ))}
+    </ButtonGroup>
           </div>
 
           <div className="my-5 flex flex-row items-center justify-center mr-[17rem]"><Button color="orange">VS</Button></div>
@@ -268,28 +273,17 @@ export default function Rosters() {
           </div>
           <div className="w-full">
           <ButtonGroup color="orange">
-            <Button>1</Button>
-            <Button>2</Button>
-            <Button>3</Button>
-            <Button>4</Button>
-            <Button>5</Button>
-            <Button>6</Button>
-            <Button>7</Button>
-            <Button>8</Button>
-            <Button>9</Button>
-            <Button>10</Button>
-            <Button>11</Button>
-            <Button>12</Button>
-            <Button>13</Button>
-            <Button>14</Button>
-            <Button>15</Button>
-            <Button>16</Button>
-            <Button>17</Button>
-            <Button>18</Button>
-            <Button>19</Button>
-            <Button>20</Button>
-            <Button>21</Button>
-          </ButtonGroup>
+      {buttonStates2.map((isActive, index) => (
+        <Button
+        className={isActive ? 'bg-white text-black border' : ''}
+          key={index}
+          variant={isActive ? 'contained' : 'outlined'}
+          onClick={() => handleButtonClick2(index)}
+        >
+          {index + 1}
+        </Button>
+      ))}
+    </ButtonGroup>
           </div>
 
         </div>

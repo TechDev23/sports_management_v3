@@ -62,12 +62,11 @@ export const orgApi = createApi({
       },
     }),
 
-    getRgstrdTeams: build.mutation({
+    getRgstrdTeams: build.query({
       query(data) {
         return {
           url: `organizer/tournament/${data.tournament_id}/games/${data.game_id}/teams?token=${data.token}`,
           method: "get",
-          body: data.req_body,
         };
       },
     }),
@@ -83,4 +82,7 @@ export const orgApi = createApi({
   }),
 });
 
-export const { useCreateTournamentMutation, useAddGameToTnmtMutation } = orgApi;
+export const { useCreateTournamentMutation, 
+  useAddGameToTnmtMutation,
+  useGetRgstrdTeamsQuery,
+} = orgApi;

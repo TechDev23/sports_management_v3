@@ -39,6 +39,7 @@ import {
   ListItemSuffix,
   Chip,
 } from "@material-tailwind/react";
+import { useAppSelector } from "../../../redux/store";
 
 // function generateUniqueTag() {
 //   const characters =
@@ -51,16 +52,16 @@ import {
 // }
 
 export default function ComplexNavbar() {
-  // const uniqueTag = generateUniqueTag();
+  const user = useAppSelector((state) => state.userState.user);
 
   const userInformation = {
-    mobile_number: "8123402",
-    name: "Om",
-    verified: true,
-    createdAt: "2023-07-15T05:53:48",
-    email_id: "om@gmail.com",
+    mobile_number: user?.phone_no || "931352345",
+    name: user?.first_name || "name",
+    verified: user?.verified || false,
+    createdAt: user?.createdAt,
+    email_id: user?.email_id || "om@gmail.com",
     emergency_contact: "null",
-    dob: "2023-07-15",
+    dob: user?.dob,
   };
 
    const [isNameEditing, setIsNameEditing] = useState(false);
@@ -79,6 +80,7 @@ export default function ComplexNavbar() {
   const [editedDOB, setEditedDOB] = useState(new Date(userInformation.dob));
 
   const handleSaveName = () => {
+
     setIsNameEditing(false);
     userInformation.name = editedName;
   };
@@ -150,12 +152,8 @@ export default function ComplexNavbar() {
 
   return (
     <div className="min-h-screen">
-      <div className="bg-red-300 py-2 text-black text-center">
-        <Typography variant="h5">Documents Verification in progress</Typography>
-      </div>
-
       <div className="flex flex-col lg:flex-row">
-        <Card className="h-[calc(100vh-2rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5 border-4 ml-32  mt-16 h-3/4 sticky top-48">
+        <Card className="h-[calc(100vh-2rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5 border-4 ml-32  mt-16 sticky top-48">
           <div className="mb-2 p-4">
             <Typography variant="h5" color="blue-gray" className="text-3xl">
               Account Settings
@@ -205,7 +203,7 @@ export default function ComplexNavbar() {
         </Card>
 
         <div className="flex-col w-full mr-64 lg:ml-32 max-w-[80rem] p-8 flex">
-        <Card className="p-4 border-4 hover:shadow-xl  hover:shadow-blue-gray-150/5 transition-all duration-300 hover:scale-105 w-full md:max-w-[20rem] lg:max-w-[60rem]">
+        <Card className="p-4 border-4 hover:shadow-xl  hover:shadow-blue-gray-150/5 transition-all duration-300 w-full md:max-w-[20rem] lg:max-w-[60rem]">
           <div className="profile-image relative">
           <div className="flex-row">
             <Avatar
@@ -218,7 +216,7 @@ export default function ComplexNavbar() {
            <div className="w-160 lg:ml-8 md:ml-0 mt-4 custom-id-text">
               <div className="text-blue-400 font-normal px-8 flex">
                 <p className="mr-1">G-Sport ID: </p>
-                <p className="ml-1">{userInformation.name}</p>
+                <p className="ml-1">{user?.name}</p>
               </div>
             </div>
             </div>

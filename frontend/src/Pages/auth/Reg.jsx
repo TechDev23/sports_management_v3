@@ -231,7 +231,7 @@ const Reg = () => {
                 onClick={onSignInSubmit}
                 disabled={mobileVerified}
               >
-                {sendingOtp ? <Spinner color="amber" /> : verifyBtnMsg}
+                {sendingOtp ? <Spinner color="amber" className="h-4 w-4" /> : verifyBtnMsg}
               </Button>
               </div>
               

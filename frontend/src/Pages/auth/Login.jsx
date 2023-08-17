@@ -53,7 +53,7 @@ function Login() {
       });
       // console.log(isSuccess)
       toast.success(userData?.message);
-      navigate("/user/main");
+      navigate("/user/profile");
     } catch (error) {
       // console.log("error", error?.data?.detail);
       toast.error(error?.data?.detail);
