@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import AddGame from './AddGame';
 import { Button } from "@material-tailwind/react";
 import { useDispatch, useSelector } from "react-redux";
-
+import { Link } from "react-router-dom";
 const Step3 = () => {
 
   const dispatch = useDispatch();
@@ -21,8 +21,10 @@ const Step3 = () => {
 
   return (
 
-    <div className='font-bold text-2xl  w-full'>
-      
+    <div className='w-full'>
+      <div className="w-full flex justify-center border-2 border-red-400">
+      <Link to={'/o/added-games'} className="font-poppins text-gray-600 underline">See previous added games</Link>
+      </div>
       <div className="space-y-4">
         {Array.from({ length: gameCount }, (_, index) => (
           <AddGame key={index} gameIndex={index} />

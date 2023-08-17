@@ -23,6 +23,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { authApi } from './api/authApi';
 import { userApi } from './api/userApi';
 import { orgApi } from './api/organizer/orgApi';
+import { tournamentApi } from './api/organizer/tournamentApi';
 import userReducer from './features/userSlice';
 import orgReducer from './features/orgSlice';
 import sidebarReducer from './features/SidebarSlice';
@@ -35,6 +36,7 @@ export const store = configureStore({
     [authApi.reducerPath]: authApi.reducer,
     [userApi.reducerPath]: userApi.reducer,
     [orgApi.reducerPath]: orgApi.reducer,
+    [tournamentApi.reducerPath]: tournamentApi.reducer,
     userState: userReducer,
     orgState: orgReducer,
     sidebar: sidebarReducer,
@@ -42,7 +44,7 @@ export const store = configureStore({
   },
   devTools: process.env.NODE_ENV === 'development',
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({}).concat([authApi.middleware, userApi.middleware, orgApi.middleware ]),
+    getDefaultMiddleware({}).concat([ tournamentApi.middleware, authApi.middleware, userApi.middleware, orgApi.middleware ]),
 });
 
 

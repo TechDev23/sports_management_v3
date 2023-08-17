@@ -13,6 +13,7 @@ import {
   Teams,
   Messages
 } from "../Pages/Organizer";
+import { AllAddedGames } from "../Components/Organizer";
 
 export const OrganizerRoutes = {
   path: "o/",
@@ -50,6 +51,11 @@ export const OrganizerRoutes = {
             {
               path: "messages",
               element: <Messages/>
+            },
+            // all added games to tournments
+            {
+              path: "added-games",
+              element: <AllAddedGames/>
             }
 
           // ],

@@ -32,10 +32,10 @@ export const orgApi = createApi({
       },
     }),
 
-    addGamesTnmt: build.mutation({
+    addGameToTnmt: build.mutation({
       query(data) {
         return {
-          url: `organizer/tournament/${data.tour_id}/games?token=${data.token}`,
+          url: `organizer/tournament/${data.tournament_id}/games?token=${token}`,
           method: "post",
           body: data,
         };
@@ -83,4 +83,4 @@ export const orgApi = createApi({
   }),
 });
 
-export const { useCreateTournamentMutation } = orgApi;
+export const { useCreateTournamentMutation, useAddGameToTnmtMutation } = orgApi;
