@@ -5,11 +5,11 @@ import { useSelector, useDispatch } from "react-redux";
 import Select from "react-select";
 import { useAddGameToTnmtMutation } from "../../../../redux/api/organizer/orgApi";
 import { useAppSelector } from "../../../../redux/store";
-
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 const AddGame = ({ gameIndex }) => {
   const { id: tourId } = useAppSelector((state) => state.tournament.tour_details);
   const dispatch = useDispatch();
-  const [addGameToTnmt, {isSuccess, isLoading}] = useAddGameToTnmtMutation()
+  const [addGameToTnmt, {isSuccess, isLoading: isAddingGame}] = useAddGameToTnmtMutation()
 
   // entire ui can be divided into 
   // game detail
@@ -81,14 +81,14 @@ const AddGame = ({ gameIndex }) => {
   }
   return (
     <div className="w-full space-y-4 py-5 border-t-2 ">
-      {!success ? (
-        <div className="flex items-center justify-center mx-auto text-xl font-bold font-poppins">
-          Details Saved
+      {isSuccess ? (
+        <div className="flex items-center justify-start mx-auto text-xl font-poppins gap-3">
+          <CheckCircleIcon className="text-green-500"/> <p>Game added Successfully</p>
         </div>
       ) : (
         <div className="space-y-4">
           <p className="text-blue-gray-700 text-xl">
-            Enter Game {gameIndex + 1}
+            Add new Game
           </p>
           <div className="w-full flex flex-col lg:flex-row gap-4">
             <div className="w-full lg:w-2/3 gap-x-2">
@@ -216,7 +216,7 @@ const AddGame = ({ gameIndex }) => {
           </div>
           <div className="w-full flex justify-center items-center">
             <Button onClick={addGameToDB} className="flex justify-center items-center" color="orange">
-              {false ? <Spinner color="amber" /> : "Add game"}
+              {isAddingGame ? <Spinner color="amber" /> : "Add game"}
             </Button>
           </div>
         </div>

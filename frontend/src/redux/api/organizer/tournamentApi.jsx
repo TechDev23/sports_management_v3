@@ -5,7 +5,8 @@ import Cookies from "universal-cookie";
 const BASE_URL = "http://127.0.0.1:8000";
 
 const cookie = new Cookies();
-const token = cookie.get("jwt_auth_token");
+// const token = cookie.get("jwt_auth_token") || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTIyNDg2OTMsInN1YiI6Ild2Y3hlaEM0VTQifQ.a0tK3yUlrfRZwLMonHjNTyD9aJoL0g_Y1Sukd1mAhuA";
+const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTIyNDg2OTMsInN1YiI6Ild2Y3hlaEM0VTQifQ.a0tK3yUlrfRZwLMonHjNTyD9aJoL0g_Y1Sukd1mAhuA";
 
 export const tournamentApi = createApi({
   reducerPath: "tournamentApi",
@@ -14,11 +15,9 @@ export const tournamentApi = createApi({
   endpoints: (build) => ({
 
     getTournamentGames: build.query({
-      query(body) {
+      query(tournament_id) {
         return {
-          url: `tournaments/${body.tournament_id}/games?token=${token}`,
-          method: "post",
-          body,
+          url: `tournaments/${tournament_id}/games?token=${token}`,
         };
       },
     }),

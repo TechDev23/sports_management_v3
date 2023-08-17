@@ -22,19 +22,19 @@ const Step3 = () => {
   return (
 
     <div className='w-full'>
-      <div className="w-full flex justify-center border-2 border-red-400">
-      <Link to={'/o/added-games'} className="font-poppins text-gray-600 underline">See previous added games</Link>
+      <div className="w-full flex justify-end">
+      <Link to={'/o/new-tournament/added-games'} className="font-poppins text-gray-600 hover:text-orange-500">See previous added games</Link>
       </div>
       <div className="space-y-4">
         {Array.from({ length: gameCount }, (_, index) => (
           <AddGame key={index} gameIndex={index} />
         ))}
       </div>
-      <div className="flex justify-end">
-      <Button color="orange" onClick={handleRemoveGame} className=" text-white px-4 py-2 mr-2">
+      <div className="flex justify-end  mb-3">
+      <Button color="red" onClick={handleRemoveGame} className=" bg-gray-400 shadow-none hover:bg-red-400 text-white px-4 py-2 mr-2">
         Remove Game
       </Button>
-        <Button  onClick={handleAddGame} className="bg-blue-500 text-white px-4 py-2 ">
+        <Button color="amber" onClick={handleAddGame} className="bg-orange-500 text-white px-4 py-2 ">
           Add Game
         </Button>
       </div>
