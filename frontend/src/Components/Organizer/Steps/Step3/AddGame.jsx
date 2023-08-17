@@ -9,7 +9,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 import DatePicker from "react-datepicker";
 
-const AddGame = ({ gameIndex }) => {
+const AddGame = () => {
   const { id: tourId } = useAppSelector((state) => state.tournament.tour_details);
   const dispatch = useDispatch();
   const [addGameToTnmt, {isSuccess, isLoading: isAddingGame}] = useAddGameToTnmtMutation()
@@ -19,13 +19,6 @@ const AddGame = ({ gameIndex }) => {
   // participants details (ex: min age, min boys ,etc)
   // prize
   // schedule
-
-  
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
-
-  const [qualification, setQualification] = useState(2);
-
   const initialValues = {
     name: "game1",
     tournament_id : "hUvFddYbS3iTN2uL",
@@ -55,7 +48,13 @@ const AddGame = ({ gameIndex }) => {
     // end_date: "2023-08-16T15:57:35.587Z"
   };
 
+  
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
   const [values, setValues] = useState(initialValues);
+  const [qualification, setQualification] = useState(null);
+
+  
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -84,22 +83,30 @@ const AddGame = ({ gameIndex }) => {
 
   const qualificationOptions = [
     {
-      value: "1",
+      value: 1,
       label: "Single Elimination"
     },
     {
-      value: "2",
+      value: 2,
       label: "League"
     }
-  ]
+  ];
+
+  const handleQualification =(selectedOption)=>{
+    setQualification(selectedOption.label)
+    setValues({
+    ...values,
+    "type": selectedOption.value,
+  })
+}
+  console.log("qualification", values)
 
   const success = true;
 
   const addGameToDB = async()=>{
-    console.log(values);
 
     try {
-      const addedGame = await addGameToTnmt(values)
+      const addedGame = await addGameToTnmt(values);
       console.log(addedGame);
     } catch (error) {
       console.log(`Error while adding game to tournament${error}`)
@@ -177,7 +184,6 @@ const AddGame = ({ gameIndex }) => {
               onChange={(e) => {
                 const newMaxTeams = e.target.value;
                 handleInputChange;
-                setMa(newMaxTeams - 1);
               }}
               label="Maximum Team"
               color="orange"
@@ -185,7 +191,7 @@ const AddGame = ({ gameIndex }) => {
             />
             <Input
               value={values.total_rounds}
-              onChange={(e) => setTotalMatches(e.target.value)}
+              onChange={handleInputChange}
               label="Total Matches to be played"
               color="orange"
               name="total_rounds"
@@ -233,16 +239,15 @@ const AddGame = ({ gameIndex }) => {
               name="max_age"
             />
             <Select
-                placeholder="Qualification method"
-                onChange={handleInputChange}
                 options={qualificationOptions}
+                onChange={handleQualification}
+                autoFocus={true} 
+                value={qualification}
                 className="w-full text-sm"
-                name="type"
-                color="orange"
               />
           </div>
           {
-            values.type === 1 && (
+            values.type === 2 && (
               <div className="w-full flex flex-col lg:flex-row gap-5"> 
                 <Input
                   value={values.avg_duration}

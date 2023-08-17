@@ -99,6 +99,10 @@ export default function MainScreen() {
             </ul>
           </CardBody>
           <CardFooter className="mt-10 p-0">
+
+
+          <Link to={"/p/dashboard"}>
+
             <Button
               size="lg"
               
@@ -108,6 +112,8 @@ export default function MainScreen() {
             >
               Enter
             </Button>
+            </Link>
+
           </CardFooter>
         </Card>
         <div className="lg:mt-0 lg:ml-8">

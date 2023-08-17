@@ -12,7 +12,6 @@ import {
   DialogFooter,
   DialogHeader,
   Input,
-  Textarea,
   Typography,
 } from "@material-tailwind/react";
 import Select from "react-select";
