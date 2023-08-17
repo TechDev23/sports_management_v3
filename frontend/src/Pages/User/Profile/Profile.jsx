@@ -1,41 +1,5 @@
-
-// import { Link } from "react-router-dom";
-// import { useAppSelector } from "../../../redux/store";
-
-// export default function PlayerProfile() {
-//   const user = useAppSelector((state) => state.userState.user) || "";
-//   // console.log(user)
-//   const welcome = user ? `Welcome ${user?.name}!` : 'welcome!'
-
-//   const content = (
-//       <section className="welcome">
-//           <h1>{welcome}</h1>
-//           <p className=" text-blue-gray-700 underline hover:text-blue-400">
-//             Common Profile Page
-//           </p>
-//       </section>
-//   )
-
-//   return (
-//     <>
-//       <h1>Hello</h1>
-//       {
-//         user && 
-//         <>
-//         <div className="flex justify-center items-center flex-col">
-//           <p>Name: {user?.name}</p>
-//           <Link className="text-sm text-blue-700 underline" to={'/player/docs'}>upload documents</Link>
-//         </div>
-//         </>
-//       }
-//     </>
-//   )
-// }
-
-
-import React, {useState} from "react";
-// import logo from './logo.png'; 
-// import user from './user.avif'
+import { React, useState } from "react";
+import user from './logo1.avif'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {
@@ -67,8 +31,6 @@ import {
   InboxIcon,
 } from "@heroicons/react/24/outline";
 
-
-
 import {
   Card,
   List,
@@ -78,205 +40,22 @@ import {
   Chip,
 } from "@material-tailwind/react";
 
- 
-// profile menu component
-const profileMenuItems = [
-  {
-    label: "My Profile",
-    icon: UserCircleIcon,
-  },
-  {
-    label: "Edit Profile",
-    icon: Cog6ToothIcon,
-  },
-  {
-    label: "Inbox",
-    icon: InboxArrowDownIcon,
-  },
-  {
-    label: "Help",
-    icon: LifebuoyIcon,
-  },
-  {
-    label: "Sign Out",
-    icon: PowerIcon,
-  },
-];
- 
-function ProfileMenu() {
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-  const closeMenu = () => setIsMenuOpen(false);
- 
-  return (
-    <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
-      <MenuHandler>
-        <Button
-          variant="text"
-          color="blue-gray"
-          className="flex items-center gap-1 rounded-full py-0.5 pr-2 pl-0.5 lg:ml-auto"
-        >
-          <Avatar
-            variant="circular"
-            size="sm"
-            alt="tania andrew"
-            className="border border-blue-500 p-0.5"
-            src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80"
-          />
-          <ChevronDownIcon
-            strokeWidth={2.5}
-            className={`h-3 w-3 transition-transform ${
-              isMenuOpen ? "rotate-180" : ""
-            }`}
-          />
-        </Button>
-      </MenuHandler>
-      <MenuList className="p-1">
-        {profileMenuItems.map(({ label, icon }, key) => {
-          const isLastItem = key === profileMenuItems.length - 1;
-          return (
-            <MenuItem
-              key={label}
-              onClick={closeMenu}
-              className={`flex items-center gap-2 rounded ${
-                isLastItem
-                  ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
-                  : ""
-              }`}
-            >
-              {React.createElement(icon, {
-                className: `h-4 w-4 ${isLastItem ? "text-red-500" : ""}`,
-                strokeWidth: 2,
-              })}
-              <Typography
-                as="span"
-                variant="small"
-                className="font-normal"
-                color={isLastItem ? "red" : "inherit"}
-              >
-                {label}
-              </Typography>
-            </MenuItem>
-          );
-        })}
-      </MenuList>
-    </Menu>
-  );
-}
- 
-// nav list menu
-const navListMenuItems = [
-  {
-    title: "@material-tailwind/html",
-    description:
-      "Learn how to use @material-tailwind/html, packed with rich components and widgets.",
-  },
-  {
-    title: "@material-tailwind/react",
-    description:
-      "Learn how to use @material-tailwind/react, packed with rich components for React.",
-  },
-  {
-    title: "Material Tailwind PRO",
-    description:
-      "A complete set of UI Elements for building faster websites in less time.",
-  },
-];
- 
-function NavListMenu() {
-  
- 
-  const renderItems = navListMenuItems.map(({ title, description }) => (
-    <a href="#" key={title}>
-      <MenuItem>
-        <Typography variant="h6" color="blue-gray" className="mb-1">
-          {title}
-        </Typography>
-        <Typography variant="small" color="gray" className="font-normal">
-          {description}
-        </Typography>
-      </MenuItem>
-    </a>
-  ));
- 
-  return (
-    <React.Fragment>
-           <MenuItem className="flex items-center gap-2 text-blue-gray-900 lg:flex lg:rounded-full">
-               Home{" "}
-           </MenuItem>
-           <ul className="ml-6 flex w-full flex-col gap-1 lg:hidden">
-             {renderItems}
-           </ul>
-    </React.Fragment>
-  );
-}
- 
-// nav list component
-const navListItems = [
-  {
-    label: "Us",
-    icon: UserCircleIcon,
-  },
-  {
-    label: "Features",
-    icon: CubeTransparentIcon,
-  },
-  {
-    label: "Blogs",
-    icon: CodeBracketSquareIcon,
-  },
-];
- 
-function NavList() {
-  return (
-    <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center">
-      <NavListMenu />
-      {navListItems.map(({ label, icon }, key) => (
-        <Typography
-          key={label}
-          as="a"
-          href="#"
-          variant="small"
-          color="blue-gray"
-          className="font-normal"
-        >
-          <MenuItem className="flex items-center gap-2 lg:rounded-full">
-            {/* {React.createElement(icon, { className: "h-[18px] w-[18px]" })}{" "} */}
-            {label}
-          </MenuItem>
-        </Typography>
-      ))}
-    </ul>
-  );
-}
+// function generateUniqueTag() {
+//   const characters =
+//     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+//   let tag = "";
+//   for (let i = 0; i < 6; i++) {
+//     tag += characters.charAt(Math.floor(Math.random() * characters.length));
+//   }
+//   return tag;
+// }
 
-function generateUniqueTag() {
-  const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  let tag = "";
-  for (let i = 0; i < 6; i++) {
-    tag += characters.charAt(Math.floor(Math.random() * characters.length));
-  }
-  return tag;
-}
- 
 export default function ComplexNavbar() {
-  const [isNavOpen, setIsNavOpen] = React.useState(false);
-  const toggleIsNavOpen = () => setIsNavOpen((cur) => !cur);
-  const uniqueTag = generateUniqueTag();
-
-  
-  React.useEffect(() => {
-    window.addEventListener(
-      "resize",
-      () => window.innerWidth >= 960 && setIsNavOpen(false)
-    );
-  }, []);
-  
-
-  
+  // const uniqueTag = generateUniqueTag();
 
   const userInformation = {
     mobile_number: "8123402",
-    name: "om",
+    name: "Om",
     verified: true,
     createdAt: "2023-07-15T05:53:48",
     email_id: "om@gmail.com",
@@ -284,325 +63,457 @@ export default function ComplexNavbar() {
     dob: "2023-07-15",
   };
 
-  const [editMode, setEditMode] = useState(false);
-  const [editValue, setEditValue] = useState("");
-  const [selectedDate, setSelectedDate] = useState(new Date());
+   const [isNameEditing, setIsNameEditing] = useState(false);
+   const [editedName, setEditedName] = useState(userInformation.name);
 
-  const handleEdit = (field) => {
-    if (field === "dob") {
-      setEditMode("dob");
-    } else {
-      setEditValue(userInformation[field]);
-      setEditMode(field);
-    }
+   const [isEmailEditing, setIsEmailEditing] = useState(false);
+  const [editedEmail, setEditedEmail] = useState(userInformation.email_id);
+
+  const [isMobileEditing, setIsMobileEditing] = useState(false);
+  const [editedMobile, setEditedMobile] = useState(userInformation.mobile_number);
+
+  const [isEmergencyEditing, setIsEmergencyEditing] = useState(false);
+  const [editedEmergency, setEditedEmergency] = useState(userInformation.emergency_contact);
+
+  const [isDOBEditing, setIsDOBEditing] = useState(false);
+  const [editedDOB, setEditedDOB] = useState(new Date(userInformation.dob));
+
+  const handleSaveName = () => {
+    setIsNameEditing(false);
+    userInformation.name = editedName;
   };
 
-  const handleFinalize = (field) => {
-    if (field === "dob") {
-      setUserInformation((prev) => ({ ...prev, dob: selectedDate }));
-    } else {
-      setUserInformation((prev) => ({ ...prev, [field]: editValue }));
-    }
-    setEditMode(false);
+  const handleCancelName = () => {
+    setIsNameEditing(false);
+    setEditedName(userInformation.name);
   };
 
-  const handleInputChange = (e) => {
-    setEditValue(e.target.value);
+  const handleEditName = () => {
+    setIsNameEditing(true);
   };
 
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
+  const handleSaveEmail = () => {
+    setIsEmailEditing(false);
+    userInformation.email_id = editedEmail;
   };
 
+  const handleCancelEmail = () => {
+    setIsEmailEditing(false);
+    setEditedEmail(userInformation.email_id);
+  };
 
+  const handleEditEmail = () => {
+    setIsEmailEditing(true);
+  };
+
+  const handleSaveMobile = () => {
+    setIsMobileEditing(false);
+    userInformation.mobile_number = editedMobile;
+  };
+
+  const handleCancelMobile = () => {
+    setIsMobileEditing(false);
+    setEditedMobile(userInformation.mobile_number);
+  };
+
+  const handleEditMobile = () => {
+    setIsMobileEditing(true);
+  };
+
+  const handleSaveEmergency = () => {
+    setIsEmergencyEditing(false);
+    userInformation.emergency_contact = editedEmergency;
+  };
+
+  const handleCancelEmergency = () => {
+    setIsEmergencyEditing(false);
+    setEditedEmergency(userInformation.emergency_contact);
+  };
+
+  const handleEditEmergency = () => {
+    setIsEmergencyEditing(true);
+  };
+
+  const handleSaveDOB = () => {
+    setIsDOBEditing(false);
+    userInformation.dob = editedDOB.toISOString().split("T")[0];
+  };
+
+  const handleCancelDOB = () => {
+    setIsDOBEditing(false);
+    setEditedDOB(new Date(userInformation.dob));
+  };
+
+  const handleEditDOB = () => {
+    setIsDOBEditing(true);
+  };
 
   return (
-    <div className="w-full h-full">
-    
-
-      <div className="flex flex-col h-full lg:flex-row">
-      <Card className=" w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5 border-2 h-full sticky top-48">
-      <div className="mb-2 p-4">
-        <Typography variant="h5" color="blue-gray" className='text-3xl'>
-          Account Settings
-        </Typography>
-      </div>
-      <List>
-        <ListItem className='mb-5 hover:bg-orange-200'>
-          <ListItemPrefix>
-            <UserCircleIcon className="h-5 w-5" />
-          </ListItemPrefix>
-          Personal info
-        </ListItem>
-        <ListItem className='mb-5 hover:bg-orange-200'>
-          <ListItemPrefix>
-            <ShoppingBagIcon className="h-5 w-5" />
-          </ListItemPrefix>
-          Update payment details
-        </ListItem>
-        <ListItem className='mb-5 hover:bg-orange-200'>
-          <ListItemPrefix>
-            <PresentationChartBarIcon className="h-5 w-5" />
-          </ListItemPrefix>
-          Security setting
-          
-        </ListItem>
-        <ListItem className='mb-5 hover:bg-orange-200'>
-          <ListItemPrefix>
-            <Cog6ToothIcon className="h-5 w-5" />
-          </ListItemPrefix>
-          Permissions
-        </ListItem>
-        <ListItem className='mb-5 hover:bg-orange-200'>
-          <ListItemPrefix>
-            <InboxIcon className="h-5 w-5" />
-          </ListItemPrefix>
-          Email notifications
-          <ListItemSuffix>
-            <Chip value="14" size="sm" variant="ghost" color="blue-gray" className="rounded-full" />
-          </ListItemSuffix>
-        </ListItem>
-        
-      </List>
-    </Card>
-
-    <div className="flex-col w-full lg:ml-32 max-w-[80rem] p-8 flex">
-    <div className="profile-image relative">
-    <Avatar
-            variant="circular"
-            size="xl"
-            alt="User Profile"
-            src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJJ7NRetidOXGwJVnAJXbKD-aTCpm2iDzT6g&usqp=CAU"}
-            className="mx-auto ml-16 mt-16"
-          />
-          
+    <div className="min-h-screen">
+      <div className="flex flex-col lg:flex-row">
+        <Card className="h-[calc(100vh-2rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5 border-4 ml-32  mt-16 sticky top-48">
+          <div className="mb-2 p-4">
+            <Typography variant="h5" color="blue-gray" className="text-3xl">
+              Account Settings
+            </Typography>
           </div>
+          <List>
+            <ListItem className="mb-5 hover:bg-orange-200">
+              <ListItemPrefix>
+                <UserCircleIcon className="h-5 w-5" />
+              </ListItemPrefix>
+              Personal info
+            </ListItem>
+            <ListItem className="mb-5 hover:bg-orange-200">
+              <ListItemPrefix>
+                <ShoppingBagIcon className="h-5 w-5" />
+              </ListItemPrefix>
+              Update payment details
+            </ListItem>
+            <ListItem className="mb-5 hover:bg-orange-200">
+              <ListItemPrefix>
+                <PresentationChartBarIcon className="h-5 w-5" />
+              </ListItemPrefix>
+              Security setting
+            </ListItem>
+            <ListItem className="mb-5 hover:bg-orange-200">
+              <ListItemPrefix>
+                <Cog6ToothIcon className="h-5 w-5" />
+              </ListItemPrefix>
+              Permissions
+            </ListItem>
+            <ListItem className="mb-5 hover:bg-orange-200">
+              <ListItemPrefix>
+                <InboxIcon className="h-5 w-5" />
+              </ListItemPrefix>
+              Email notifications
+              <ListItemSuffix>
+                <Chip
+                  value="14"
+                  size="sm"
+                  variant="ghost"
+                  color="blue-gray"
+                  className="rounded-full"
+                />
+              </ListItemSuffix>
+            </ListItem>
+          </List>
+        </Card>
 
-          
-
-          <div className="ml-16 mt-24 mr-80">
-            <div className="text-left mt-16">
-              <div className="mb-8">
-                <Typography variant="h6" color="blue-gray">
-                  Full Name
-                   {editMode === "name" ? (
-                    <div>
-                      <input
-                        type="text"
-                        className="border rounded px-2 ml-2"
-                        value={editValue}
-                        onChange={handleInputChange}
-                      />
-                      <span
-                        className="text-blue-500 cursor-pointer ml-2"
-                        onClick={() => handleFinalize("name")}
-                      >
-                        &#10004;
-                      </span>
-                    </div>
-                  ) : (
-                    <div className="ml-80">
-                      <span
-                      className="text-gray-500 ml-80 cursor-pointer"
-                      onClick={() => handleEdit("name")}
-                    >
-                      Edit
-                    </span>
-                    </div>
-                  )}
-                </Typography>
-                <div className="flex items-center gap-2">
-                  {editMode === "name" ? (
-                    null
-                  ) : (
-                    <Typography variant="body" color="gray">
-                      {userInformation.name}
-                    </Typography>
-                  )}
-                 
-                </div>
-                
-                <hr className="my-2 hr-style"/>
-              </div>
-              <div className="mb-8">
-                <Typography variant="h6" color="blue-gray">
-                  Email
-                  {editMode === "email_id" ? (
-                    <div>
-                      <input
-                        type="text"
-                        className="border rounded px-2 ml-2"
-                        value={editValue}
-                        onChange={handleInputChange}
-                      />
-                      <span
-                        className="text-blue-500 cursor-pointer ml-2"
-                        onClick={() => handleFinalize("email_id")}
-                      >
-                        &#10004;
-                      </span>
-                    </div>
-                  ) : (
-                    <div className="ml-80">
-                      <span
-                      className="text-gray-500 w-full cursor-pointer ml-80"
-                      onClick={() => handleEdit("email_id")}
-                    >
-                      Edit
-                    </span>
-                    </div>
-                  )}
-                </Typography>
-                <div className="flex items-center gap-2">
-                  {editMode === "email_id" ? (
-                    null
-                  ) : (
-                    <Typography variant="body" color="gray">
-                      {userInformation.email_id}
-                    </Typography>
-                  )}
-                 
-                </div>
-                <hr className="my-2 hr-style"/>
-              </div>
-              <div className="mb-8">
-                <Typography variant="h6" color="blue-gray">
-                  Mobile
-                  {editMode === "mobile_number" ? (
-                    <div>
-                      <input
-                        type="text"
-                        className="border rounded px-2 ml-2"
-                        value={editValue}
-                        onChange={handleInputChange}
-                      />
-                      <span
-                        className="text-blue-500 cursor-pointer ml-2"
-                        onClick={() => handleFinalize("mobile_number")}
-                      >
-                        &#10004;
-                      </span>
-                    </div>
-                  ) : (
-                    <div className="ml-80">
-                      <span
-                      className="text-gray-500 ml-80 cursor-pointer"
-                      onClick={() => handleEdit("mobile_number")}
-                    >
-                      Edit
-                    </span>
-                    </div>
-                  )}
-                </Typography>
-                <div className="flex items-center gap-2">
-                  {editMode === "mobile_number" ? (
-                    null
-                  ) : (
-                    <Typography variant="body" color="gray">
-                      {userInformation.mobile_number}
-                    </Typography>
-                  )}
-                 
-                </div>
-                <hr className="my-2 hr-style"/>
-              </div>
-              <div className="mb-8">
-                <Typography variant="h6" color="blue-gray">
-                  Emergency contact
-                  {editMode === "emergency_contact" ? (
-                    <div>
-                      <input
-                        type="text"
-                        className="border rounded px-2 ml-2"
-                        value={editValue}
-                        onChange={handleInputChange}
-                      />
-                      <span
-                        className="text-blue-500 cursor-pointer ml-2"
-                        onClick={() => handleFinalize("emergency_contact")}
-                      >
-                        &#10004;
-                      </span>
-                    </div>
-                  ) : (
-                    <div className="ml-80">
-                      <span
-                      className="text-gray-500 ml-80 cursor-pointer"
-                      onClick={() => handleEdit("emergency_contact")}
-                    >
-                      Edit
-                    </span>
-                    </div>
-                  )}
-                </Typography>
-               <div className="flex items-center gap-2">
-                  {editMode === "emergency_contact" ? (
-                    null
-                  ) : (
-                    <Typography variant="body" color="gray">
-                      {userInformation.emergency_contact}
-                    </Typography>
-                  )}
-                 
-                </div>
-                <hr className="my-2 hr-style"/>
-              </div>
-              <div className="mb-8">
-                <Typography variant="h6" color="blue-gray">
-                  Date of Birth
-                  {editMode === "dob" ? (
-          <div>
-            <DatePicker
-              selected={selectedDate}
-              onChange={handleDateChange}
-              className="border rounded px-2 ml-2"
-              dateFormat="yyyy-MM-dd"
+        <div className="flex-col w-full mr-64 lg:ml-32 max-w-[80rem] p-8 flex">
+        <Card className="p-4 border-4 hover:shadow-xl  hover:shadow-blue-gray-150/5 transition-all duration-300 w-full md:max-w-[20rem] lg:max-w-[60rem]">
+          <div className="profile-image relative">
+          <div className="flex-row">
+            <Avatar
+              variant="circular"
+              size="xl"
+              alt="User Profile"
+              src={user}
+              className="mx-0 md:mx-auto md:ml-4 lg:ml-16 md:mt-16"
             />
-            <span
-              className="text-blue-500 cursor-pointer ml-2"
-              onClick={() => handleFinalize("dob")}
-            >
-              &#10004;
-            </span>
+           <div className="w-160 lg:ml-8 md:ml-0 mt-4 custom-id-text">
+              <div className="text-blue-400 font-normal px-8 flex">
+                <p className="mr-1">G-Sport ID: </p>
+                <p className="ml-1">{userInformation.name}</p>
+              </div>
+            </div>
+            </div>
           </div>
-        ) : (
-          <div className="ml-80"><span
-            className="text-gray-500 ml-80 cursor-pointer"
-            onClick={() => handleEdit("dob")}
-          >
-            Edit
-          </span>
-          </div>
-        )}
+
+          
+          <div className="ml-0 md:ml-4 lg:ml-16 sm:ml-4 mr-80 flex w-2/4">
+          
+            <div className="text-center md:text-left mt-16">
+              <div className="mb-8">
+                <Typography variant="h6" color="blue-gray" className="sm:text-left">
+                  Full Name
                 </Typography>
-                <div className="flex items-center gap-2">
-        {editMode === "dob" ? (
-          null
-        ) : (
+                <div className="flex sm:flex-row items-center gap-2">
+                {isNameEditing ? (
+               
+  
+        <>
+        <div className="flex sm:flex-col items-center sm:items-start gap-2">
+          <input
+            type="text"
+            value={editedName}
+            onChange={(e) => setEditedName(e.target.value)}
+            className="border rounded px-2 py-1"
+          />
+          <div className="flex sm:flex-row gap-2">
+           <div className="rounded-lg border border-blue-500 px-4 bg-blue-400">
+            <button
+            onClick={handleSaveName}
+            className="text-white"
+          >Save</button>
+          </div>
+          <div className="flex sm:flex-row gap-2">
+          <div className="rounded-lg border border-blue-500 px-4 bg-blue-50">
+            <button
+            onClick={handleCancelName}
+            className="text-gray-900"
+            >Cancel</button>
+            </div>
+            </div>
+            </div>
+            </div>
+        </>
+      ) : (
+        <>
+        
           <Typography variant="body" color="gray">
-            {userInformation.dob}
+            {userInformation.name}
           </Typography>
-        )}
-      </div>
-                <hr className="my-2 hr-style"/>
+          
+          <div className="flex-grow"></div>
+          
+            <button 
+            onClick={handleEditName}
+            className="text-blue-500 lg:ml-80"
+          >Edit</button>
+          
+          
+        </>
+      )}
+                </div>
+                <hr className="my-2 hr-light" style={{ width: "170%"}} />
               </div>
               <div className="mb-8">
-                <Typography variant="h6" color="blue-gray">
+                <Typography variant="h6" color="blue-gray" className="sm:text-left">
+                  Email
+                </Typography>
+                <div className="flex sm:flex-row items-center gap-2">
+                {isEmailEditing ? (
+                      <>
+                      <div className="flex sm:flex-col items-center sm:items-start gap-2">
+                        <input
+                          type="text"
+                          value={editedEmail}
+                          onChange={(e) => setEditedEmail(e.target.value)}
+                          className="border rounded px-2 py-1"
+                        />
+                        <div className="flex sm:flex-row gap-2">
+                        <div className="rounded-lg border border-blue-500 px-4 bg-blue-400">
+                          <button
+                            onClick={handleSaveEmail}
+                            className="text-white"
+                          >
+                            Save
+                          </button>
+                        </div>
+                        <div className="flex sm:flex-row gap-2">
+                        <div className="rounded-lg border border-blue-500 px-4 bg-blue-50">
+                          <button
+                            onClick={handleCancelEmail}
+                            className="text-gray-900"
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                        </div>
+                        </div>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <Typography variant="body" color="gray">
+                          {userInformation.email_id}
+                        </Typography>
+                        <div className="flex-grow md:flex-grow"></div>
+                        
+                          <button
+                            onClick={handleEditEmail}
+                            className="text-blue-500 hover:text-blue-700"
+                          >
+                            Edit
+                          </button>
+                        
+                      </>
+                    )}
+                </div>
+                <hr className="my-2 hr-light" style={{ width: "170%" }} />
+              </div>
+              <div className="mb-8">
+                <Typography variant="h6" color="blue-gray"  className="sm:text-left">
+                  Mobile
+                </Typography>
+                <div className="flex sm:flex-row items-center gap-2">
+                {isMobileEditing ? (
+                      <>
+                      <div className="flex sm:flex-col items-center sm:items-start gap-2">
+                        <input
+                          type="number"
+                          value={editedMobile}
+                          onChange={(e) => setEditedMobile(e.target.value)}
+                          className="border rounded px-2 py-1"
+                        />
+                        <div className="flex sm:flex-row gap-2">
+                        <div className="rounded-lg border border-blue-500 px-4 bg-blue-400">
+                          <button
+                            onClick={handleSaveMobile}
+                            className="text-white"
+                          >
+                            Save
+                          </button>
+                        </div>
+                        <div className="flex sm:flex-row gap-2">
+                        <div className="rounded-lg border border-blue-500 px-4 bg-blue-50">
+                          <button
+                            onClick={handleCancelMobile}
+                            className="text-gray-900"
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                        </div>
+                        </div>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <Typography variant="body" color="gray">
+                          {userInformation.mobile_number}
+                        </Typography>
+                        <div className="flex-grow"></div>
+                        
+                          <button
+                            onClick={handleEditMobile}
+                            className="text-blue-500 hover:text-blue-700"
+                          >
+                            Edit
+                          </button>
+                        
+                      </>
+                    )}
+                </div>
+                <hr className="my-2 hr-light" style={{ width: "170%" }} />
+              </div>
+              <div className="mb-8">
+                <Typography variant="h6" color="blue-gray"  className="sm:text-left">
+                  Emergency contact
+                </Typography>
+                <div className="flex sm:flex-row items-center gap-2">
+                {isEmergencyEditing ? (
+                      <>
+                      <div className="flex sm:flex-col items-center sm:items-start gap-2">
+                        <input
+                          type="number"
+                          value={editedEmergency}
+                          onChange={(e) => setEditedEmergency(e.target.value)}
+                          className="border rounded px-2 py-1"
+                        />
+                        <div className="flex sm:flex-row gap-2">
+                        <div className="rounded-lg border border-blue-500 px-4 bg-blue-400">
+                          <button
+                            onClick={handleSaveEmergency}
+                            className="text-white"
+                          >
+                            Save
+                          </button>
+                        </div>
+                        <div className="flex sm:flex-row gap-2">
+                        <div className="rounded-lg border border-blue-500 px-4 bg-blue-50">
+                          <button
+                            onClick={handleCancelEmergency}
+                            className="text-gray-900"
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                        </div>
+                        </div>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <Typography variant="body" color="gray">
+                          {userInformation.emergency_contact}
+                        </Typography>
+                        <div className="flex-grow"></div>
+                        
+                          <button
+                            onClick={handleEditEmergency}
+                            className="text-blue-500 hover:text-blue-700"
+                          >
+                            Edit
+                          </button>
+                        
+                      </>
+                    )}
+                </div>
+                <hr className="my-2 hr-light" style={{ width: "170%" }} />
+              </div>
+              <div className="mb-8">
+                <Typography variant="h6" color="blue-gray"  className="sm:text-left">
+                  Date of Birth
+                </Typography>
+                <div className="flex sm:flex-row items-center gap-2">
+                {isDOBEditing ? (
+                      <>
+                      <div className="flex sm:flex-col items-center sm:items-start gap-2">
+                        <DatePicker
+                          selected={editedDOB}
+                          onChange={(date) => setEditedDOB(date)}
+                          showYearDropdown
+                          scrollableYearDropdown
+                          yearDropdownItemNumber={70}
+                          yearDropdownMin={1950}
+                          className="border rounded px-2 py-1"
+                        />
+                        <div className="flex sm:flex-row gap-2">
+                        <div className="rounded-lg border border-blue-500 px-4 bg-blue-400">
+                          <button
+                            onClick={handleSaveDOB}
+                            className="text-white"
+                          >
+                            Save
+                          </button>
+                        </div>
+                        <div className="flex sm:flex-row gap-2">
+                        <div className="rounded-lg border border-blue-500 px-4 bg-blue-50">
+                          <button
+                            onClick={handleCancelDOB}
+                            className="text-gray-900"
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                        </div>
+                        </div>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <Typography variant="body" color="gray">
+                          {editedDOB.toDateString()}
+                        </Typography>
+                        <div className="flex-grow"></div>
+                       
+                          <button
+                            onClick={handleEditDOB}
+                            className="text-blue-500 hover:text-blue-700"
+                          >
+                            Edit
+                          </button>
+                        
+                      </>
+                    )}
+                </div>
+                <hr className="my-2 hr-light" style={{ width: "170%" }} />
+              </div>
+              <div className="mb-8">
+                <Typography variant="h6" color="blue-gray"  className="sm:text-left">
                   Created at
                 </Typography>
-                <Typography variant="body" color="gray">
+                <Typography variant="body" color="gray"  className="sm:text-left">
                   {userInformation.createdAt}
                 </Typography>
               </div>
             </div>
-
-            </div>
+          </div>
+          </Card>
         </div>
-
-    </div> 
+      </div>
     </div>
-    
-
   );
-  
 }
