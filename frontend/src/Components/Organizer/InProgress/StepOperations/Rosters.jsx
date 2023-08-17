@@ -11,7 +11,7 @@ import {
   Spinner,
 } from "@material-tailwind/react";
 import { ButtonGroup } from "@material-tailwind/react";
-
+import { Select, Option } from "@material-tailwind/react";
 function ScoreDialog({
   open,
   handleClose,
@@ -185,8 +185,12 @@ export default function Rosters() {
   const [isTeam, setIsTeam] = useState(false);
 
   const teamDetails = () => {
-    setShow(true);
+    setIsTeam(true);
   };
+
+  const userDetails = () =>{
+    setShow(true);
+  }
 
   const [buttonStates, setButtonStates] = useState(Array(21).fill(false));
 
@@ -203,6 +207,13 @@ export default function Rosters() {
     newButtonStates[index] = true;
     setButtonStates2(newButtonStates);
   };
+
+  const [isToggled, setIsToggled] = useState(false);
+
+  const handleToggle = () => {
+    setIsToggled(!isToggled);
+  };
+
 
   return (
     <div className="flex flex-col gap-2 min-h-screen">
@@ -275,105 +286,202 @@ export default function Rosters() {
 
         </div>
       ) : (
+
+        isTeam?
         <div>
-          <div className="flex flex-col w-full items-start justify-center gap-6">
-            <h1 className="font-semibold">Roster 1</h1>
-            <button
-              onClick={teamDetails}
-              className=" p-2 border w-full rounded-lg"
-            >
-              <div className="flex flex-row  items-center justify-between gap-4  ">
-                <div className="w-72">
-                  <p className="text-[14px] bg-gray-200 h-10 rounded-md flex items-center justify-center">
-                    Player 1
-                  </p>
-                </div>
 
-                <Button color="orange">VS</Button>
-
-                <div className="w-72">
-                  <p className="text-[14px] bg-gray-200 h-10 rounded-md flex items-center justify-center">
-                    Player 2
-                  </p>
-                </div>
-                <textarea
-                  className="flex-grow w-full h-10 border border-gray-500 px-4 py-2 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200"
-                  placeholder="Time Place and Responsible details"
-                  rows={10}
-                  disabled="true"
-                ></textarea>
-              </div>
-            </button>
-
-            {/* ================================ */}
-
-            <div className="flex flex-row w-full px-20 justify-between items-center">
-              <Button color="orange">Customize Roster</Button>
-              <Button color="orange">Declear Roster</Button>
+<div className="flex flex-row  items-center justify-between gap-4  ">
+           <div className="flex flex-row items-center gap-4">
+           <div className="w-72">
+              <p className="text-[14px] bg-gray-200 h-10 rounded-md flex items-center justify-center">
+                Team 1
+              </p>
             </div>
+
+            <Button color="orange">VS</Button>
+
+            <div className="w-72">
+              <p className="text-[14px] bg-gray-200 h-10 rounded-md flex items-center justify-center">
+                Team 2
+              </p>
+            </div>
+            </div>
+            <div>
+            <div className="w-72">
+      <Select label="Match Details">
+        <Option>Material Tailwind HTML</Option>
+        <Option>Material Tailwind React</Option>
+        <Option>Material Tailwind Vue</Option>
+        <Option>Material Tailwind Angular</Option>
+        <Option>Material Tailwind Svelte</Option>
+      </Select>
+    </div>
+            
+           </div>
           </div>
+          <textarea
+            className="flex-grow w-full h-[10rem] mt-5 border border-gray-500 px-4 py-2 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200"
+            placeholder="Time Place and Responsible details"
+            rows={1}
+            disabled="true"
+          ></textarea>
 
-          <div className="my-10 border-t-2"></div>
+<div className="grid grid-cols-7 gap-4">
+<div className="col-start-1 col-end-5">
+  <div className="flex flex-row justify-center items-center">
+    <p className="text-[18px] font-semibold">Goal Score</p>
+  </div>
 
-          <div className="flex flex-col w-full items-start justify-center gap-6">
-            <h1 className="font-semibold">Roster Round 2</h1>
-            <button className=" p-2 border w-full rounded-lg">
-              <div className="flex flex-row  items-center justify-between gap-4  ">
-                <div className="w-72">
-                  <p className="text-[14px] bg-gray-200 h-10 rounded-md flex items-center justify-center">
-                    Player 1
-                  </p>
-                </div>
+  <div className="flex flex-row items-center justify-between border p-3 rounded-md">
+    <div className="bg-gray-200 w-[12rem] h-[4rem] flex items-center justify-center rounded-sm">Team A</div>
 
-                <Button color="orange">VS</Button>
+    <div className="w-[1rem] ">
+      0|0
+    </div>
+    <div className="bg-gray-200 w-[12rem] h-[4rem] flex items-center justify-center rounded-sm">Team A</div>
 
-                <div className="w-72">
-                  <p className="text-[14px] bg-gray-200 h-10 rounded-md flex items-center justify-center">
-                    Player 2
-                  </p>
-                </div>
-                <textarea
-                  className="flex-grow w-full h-10 border border-gray-500 px-4 py-2 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200"
-                  placeholder="Time Place and Responsible details"
-                  rows={10}
-                  disabled="true"
-                ></textarea>
+    <div className="bg-white w-[10rem] border-orange-400 border rounded-lg h-[4rem] flex items-center justify-center text-black">45:02</div>
+    <div className="bg-white w-[10rem] border-orange-400 border rounded-lg h-[4rem] flex items-center justify-center text-black">+05:00</div>
+
+  </div>
+
+  
+
+
+
+</div>
+<div className="col-end-8 col-span-3 bg-blue-200">03</div>
+</div>
+
+        </div>
+        :
+        <div>
+        <div className="flex flex-col w-full items-start justify-center gap-6">
+          <h1 className="font-semibold">Roster 1</h1>
+          <button
+            onClick={userDetails}
+            className=" p-2 border w-full rounded-lg"
+          >
+            <div className="flex flex-row  items-center justify-between gap-4  ">
+              <div className="w-72">
+                <p className="text-[14px] bg-gray-200 h-10 rounded-md flex items-center justify-center">
+                  Player 1
+                </p>
               </div>
-            </button>
 
-            <button className=" p-2 border w-full rounded-lg">
-              <div className="flex flex-row  items-center justify-between gap-4  ">
-                <div className="w-72">
-                  <p className="text-[14px] bg-gray-200 h-10 rounded-md flex items-center justify-center">
-                    Player 3
-                  </p>
-                </div>
+              <Button color="orange">VS</Button>
 
-                <Button color="orange">VS</Button>
-
-                <div className="w-72">
-                  <p className="text-[14px] bg-gray-200 h-10 rounded-md flex items-center justify-center">
-                    Player 4
-                  </p>
-                </div>
-                <textarea
-                  className="flex-grow w-full h-10 border border-gray-500 px-4 py-2 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200"
-                  placeholder="Time Place and Responsible details"
-                  rows={10}
-                  disabled="true"
-                ></textarea>
+              <div className="w-72">
+                <p className="text-[14px] bg-gray-200 h-10 rounded-md flex items-center justify-center">
+                  Player 2
+                </p>
               </div>
-            </button>
-
-            {/* ================================ */}
-
-            <div className="flex flex-row w-full px-20 justify-between items-center">
-              <Button color="orange">Customize Roster</Button>
-              <Button color="orange">Declear Roster</Button>
+              <textarea
+                className="flex-grow w-full h-10 border border-gray-500 px-4 py-2 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200"
+                placeholder="Time Place and Responsible details"
+                rows={10}
+                disabled="true"
+              ></textarea>
             </div>
+          </button>
+
+          <button
+            onClick={teamDetails}
+            className=" p-2 border w-full rounded-lg"
+          >
+            <div className="flex flex-row  items-center justify-between gap-4  ">
+              <div className="w-72">
+                <p className="text-[14px] bg-gray-200 h-10 rounded-md flex items-center justify-center">
+                  Team 1
+                </p>
+              </div>
+
+              <Button color="orange">VS</Button>
+
+              <div className="w-72">
+                <p className="text-[14px] bg-gray-200 h-10 rounded-md flex items-center justify-center">
+                  Team 2
+                </p>
+              </div>
+              <textarea
+                className="flex-grow w-full h-10 border border-gray-500 px-4 py-2 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200"
+                placeholder="Time Place and Responsible details"
+                rows={10}
+                disabled="true"
+              ></textarea>
+            </div>
+          </button>
+
+          {/* ================================ */}
+
+          <div className="flex flex-row w-full px-20 justify-between items-center">
+            <Button color="orange">Customize Roster</Button>
+            <Button color="orange">Declear Roster</Button>
           </div>
         </div>
+
+        <div className="my-10 border-t-2"></div>
+
+        <div className="flex flex-col w-full items-start justify-center gap-6">
+          <h1 className="font-semibold">Roster Round 2</h1>
+          <button className=" p-2 border w-full rounded-lg">
+            <div className="flex flex-row  items-center justify-between gap-4  ">
+              <div className="w-72">
+                <p className="text-[14px] bg-gray-200 h-10 rounded-md flex items-center justify-center">
+                  Player 1
+                </p>
+              </div>
+
+              <Button color="orange">VS</Button>
+
+              <div className="w-72">
+                <p className="text-[14px] bg-gray-200 h-10 rounded-md flex items-center justify-center">
+                  Player 2
+                </p>
+              </div>
+              <textarea
+                className="flex-grow w-full h-10 border border-gray-500 px-4 py-2 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200"
+                placeholder="Time Place and Responsible details"
+                rows={10}
+                disabled="true"
+              ></textarea>
+            </div>
+          </button>
+
+          <button className=" p-2 border w-full rounded-lg">
+            <div className="flex flex-row  items-center justify-between gap-4  ">
+              <div className="w-72">
+                <p className="text-[14px] bg-gray-200 h-10 rounded-md flex items-center justify-center">
+                  Player 3
+                </p>
+              </div>
+
+              <Button color="orange">VS</Button>
+
+              <div className="w-72">
+                <p className="text-[14px] bg-gray-200 h-10 rounded-md flex items-center justify-center">
+                  Player 4
+                </p>
+              </div>
+              <textarea
+                className="flex-grow w-full h-10 border border-gray-500 px-4 py-2 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200"
+                placeholder="Time Place and Responsible details"
+                rows={10}
+                disabled="true"
+              ></textarea>
+            </div>
+          </button>
+
+          {/* ================================ */}
+
+          <div className="flex flex-row w-full px-20 justify-between items-center">
+            <Button color="orange">Customize Roster</Button>
+            <Button color="orange">Declear Roster</Button>
+          </div>
+        </div>
+      </div>
       )}
+
     </div>
   );
 }
