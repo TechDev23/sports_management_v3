@@ -5,10 +5,11 @@ import { Button, Carousel, IconButton } from "@material-tailwind/react";
 import { BiCheckCircle, BiPlay, BiPlus } from "react-icons/bi";
 import { HiDocumentText } from "react-icons/hi";
 import { Link } from "react-router-dom";
-import { Table } from "../../../Components/Organizer/table";
+
 import { FaBoxes } from "react-icons/fa";
 import { FiFilter } from "react-icons/fi";
 import { IoMdOptions } from "react-icons/io";
+import { Table } from "../../../Components/Organizer/Table";
 
 const Tournaments = () => {
   const cards = [
@@ -141,7 +142,7 @@ const Tournaments = () => {
             </div>
 
             <div className="scroll-smooth">
-              <Table />
+              <Table/>
             </div>
           </div>
         </div>

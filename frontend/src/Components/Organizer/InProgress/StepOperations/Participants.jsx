@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 //import { useDispatch } from "react-redux";
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
 //import { getTournamentEntries } from "../../redux/slices/Tournament/tournamentAction";
@@ -26,37 +27,36 @@ export default function Participants() {
 //     fetchData();
 //   }, [dispatch]);
 
-    const fetchAprpovedTeams = async()=>{
-      try {
-        // const response = await dispatch(getTournamentEntries({id: tourID, isApproved: true}))
-        // setAllTeams(response.payload);
-      } catch (error) {
-        console.log('Error:', error);
-      }
-    }
-    const fetchRejectedTeams = async()=>{
-      try {
-        // const response = await dispatch(getTournamentEntries({id: tourID, isApproved: false}))
-        // setAllTeams(response.payload);
-      } catch (error) {
-        console.log('Error:', error);
-      }
-    }
+
+    const [all, setAll] = useState(true);
+    const [approved, setApproved] = useState(false);
+    const [rejected, setRejected] = useState(false);
+
+
 
     const fetchData = async () => {
-      try {
-        // const approvedResponse = await dispatch(getTournamentEntries({ id: tourID, isApproved: true }));
-        // const rejectedResponse = await dispatch(getTournamentEntries({ id: tourID, isApproved: false }));
-    
-        // const approvedTeams = Array.isArray(approvedResponse.payload) ? approvedResponse.payload : [];
-        // const rejectedTeams = Array.isArray(rejectedResponse.payload) ? rejectedResponse.payload : [];
-    
-        // const allTeams = [...approvedTeams, ...rejectedTeams];
-        // setAllTeams(allTeams);
-      } catch (error) {
-        console.log('Error:', error);
-      }
+
+      setAll(true);
+      setApproved(false);
+      setRejected(false);
+
     };
+
+    const fetchAprpovedTeams = async()=>{
+
+        setApproved(true);
+        setAll(false);
+        setRejected(false);
+
+    }
+
+    const fetchRejectedTeams = async()=>{
+
+        setRejected(true);
+        setApproved(false);
+        setAll(false);
+
+    }
   
   const handleApproveTeam = async (id, isApprove) => {
     try {
@@ -106,28 +106,27 @@ export default function Participants() {
         <Button color="orange" size="sm" variant="text" className="border-none outline-none" onClick={()=>fetchAprpovedTeams()}>Approved Teams</Button>
         <Button color="red" size="sm" variant="text" className="border-none outline-none" onClick={()=>fetchRejectedTeams()}>Rejected Teams</Button>
       </div>
-    <div className="w-full rounded-md">
+      <div className="my-8 border-t-2"></div>
+{
+  all?
+  <div>
 
-      {allTeams && allTeams.map((data, index) => (
-          <div key={index} className="w-full shadow-md rounded-md my-2 p-4 flex flex-row justify-between items-center ">
+<div className="w-full rounded-md">
+          <div className="w-full shadow-md rounded-md my-2 p-4 flex flex-row justify-between items-center ">
             <div className="flex flex-col gap-2 items-start">
               <div className="flex gap-3">
-                <Typography variant="h5" className="capitalize font-semibold ">{data.name}</Typography>
-                {
-                  data.isApproved ? <Chip value="approved" variant="outlined" className="text-green-200 border-green-200 border-none" icon={<CheckCircleIcon className="text-green-200" />} />:
-                  <Chip value="not approved" variant="outlined" className="text-red-200 border-none" icon={<ImCross className="text-red-200" />} />
-                }
+                <Typography variant="h5" className="capitalize font-semibold ">Team name</Typography>
                 
               </div>
               <div className="flex flex-row items-start gap-20">
                 <div className="flex flex-col gap-2">
                   <span className=" text-[14px] text-gray-700 font-medium">
-                    Created by: {data.creator.name}
+                    Created by: name
                   </span>
-              <span className="text-[13px]">{data.members_count} Member</span>
-                  {/* <span className="rounded-full -mt-1 bg-gray-200 border-gray-400 border-[1px] px-6 py-1 text-[12px]">
+              <span className="text-[13px]">count Member</span>
+                  <span className="rounded-full -mt-1 bg-gray-200 border-gray-400 border-[1px] px-6 py-1 text-[12px]">
                     Cricket
-                  </span> */}
+                  </span>
                 </div>
 
               </div>
@@ -137,7 +136,7 @@ export default function Participants() {
               <Button
                 type="button"
                 color="amber"
-                onClick={() => handleApproveTeam(data.id, true)}
+                // onClick={() => handleApproveTeam(data.id, true)}
                 variant="text" 
               >
                 Accept
@@ -145,17 +144,101 @@ export default function Participants() {
               <Button
                 type="button"
                 color="red"
-                onClick={() => handleRejectTeam(data.id, false)}
+                // onClick={() => handleRejectTeam(data.id, false)}
                 variant="text" 
               >
                 Reject
               </Button>
             </div>
           </div>
-      ))}
     </div>
+
+
+  </div>
+  :
+  null
+}
+
+{
+  approved?
+  <div>
+
+
+<div className="w-full rounded-md">
+          <div className="w-full shadow-md rounded-md my-2 p-4 flex flex-row justify-between items-center ">
+            <div className="flex flex-col gap-2 items-start">
+              <div className="flex gap-3">
+                <Typography variant="h5" className="capitalize font-semibold ">Approved Team name</Typography>
+                <Chip value="approved" variant="outlined" className="text-green-600 border-green-200 border-none" icon={<CheckCircleIcon className="text-green-600" />} />
+                
+              </div>
+              <div className="flex flex-row items-start gap-20">
+                <div className="flex flex-col gap-2">
+                  <span className=" text-[14px] text-gray-700 font-medium">
+                    Created by: name
+                  </span>
+              <span className="text-[13px]">count Member</span>
+                  <span className="rounded-full -mt-1 bg-gray-200 border-gray-400 border-[1px] px-6 py-1 text-[12px]">
+                    Cricket
+                  </span>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+    </div>
+
+
+
+  </div>
+  :
+  null
+}
+{
+  rejected?
+  <div>
+
+<div className="w-full rounded-md">
+          <div className="w-full shadow-md rounded-md my-2 p-4 flex flex-row justify-between items-center ">
+            <div className="flex flex-col gap-2 items-start">
+              <div className="flex gap-3">
+                <Typography variant="h5" className="capitalize font-semibold ">Rejected Team name</Typography>
+                <Chip value="not approved" variant="outlined" className="text-red-600 border-none" icon={<ImCross className="text-red-600 mt-1" />} />
+              
+                
+              </div>
+              <div className="flex flex-row items-start gap-20">
+                <div className="flex flex-col gap-2">
+                  <span className=" text-[14px] text-gray-700 font-medium">
+                    Created by: name
+                  </span>
+              <span className="text-[13px]">count Member</span>
+                  <span className="rounded-full -mt-1 bg-gray-200 border-gray-400 border-[1px] px-6 py-1 text-[12px]">
+                    Cricket
+                  </span>
+                </div>
+
+              </div>
+            </div>
+
+          
+          </div>
+    </div>
+
+
+  </div>
+  :
+  null
+}
+
+
+    
+
+
+
 
       </div>
     </>
   );
-};
+}
