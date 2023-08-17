@@ -372,9 +372,8 @@ export default function ComplexNavbar() {
             variant="circular"
             size="xl"
             alt="User Profile"
-            src={"../../../assets/images/google.png"}
+            src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJJ7NRetidOXGwJVnAJXbKD-aTCpm2iDzT6g&usqp=CAU"}
             className="mx-auto ml-16 mt-16"
-            
           />
           
           </div>
@@ -382,11 +381,6 @@ export default function ComplexNavbar() {
           
 
           <div className="ml-16 mt-24 mr-80">
-            <div className='w-40'>
-          <div className="rounded-full bg-blue-50 text-blue-400 font-bold px-8">
-              {uniqueTag}
-            </div>
-            </div>
             <div className="text-left mt-16">
               <div className="mb-8">
                 <Typography variant="h6" color="blue-gray">

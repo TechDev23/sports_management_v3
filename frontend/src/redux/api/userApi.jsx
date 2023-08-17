@@ -1,41 +1,38 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import Cookies from "universal-cookie";
 
-const BASE_URL = 'http://127.0.0.1:8000'
+const cookie = new Cookies();
+const token = cookie.get("jwt_auth_token");
+
+const BASE_URL = "http://127.0.0.1:8000";
 
 export const userApi = createApi({
-  reducerPath: 'userApi',
+  reducerPath: "userApi",
   baseQuery: fetchBaseQuery({
     baseUrl: `${BASE_URL}/`,
   }),
-  tagTypes: ['User'],
+  tagTypes: ["User"],
   endpoints: (builder) => ({
     uploadDoc: builder.mutation({
       query(data) {
-        console.log("data from upload docs", data)
         return {
           url: `users/document?token=${data.token}`,
           body: data,
-          method: 'post'
+          method: "post",
         };
       },
     }),
 
-    createTournament: builder.mutation({
-            query(data) {
-                // const cookie = new Cookies()
-                // const token = cookie.get('jwt_auth_token')
-                return {
-                    url: `organizer/tournament?token=${token}`,
-                    method: 'post',
-                    body: data
-                }
-            }
-        }),
+    updateUserDetails: builder.mutation({
+      query(data) {
+        return {
+          url: `users/details?token=${token}`,
+        };
+      },
+    }),
+
 
   }),
 });
 
-export const {
-  useUploadDocMutation, 
-} = userApi;
-
+export const { useUploadDocMutation, useUpdateUserDetailsMutation } = userApi;
