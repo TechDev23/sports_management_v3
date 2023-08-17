@@ -225,6 +225,25 @@ export default function Rosters() {
   const handleSubOptionClick = (subOption) => {
     setSelectedSubOption(subOption);
   };
+
+  const [checkedBoxes, setCheckedBoxes] = useState({});
+
+  const handleCheckboxChange = (team, title) => {
+    setCheckedBoxes((prevState) => ({
+      ...prevState,
+      [team]: {
+        ...prevState[team],
+        [title]: !prevState[team][title]
+      }
+    }));
+  };
+
+  const teams = ['Team1', 'Team2'];
+  const titles = ['1', '2', '3', '4', '5'];
+
+
+
+
   return (
     <div className="flex flex-col gap-2 min-h-screen">
       {show ? (
@@ -381,6 +400,43 @@ export default function Rosters() {
 
 
               <Button color="orange">Shoot OUT</Button>
+
+              <div className="p-4">
+      <table className="w-full border-collapse border border-gray-300">
+        <thead>
+          <tr>
+            <th className="border p-2">Teams</th>
+            {titles.map((title) => (
+              <th key={title} className="border p-2">
+                {title}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {teams.map((team) => (
+            <tr key={team}>
+              <td className="border p-2">{team}</td>
+              {titles.map((title) => (
+                <td key={title} className="border p-2">
+                  <input
+                    type="checkbox"
+                    checked={checkedBoxes[team]?.[title] || false}
+                    onChange={() => handleCheckboxChange(team, title)}
+                  />
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+
+      
+    </div>
+
+
+    
             </div>
             <div className="col-end-8 col-span-2">
               <div className="flex flex-row gap-4 items-center justify-between mt-7">
