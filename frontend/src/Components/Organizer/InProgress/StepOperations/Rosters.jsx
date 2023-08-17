@@ -12,7 +12,14 @@ import {
 } from "@material-tailwind/react";
 import { ButtonGroup } from "@material-tailwind/react";
 import { Select, Option } from "@material-tailwind/react";
-import { FaPlay, FaPlus, FaUndo, FaPause, FaStopwatch, FaSync } from 'react-icons/fa';
+import {
+  FaPlay,
+  FaPlus,
+  FaUndo,
+  FaPause,
+  FaStopwatch,
+  FaSync,
+} from "react-icons/fa";
 function ScoreDialog({
   open,
   handleClose,
@@ -232,21 +239,20 @@ export default function Rosters() {
       ...prevState,
       [team]: {
         ...prevState[team],
-        [title]: !prevState[team][title]
-      }
+        [title]: !prevState[team][title],
+      },
     }));
   };
 
-  const teams = ['Team1', 'Team2'];
-  const titles = ['1', '2', '3', '4', '5'];
+  const teams = ["Team1", "Team2"];
+  const titles = ["1", "2", "3", "4", "5"];
 
   const actions = [
-    { label: 'Start', icon: <FaPlay className="text-xl" /> },
-    { label: 'Add Time at Half Time', icon: <FaPlus className="text-xl" /> },
-    { label: 'Add Time at Full Time', icon: <FaPlus className="text-xl" /> },
-    { label: 'Reset', icon: <FaUndo className="text-xl" /> },
+    { label: "Start", icon: <FaPlay className="text-xl" /> },
+    { label: "Add Time at Half Time", icon: <FaPlus className="text-xl" /> },
+    { label: "Add Time at Full Time", icon: <FaPlus className="text-xl" /> },
+    { label: "Reset", icon: <FaUndo className="text-xl" /> },
   ];
-
 
   return (
     <div className="flex flex-col gap-2 min-h-screen">
@@ -379,134 +385,122 @@ export default function Rosters() {
                 </div>
               </div>
 
-            <div className="grid grid-cols-4 gap-4">
+              <div className="grid grid-cols-4 gap-4">
+                <div className="col-start-1 col-end-3">
+                  <div className="flex flex-row items-center my-5 gap-5">
+                    <Button color="orange">Team A Goal</Button>
+                    <Button color="orange">Team B Goal</Button>
+                  </div>
 
+                  <div className="w-72">
+                    <Select label="Goal Type">
+                      <Option>Normal Goal</Option>
+                      <Option>Set Piece</Option>
+                      <Option>Own Goal by Team B</Option>
+                    </Select>
+                  </div>
+                  <div className="flex flex-row items-center my-5 gap-5">
+                    <Button color="orange">Team A Card</Button>
+                    <Button color="orange">Team B Card</Button>
+                  </div>
+                  <div className="w-72 mb-5">
+                    <Select label="Card Type">
+                      <Option>Yellow</Option>
+                      <Option>Red</Option>
+                    </Select>
+                  </div>
 
-              <div className="col-start-1 col-end-3">
-              <div className="flex flex-row items-center my-5 gap-5">
-                <Button color="orange">Team A Goal</Button>
-                <Button color="orange">Team B Goal</Button>
+                  <Button color="orange">Shoot OUT</Button>
+
+                  <div className="p-4">
+                    <table className="w-full border-collapse border border-gray-300">
+                      <thead>
+                        <tr>
+                          <th className="border p-2">Teams</th>
+                          {titles.map((title) => (
+                            <th key={title} className="border p-2">
+                              {title}
+                            </th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {teams.map((team) => (
+                          <tr key={team}>
+                            <td className="border p-2">{team}</td>
+                            {titles.map((title) => (
+                              <td key={title} className="border p-2">
+                                <input
+                                  type="checkbox"
+                                  checked={checkedBoxes[team]?.[title] || false}
+                                  onChange={() =>
+                                    handleCheckboxChange(team, title)
+                                  }
+                                />
+                              </td>
+                            ))}
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <div className="col-end-5 col-span-2 mt-4">
+                  <div className="container mx-auto">
+                    <table className="w-full border-collapse border border-gray-300">
+                      <thead>
+                        <tr className="bg-gray-200">
+                          <th className="border p-2">Timer</th>
+                          <th className="border p-2">Icon</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {actions.map((action, index) => (
+                          <tr key={index} className={index % 2 === 0 ? "" : ""}>
+                            <td className="border p-2">{action.label}</td>
+                            <td className="border p-2 flex justify-center items-center">
+                              {action.icon}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </div>
-
-              <div className="w-72">
-                <Select label="Goal Type">
-                  <Option>Normal Goal</Option>
-                  <Option>Set Piece</Option>
-                  <Option>Own Goal by Team B</Option>
-                </Select>
-              </div>
-              <div className="flex flex-row items-center my-5 gap-5">
-                <Button color="orange">Team A Card</Button>
-                <Button color="orange">Team B Card</Button>
-              </div>
-              <div className="w-72 mb-5">
-                <Select label="Card Type">
-                  <Option>Yellow</Option>
-                  <Option>Red</Option>
-                </Select>
-              </div>
-
-
-              <Button color="orange">Shoot OUT</Button>
-
-              <div className="p-4">
-      <table className="w-full border-collapse border border-gray-300">
-        <thead>
-          <tr>
-            <th className="border p-2">Teams</th>
-            {titles.map((title) => (
-              <th key={title} className="border p-2">
-                {title}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {teams.map((team) => (
-            <tr key={team}>
-              <td className="border p-2">{team}</td>
-              {titles.map((title) => (
-                <td key={title} className="border p-2">
-                  <input
-                    type="checkbox"
-                    checked={checkedBoxes[team]?.[title] || false}
-                    onChange={() => handleCheckboxChange(team, title)}
-                  />
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-
-
-      
-    </div>
-
-              </div>
-
-
-
-
-              <div className="col-end-5 col-span-2 mt-4">
-
-              <div className="container mx-auto">
-      <table className="w-full border-collapse border border-gray-300">
-        <thead>
-          <tr className="bg-gray-200">
-            <th className="border p-2">Timer</th>
-            <th className="border p-2">Icon</th>
-          </tr>
-        </thead>
-        <tbody>
-          {actions.map((action, index) => (
-            <tr key={index} className={index % 2 === 0 ? '' : ''}>
-              <td className="border p-2">{action.label}</td>
-              <td className="border p-2 flex justify-center items-center">{action.icon}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-
-
-
-              </div>
-            </div>
-
-    
             </div>
             <div className="col-end-8 col-span-2">
               <div className="flex flex-row gap-4 items-center justify-between mt-7">
                 <div className="flex flex-col justify-center items-center gap-3">
-                <Button color="orange">Team A</Button>
-                <div className="flex flex-col gap-4">
-                  <p>Player 1</p>
-                  <p>Player 2</p>
-                  <p>Player 3</p>
-                  <p>Player 4</p>
-                  <span className="border-t-2"></span>
-                  <p>substitutes</p>
-                  <p>Player 1</p>
-                  <p>Player 2</p>
-                  <p>Player 3</p>
-                  <p>Player 4</p>
-                </div>
+                  <Button color="orange">Team A</Button>
+                  <div className="flex flex-col gap-4">
+                    <p>Player 1</p>
+                    <p>Player 2</p>
+                    <p>Player 3</p>
+                    <p>Player 4</p>
+                    <span className="border-t-2"></span>
+                    <p>substitutes</p>
+                    <p>Player 1</p>
+                    <p>Player 2</p>
+                    <p>Player 3</p>
+                    <p>Player 4</p>
+                  </div>
                 </div>
                 <div className="flex flex-col items-center justify-center gap-3">
-                <Button color="orange">Team B</Button>
-                <div className="flex flex-col gap-4">
-                  <p>Player 1</p>
-                  <p>Player 2</p>
-                  <p>Player 3</p>
-                  <p>Player 4</p>
-                  <span className="border-t-2"></span>
-                  <p>substitutes</p>
-                  <p>Player 1</p>
-                  <p>Player 2</p>
-                  <p>Player 3</p>
-                  <p>Player 4</p>
-                </div>
+                  <Button color="orange">Team B</Button>
+                  <div className="flex flex-col gap-4">
+                    <p>Player 1</p>
+                    <p>Player 2</p>
+                    <p>Player 3</p>
+                    <p>Player 4</p>
+                    <span className="border-t-2"></span>
+                    <p>substitutes</p>
+                    <p>Player 1</p>
+                    <p>Player 2</p>
+                    <p>Player 3</p>
+                    <p>Player 4</p>
+                  </div>
                 </div>
               </div>
             </div>
