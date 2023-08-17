@@ -1,5 +1,4 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { setUser } from '../features/userSlice';
 
 const BASE_URL = 'http://127.0.0.1:8000'
 
@@ -20,6 +19,18 @@ export const userApi = createApi({
         };
       },
     }),
+
+    createTournament: builder.mutation({
+            query(data) {
+                // const cookie = new Cookies()
+                // const token = cookie.get('jwt_auth_token')
+                return {
+                    url: `organizer/tournament?token=${token}`,
+                    method: 'post',
+                    body: data
+                }
+            }
+        }),
 
   }),
 });

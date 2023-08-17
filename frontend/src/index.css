@@ -1,13 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,400;0,500;1,400;1,600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,400;0,500;1,400;1,600&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@layer base{
+@layer base {
     body{
-        /* @apply  max-w-screen scroll-smooth; */
+        /* @apply max-w-screen scroll-smooth; */
     }
 }
+<<<<<<< HEAD
 
 @tailwind base;
 @tailwind components;
@@ -136,3 +137,5 @@
 
 
 
+=======
+>>>>>>> 5ca7932863c7151ccfe410eab56ea535e9716250

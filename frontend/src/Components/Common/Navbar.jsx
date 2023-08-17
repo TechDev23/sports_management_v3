@@ -39,6 +39,8 @@ import {
 } from "@heroicons/react/24/outline";
 import { BiBook, BiHome } from "react-icons/bi";
 import { FiInfo } from "react-icons/fi";
+import { useDispatch } from "react-redux";
+import { logout } from "../../redux/features/userSlice";
 
  
 const colors = {
@@ -294,9 +296,24 @@ const profileMenuItems = [
 ];
  
 function ProfileMenu() {
+
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+
+  const navigate = useNavigate();
+  
+  const dispatch = useDispatch();
  
   const closeMenu = () => setIsMenuOpen(false);
+
+
+  const handleMenuItemClick = (link) => {
+      // Implement your signout logic here
+      dispatch(logout())
+      navigate('/user/login')
+      console.log("Signing out...");
+      closeMenu(); // Close the menu
+  };
+  
  
   return (
     <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
@@ -334,6 +351,7 @@ function ProfileMenu() {
                   ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
                   : ""
               }`}
+
             >
               {React.createElement(icon, {
                 className: `h-4 w-4 ${isLastItem ? "text-red-500" : ""}`,
@@ -371,13 +389,20 @@ const { pathname } = useLocation();
 const [loggedIn , setLoggedIn] = useState(true);
 
   const [openNav, setOpenNav] = React.useState(false);
- 
+  const dispatch = useDispatch();
+
   React.useEffect(() => {
     window.addEventListener(
       "resize",
       () => window.innerWidth >= 960 && setOpenNav(false)
     );
   }, []);
+
+  const logOutUser = ()=>{
+    setLoggedIn(false)
+    dispatch(logout())
+    navigate('/user/login')
+  }
   return(
     // !pathname == "/user/login" && !pathname == "/user/register" &&
 
@@ -397,7 +422,8 @@ const [loggedIn , setLoggedIn] = useState(true);
 
         {
           loggedIn ? (
-            <ProfileMenu/>
+            // <ProfileMenu/>
+            <Button color="red" variant="outlined" className="hover:bg-[#ff0000] hover:text-white" onClick={logOutUser}>Log out</Button>
           ) : (
             <div className="hidden gap-2 lg:flex">
               <Button variant="text" size="sm" color="blue-gray" onClick={()=> navigate("/user/login")}>

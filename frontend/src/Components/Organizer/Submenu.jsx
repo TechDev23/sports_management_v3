@@ -2,7 +2,7 @@ import { Breadcrumbs } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 import { BiMenuAltLeft } from "react-icons/bi";
 import { useDispatch } from 'react-redux';
-import { toggleSidebar } from "../../redux/SidebarSlice";
+import { toggleSidebar } from "../../redux/features/SidebarSlice";
 
 export default function Submenu() {
 

@@ -22,24 +22,29 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { authApi } from './api/authApi';
 import { userApi } from './api/userApi';
+import { orgApi } from './api/organizer/orgApi';
+import { tournamentApi } from './api/organizer/tournamentApi';
 import userReducer from './features/userSlice';
 import orgReducer from './features/orgSlice';
-import sidebarReducer from './SidebarSlice';
+import sidebarReducer from './features/SidebarSlice';
+import tournamentReducer from './features/tournamentSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { organizerAuthApi } from './api/organizerAuthApi';
+
 
 export const store = configureStore({
   reducer: {
     [authApi.reducerPath]: authApi.reducer,
-    [organizerAuthApi.reducerPath]: organizerAuthApi.reducer,
     [userApi.reducerPath]: userApi.reducer,
+    [orgApi.reducerPath]: orgApi.reducer,
+    [tournamentApi.reducerPath]: tournamentApi.reducer,
     userState: userReducer,
     orgState: orgReducer,
     sidebar: sidebarReducer,
+    tournament: tournamentReducer,
   },
   devTools: process.env.NODE_ENV === 'development',
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({}).concat([authApi.middleware, userApi.middleware]),
+    getDefaultMiddleware({}).concat([ tournamentApi.middleware, authApi.middleware, userApi.middleware, orgApi.middleware ]),
 });
 
 

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 //import { useDispatch, useSelector } from "react-redux";
@@ -16,6 +17,7 @@ import {
   Input,
   Spinner,
 } from "@material-tailwind/react";
+import { ButtonGroup } from "@material-tailwind/react";
 
 import { ArrowPathIcon } from "@heroicons/react/24/outline";
 
@@ -115,13 +117,9 @@ function WinnerDialog({
 }
 
 function Match({ match }) {
-  
   const [team1Score, setTeam1Score] = useState("");
   const [team2Score, setTeam2Score] = useState("");
   const [scoreDialogOpen, setScoreDialogOpen] = useState(false);
-  
-
-  
 
   const handleOpenScoreDialog = () => {
     setScoreDialogOpen(true);
@@ -140,9 +138,7 @@ function Match({ match }) {
   };
 
   // handle submit score
-  const handlePostMatchScore = async () => {
-    
-  };
+  const handlePostMatchScore = async () => {};
   // handle post winner
   // const handlePostWinner = async ({ match_id }) => {
   //   console.log("Winner id", winnerId);
@@ -169,9 +165,6 @@ function Match({ match }) {
           <Button variant="text" color="amber" onClick={handleOpenScoreDialog}>
             Score
           </Button>
-          {/* <Button variant="text" color="green" onClick={handleOpenWinnerDialog}>
-            winner
-          </Button> */}
         </div>
       </div>
 
@@ -182,69 +175,224 @@ function Match({ match }) {
         team1Score={team1Score}
         team2Score={team2Score}
         handlePostMatchScore={handlePostMatchScore}
-        postScoreState={postScoreState}
       />
     </>
   );
 }
 
 export default function Rosters() {
- 
-
-  
   const [tourFixtures, setTourFixtures] = useState([]);
   const tourID = localStorage.getItem("createdTournamentID");
 
   useEffect(() => {
-    const fetchData = async () => {
-     
-    };
+    const fetchData = async () => {};
 
     fetchData();
   }, []);
 
-  const mappedMatches = tourFixtures?.reduce((matchesByRound, fixture) => {
-    
-  }, []);
+  const mappedMatches = tourFixtures?.reduce((matchesByRound, fixture) => {},
+  []);
 
-  const handleCreateFixtures = async () => {
-    
+  const handleCreateFixtures = async () => {};
+
+  const [show, setShow] = useState(false);
+
+  const teamDetails = () => {
+    setShow(true);
   };
 
   return (
     <div className="flex flex-col gap-2 min-h-screen">
-      <div>
-        <Button
-          onClick={handleCreateFixtures}
-          variant="outlined"
-          color="orange"
-          className={`flex items-center gap-3`}
-        >
-          Create fixtures
-          <ArrowPathIcon
-            strokeWidth={2}
-            className={`h-5 w-5`}
-          />
-        </Button>
-      </div>
-      {mappedMatches.map((roundMatches, index) => (
-        <div
-          key={index}
-          className="min-w-screen py-5 rounded border border-gray-600"
-        >
-          <p className="ml-2 text-gray-500">Roster Round {index}</p>
-          <div className="flex flex-col p-2 space-y-3">
-            {roundMatches.map((match) => (
-              <Match
-                key={match.id}
-                match={match}
-                postScoreState={postScoreState}
-                postResultState={postResultState}
-              />
-            ))}
+      {show ? (
+        <div>
+          <div className="flex flex-row  items-center gap-4  ">
+            <div className="w-72">
+              <p className="text-[14px] bg-gray-200 h-10 rounded-md flex items-center justify-center">
+                Player 1
+              </p>
+            </div>
+
+            <Button color="orange">VS</Button>
+
+            <div className="w-72">
+              <p className="text-[14px] bg-gray-200 h-10 rounded-md flex items-center justify-center">
+                Player 2
+              </p>
+            </div>
+          </div>
+          <textarea
+            className="flex-grow w-full h-full mt-5 border border-gray-500 px-4 py-2 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200"
+            placeholder="Time Place and Responsible details"
+            rows={1}
+            disabled="true"
+          ></textarea>
+
+          <div className="w-72 my-5">
+            <p className="text-[14px] bg-gray-200 h-10 rounded-md flex items-center justify-center">
+              Player 1
+            </p>
+          </div>
+          <div className="w-full">
+          <ButtonGroup color="orange">
+            <Button>1</Button>
+            <Button>2</Button>
+            <Button>3</Button>
+            <Button>4</Button>
+            <Button>5</Button>
+            <Button>6</Button>
+            <Button>7</Button>
+            <Button>8</Button>
+            <Button>9</Button>
+            <Button>10</Button>
+            <Button>11</Button>
+            <Button>12</Button>
+            <Button>13</Button>
+            <Button>14</Button>
+            <Button>15</Button>
+            <Button>16</Button>
+            <Button>17</Button>
+            <Button>18</Button>
+            <Button>19</Button>
+            <Button>20</Button>
+            <Button>21</Button>
+          </ButtonGroup>
+          </div>
+
+          <div className="my-5 flex flex-row items-center justify-center mr-[17rem]"><Button color="orange">VS</Button></div>
+
+
+          <div className="w-72 my-5">
+            <p className="text-[14px] bg-gray-200 h-10 rounded-md flex items-center justify-center">
+              Player 1
+            </p>
+          </div>
+          <div className="w-full">
+          <ButtonGroup color="orange">
+            <Button>1</Button>
+            <Button>2</Button>
+            <Button>3</Button>
+            <Button>4</Button>
+            <Button>5</Button>
+            <Button>6</Button>
+            <Button>7</Button>
+            <Button>8</Button>
+            <Button>9</Button>
+            <Button>10</Button>
+            <Button>11</Button>
+            <Button>12</Button>
+            <Button>13</Button>
+            <Button>14</Button>
+            <Button>15</Button>
+            <Button>16</Button>
+            <Button>17</Button>
+            <Button>18</Button>
+            <Button>19</Button>
+            <Button>20</Button>
+            <Button>21</Button>
+          </ButtonGroup>
+          </div>
+
+        </div>
+      ) : (
+        <div>
+          <div className="flex flex-col w-full items-start justify-center gap-6">
+            <h1 className="font-semibold">Roster 1</h1>
+            <button
+              onClick={teamDetails}
+              className=" p-2 border w-full rounded-lg"
+            >
+              <div className="flex flex-row  items-center justify-between gap-4  ">
+                <div className="w-72">
+                  <p className="text-[14px] bg-gray-200 h-10 rounded-md flex items-center justify-center">
+                    Player 1
+                  </p>
+                </div>
+
+                <Button color="orange">VS</Button>
+
+                <div className="w-72">
+                  <p className="text-[14px] bg-gray-200 h-10 rounded-md flex items-center justify-center">
+                    Player 2
+                  </p>
+                </div>
+                <textarea
+                  className="flex-grow w-full h-10 border border-gray-500 px-4 py-2 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200"
+                  placeholder="Time Place and Responsible details"
+                  rows={10}
+                  disabled="true"
+                ></textarea>
+              </div>
+            </button>
+
+            {/* ================================ */}
+
+            <div className="flex flex-row w-full px-20 justify-between items-center">
+              <Button color="orange">Customize Roster</Button>
+              <Button color="orange">Declear Roster</Button>
+            </div>
+          </div>
+
+          <div className="my-10 border-t-2"></div>
+
+          <div className="flex flex-col w-full items-start justify-center gap-6">
+            <h1 className="font-semibold">Roster Round 2</h1>
+            <button className=" p-2 border w-full rounded-lg">
+              <div className="flex flex-row  items-center justify-between gap-4  ">
+                <div className="w-72">
+                  <p className="text-[14px] bg-gray-200 h-10 rounded-md flex items-center justify-center">
+                    Player 1
+                  </p>
+                </div>
+
+                <Button color="orange">VS</Button>
+
+                <div className="w-72">
+                  <p className="text-[14px] bg-gray-200 h-10 rounded-md flex items-center justify-center">
+                    Player 2
+                  </p>
+                </div>
+                <textarea
+                  className="flex-grow w-full h-10 border border-gray-500 px-4 py-2 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200"
+                  placeholder="Time Place and Responsible details"
+                  rows={10}
+                  disabled="true"
+                ></textarea>
+              </div>
+            </button>
+
+            <button className=" p-2 border w-full rounded-lg">
+              <div className="flex flex-row  items-center justify-between gap-4  ">
+                <div className="w-72">
+                  <p className="text-[14px] bg-gray-200 h-10 rounded-md flex items-center justify-center">
+                    Player 3
+                  </p>
+                </div>
+
+                <Button color="orange">VS</Button>
+
+                <div className="w-72">
+                  <p className="text-[14px] bg-gray-200 h-10 rounded-md flex items-center justify-center">
+                    Player 4
+                  </p>
+                </div>
+                <textarea
+                  className="flex-grow w-full h-10 border border-gray-500 px-4 py-2 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200"
+                  placeholder="Time Place and Responsible details"
+                  rows={10}
+                  disabled="true"
+                ></textarea>
+              </div>
+            </button>
+
+            {/* ================================ */}
+
+            <div className="flex flex-row w-full px-20 justify-between items-center">
+              <Button color="orange">Customize Roster</Button>
+              <Button color="orange">Declear Roster</Button>
+            </div>
           </div>
         </div>
-      ))}
+      )}
     </div>
   );
 }

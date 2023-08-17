@@ -5,6 +5,7 @@ import { IoMdOptions } from "react-icons/io";
 import { MdNewLabel } from "react-icons/md";
 import { BsPlayFill, BsCheck2Circle } from "react-icons/bs";
 import { IoIosArrowUp } from 'react-icons/io'
+import { useGetAllTrnmtsQuery } from "../../redux/api/organizer/tournamentApi";
 // import FaMoneyBillTrendUp from 'react-icons/fa'
 
 
@@ -146,6 +147,7 @@ function GamesUpdate(){
 
 
 const Dashboard = () => {
+
   return (
     <div className="h-full">
       <HeaderConent />

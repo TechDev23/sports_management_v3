@@ -1,5 +1,4 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { userApi } from "./userApi";
 import { setUser } from "../features/userSlice";
 
 const BASE_URL = "http://127.0.0.1:8000";
@@ -31,23 +30,15 @@ export const authApi = createApi({
       async onQueryStarted(args, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
-          dispatch(setUser({ user: data, token: data.access_token }));
+          dispatch(setUser({ user: data.data, token: data.access_token }));
           // Save user data to localStorage
-          localStorage.setItem('userData', JSON.stringify(data));
+          localStorage.setItem('userData', JSON.stringify(data.data));
         } catch (error) {
-          console.log(`Error while getMe ${error}`);
+          console.log(`Error while onQueryStarted ${error}`);
         }
       },
     }),
 
-    verifyEmail: builder.mutation({
-      query({ verificationCode }) {
-        return {
-          url: `verifyemail/${verificationCode}`,
-          method: "GET",
-        };
-      },
-    }),
     logoutUser: builder.mutation({
       query() {
         return {
@@ -62,5 +53,4 @@ export const {
   useLoginUserMutation,
   useRegisterUserMutation,
   useLogoutUserMutation,
-  useVerifyEmailMutation,
 } = authApi;
