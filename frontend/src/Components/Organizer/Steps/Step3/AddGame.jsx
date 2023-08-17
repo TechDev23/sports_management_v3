@@ -6,6 +6,9 @@ import Select from "react-select";
 import { useAddGameToTnmtMutation } from "../../../../redux/api/organizer/orgApi";
 import { useAppSelector } from "../../../../redux/store";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+
+import DatePicker from "react-datepicker";
+
 const AddGame = ({ gameIndex }) => {
   const { id: tourId } = useAppSelector((state) => state.tournament.tour_details);
   const dispatch = useDispatch();
@@ -16,6 +19,13 @@ const AddGame = ({ gameIndex }) => {
   // participants details (ex: min age, min boys ,etc)
   // prize
   // schedule
+
+  
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+
+  const [qualification, setQualification] = useState(2);
+
   const initialValues = {
     name: "game1",
     tournament_id : "hUvFddYbS3iTN2uL",
@@ -38,8 +48,11 @@ const AddGame = ({ gameIndex }) => {
     num_groups: 0,
     teams_per_group: 0,
     avg_duration: 45,
-    start_date: "2023-08-16T15:57:35.587Z",
-    end_date: "2023-08-16T15:57:35.587Z"
+
+    // start_date: "2023-08-16T15:57:35.587Z",
+    start_date: null,
+    end_date: null
+    // end_date: "2023-08-16T15:57:35.587Z"
   };
 
   const [values, setValues] = useState(initialValues);
@@ -50,7 +63,9 @@ const AddGame = ({ gameIndex }) => {
       ...values,
       [name]: value,
     });
+    console.log(values);
   };
+
 
   const options = [
     {
@@ -204,6 +219,7 @@ const AddGame = ({ gameIndex }) => {
           <div className="w-full flex flex-col lg:flex-row gap-5">
             <Input
               value={values.min_age}
+              type="number"
               onChange={handleInputChange}
               label="Minimum age"
               color="orange"
@@ -225,10 +241,63 @@ const AddGame = ({ gameIndex }) => {
                 color="orange"
               />
           </div>
-
-          <div className="w-full">
-              
+          {
+            values.type === 1 && (
+              <div className="w-full flex flex-col lg:flex-row gap-5"> 
+                <Input
+                  value={values.avg_duration}
+                  type="number"
+                  onChange={handleInputChange}
+                  label="Average duration"
+                  color="orange"
+                  name="avg_duration"
+                />
+                <Input
+                  value={values.num_groups}
+                  type="number"
+                  onChange={handleInputChange}
+                  label="Average duration"
+                  color="orange"
+                  name="num_groups"
+                />
+                <Input
+                  value={values.teams_per_group}
+                  type="number"
+                  onChange={handleInputChange}
+                  label="Teams per group"
+                  color="orange"
+                  name="teams_per_group"
+                />
+                
+              </div>
+            )
+          }
+          
+          <div className="w-full flex flex-col lg:flex-row justify-between  gap-4">
+            <div className="text-sm w-full  flex items-center justify-center">
+              <DatePicker
+                selected={startDate}
+                showTimeSelect
+                onChange={(date) => setStartDate(date)}
+                className="border border-gray-500 px-4 py-2  rounded-lg focus:outline-none w-64 focus:border-orange-500 focus:ring-2 focus:ring-orange-200  text-xs md:text-normal"
+                placeholderText="Select End Date"
+                name="start_date"
+              />
+            </div>
+            <p className=" my-auto mx-4 text-normal font-poppins text-gray-700 text-center">to</p>
+            <div className="text-sm w-full  flex items-center justify-center">
+              <DatePicker
+                selected={endDate}
+                showTimeSelect
+                onChange={(date) => setEndDate(date)}
+                className="border border-gray-500 px-4 py-2 rounded-lg focus:outline-none w-64 focus:border-orange-500 focus:ring-2 focus:ring-orange-200  text-xs md:text-normal"
+                placeholderText="Select End Date"
+                name="end_date"
+              />
+            </div>
           </div>
+
+
           <div className="w-full flex justify-center items-center">
             <Button onClick={addGameToDB} className="flex justify-center items-center" color="orange">
               {isAddingGame ? <Spinner color="amber" /> : "Add game"}
