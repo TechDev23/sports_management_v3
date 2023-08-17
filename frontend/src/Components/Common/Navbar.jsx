@@ -399,6 +399,7 @@ const [loggedIn , setLoggedIn] = useState(true);
   }, []);
 
   const logOutUser = ()=>{
+    setLoggedIn(false)
     dispatch(logout())
     navigate('/user/login')
   }
@@ -420,7 +421,7 @@ const [loggedIn , setLoggedIn] = useState(true);
         </div>
 
         {
-          !loggedIn ? (
+          loggedIn ? (
             // <ProfileMenu/>
             <Button color="red" variant="outlined" className="hover:bg-[#ff0000] hover:text-white" onClick={logOutUser}>Log out</Button>
           ) : (
