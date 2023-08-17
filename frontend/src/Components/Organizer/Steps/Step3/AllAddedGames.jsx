@@ -16,6 +16,7 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import Select from "react-select";
+import EditIcon from '@mui/icons-material/Edit';
 
 // entire ui can be divided into
 // game detail
@@ -53,7 +54,7 @@ function UpdateDialog() {
   };
 
   const [values, setValues] = useState(initialValues);
-  const [selectedOption, setSelectedOption] = useState(null);
+  const [selectedGame, setSelectedGame] = useState(null);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -78,13 +79,17 @@ function UpdateDialog() {
     },
   ];
 
+  const handleGameChangeSelect = (game)=>{
+    setSelectedGame(game);
+    console.log(`Option selected:`, game);
+  }
   const addGameToDB = async () => {
     console.log(values);
   };
   return (
     <>
-      <Button onClick={handleOpen} variant="gradient">
-        Open Dialog
+      <Button color="amber" variant="outlined" onClick={handleOpen} className="hover:text-white hover:bg-orange-500 flex gap-2 items-center justify-center w-auto border-none">
+        <EditIcon/><p>Edit</p> 
       </Button>
       <Dialog open={open} handler={handleOpen} size="xxl">
         <DialogHeader className="font-poppins">Edit game details</DialogHeader>
@@ -107,9 +112,10 @@ function UpdateDialog() {
             <div className="w-full lg:w-1/3 text-sm">
               <Select
                 placeholder="Select game"
-                onChange={handleInputChange}
                 options={options}
-                name="game"
+                onChange={handleGameChangeSelect}
+                autoFocus={true} 
+                value={selectedGame}
               />
             </div>
           </div>
@@ -184,7 +190,6 @@ export default function AllAddedGames() {
                 </Typography>
               </CardBody>
               <CardFooter className="pt-0">
-                <Button>Read More</Button>
                 <UpdateDialog />
               </CardFooter>
             </Card>

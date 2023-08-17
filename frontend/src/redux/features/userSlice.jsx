@@ -16,8 +16,10 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     logout: (state, action) => {
+      console.log("log out user called")
       state.user = null,
-      state.token = null
+      state.token = null,
+      cookie.remove('jwt_auth_token', { path: '/' })
     },
     
     setUser: (state, action) => {
