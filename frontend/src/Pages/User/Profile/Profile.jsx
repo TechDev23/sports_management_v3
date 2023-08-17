@@ -62,6 +62,7 @@ export default function ComplexNavbar() {
     email_id: user?.email_id || "om@gmail.com",
     emergency_contact: "null",
     dob: user?.dob,
+    gender:user?.gender || "Male"
   };
 
    const [isNameEditing, setIsNameEditing] = useState(false);
@@ -78,6 +79,9 @@ export default function ComplexNavbar() {
 
   const [isDOBEditing, setIsDOBEditing] = useState(false);
   const [editedDOB, setEditedDOB] = useState(new Date(userInformation.dob));
+
+  const [isGenderEditing, setIsGenderEditing] = useState(false);
+const [editedGender, setEditedGender] = useState(userInformation.gender);
 
   const handleSaveName = () => {
 
@@ -148,6 +152,20 @@ export default function ComplexNavbar() {
 
   const handleEditDOB = () => {
     setIsDOBEditing(true);
+  };
+
+  const handleSaveGender = () => {
+    setIsGenderEditing(false);
+    userInformation.gender = editedGender;
+  };
+  
+  const handleCancelGender = () => {
+    setIsGenderEditing(false);
+    setEditedGender(userInformation.gender);
+  };
+  
+  const handleEditGender = () => {
+    setIsGenderEditing(true);
   };
 
   return (
@@ -503,6 +521,59 @@ export default function ComplexNavbar() {
                 </div>
                 <hr className="my-2 hr-light" style={{ width: "170%" }} />
               </div>
+              <div className="mb-8">
+  <Typography variant="h6" color="blue-gray" className="sm:text-left">
+    Gender
+  </Typography>
+  <div className="flex sm:flex-row items-center gap-2">
+    {isGenderEditing ? (
+      <>
+       <div className="flex sm:flex-col items-center sm:items-start gap-2">
+        <select
+          value={editedGender}
+          onChange={(e) => setEditedGender(e.target.value)}
+          className="border rounded px-2 py-1"
+        >
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="other">Other</option>
+        </select>
+        <div className="flex sm:flex-row gap-2">
+          <div className="rounded-lg border border-blue-500 px-4 bg-blue-400">
+            <button onClick={handleSaveGender} className="text-white">
+              Save
+            </button>
+          </div>
+          <div className="flex sm:flex-row gap-2">
+            <div className="rounded-lg border border-blue-500 px-4 bg-blue-50">
+              <button
+                onClick={handleCancelGender}
+                className="text-gray-900"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+        </div>
+      </>
+    ) : (
+      <>
+        <Typography variant="body" color="gray">
+          {userInformation.gender}
+        </Typography>
+        <div className="flex-grow"></div>
+        <button
+          onClick={handleEditGender}
+          className="text-blue-500 hover:text-blue-700"
+        >
+          Edit
+        </button>
+      </>
+    )}
+  </div>
+  <hr className="my-2 hr-light" style={{ width: "170%" }} />
+</div>
               <div className="mb-8">
                 <Typography variant="h6" color="blue-gray"  className="sm:text-left">
                   Created at
