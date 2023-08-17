@@ -31,7 +31,9 @@ const AddGame = ({ gameIndex }) => {
     open_to: 1,
     min_age: 18,
     max_age: 23,
+
     // field to be added
+
     type: 1, // select field 
     num_groups: 0,
     teams_per_group: 0,
@@ -50,8 +52,6 @@ const AddGame = ({ gameIndex }) => {
     });
   };
 
-
-
   const options = [
     {
       value: "Cricket",
@@ -66,6 +66,17 @@ const AddGame = ({ gameIndex }) => {
       label: "Badminton",
     },
   ];
+
+  const qualificationOptions = [
+    {
+      value: "1",
+      label: "Single Elimination"
+    },
+    {
+      value: "2",
+      label: "League"
+    }
+  ]
 
   const success = true;
 
@@ -205,14 +216,18 @@ const AddGame = ({ gameIndex }) => {
               color="orange"
               name="max_age"
             />
-            <Input
-              // onChange={(e) => setTotalMatches(e.target.value)}
-              label="qualification method"
-              color="orange"
-              name="qualification"
-              value={values.qualification}
-              onChange={handleInputChange}
-            />
+            <Select
+                placeholder="Qualification method"
+                onChange={handleInputChange}
+                options={qualificationOptions}
+                className="w-full text-sm"
+                name="type"
+                color="orange"
+              />
+          </div>
+
+          <div className="w-full">
+              
           </div>
           <div className="w-full flex justify-center items-center">
             <Button onClick={addGameToDB} className="flex justify-center items-center" color="orange">

@@ -19,9 +19,13 @@ import Select from "react-select";
 import EditIcon from '@mui/icons-material/Edit';
 
 // entire ui can be divided into
+
 // game detail
+
 // participants details (ex: min age, min boys ,etc)
+
 // prize
+
 // schedule
 
 function UpdateDialog() {
