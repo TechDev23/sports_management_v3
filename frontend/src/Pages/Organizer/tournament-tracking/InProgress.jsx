@@ -100,7 +100,7 @@ const InProgress = () => {
     </div>
 
       <p className=" text-blue-gray-700 text-3xl font-bold my-4 lg:mt-0 w-full">
-        New Tournament
+        Current Tournament
       </p>
       
       <Outlet/>

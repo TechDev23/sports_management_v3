@@ -6,13 +6,19 @@ const BASE_URL = "http://127.0.0.1:8000";
 
 const cookie = new Cookies();
 // const token = cookie.get("jwt_auth_token") || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTIyNDg2OTMsInN1YiI6Ild2Y3hlaEM0VTQifQ.a0tK3yUlrfRZwLMonHjNTyD9aJoL0g_Y1Sukd1mAhuA";
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTIyNDg2OTMsInN1YiI6Ild2Y3hlaEM0VTQifQ.a0tK3yUlrfRZwLMonHjNTyD9aJoL0g_Y1Sukd1mAhuA";
+const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTIyNjQ1NzgsInN1YiI6Ild2Y3hlaEM0VTQifQ.6rBiykkDe7IRiy4EvQ7necFFdtwi_vRJ01BFU-LkPIM";
 
 export const tournamentApi = createApi({
   reducerPath: "tournamentApi",
   baseQuery: fetchBaseQuery({ baseUrl: `${BASE_URL}/` }),
   tagTypes: ["Posts"],
   endpoints: (build) => ({
+
+    getAllTrnmts: build.query({
+      query: ()=>({
+        url: `tournaments/?page=0&limit=5&token=${token}`
+      })
+    }),
 
     getTournamentGames: build.query({
       query(tournament_id) {
@@ -25,4 +31,4 @@ export const tournamentApi = createApi({
   }),
 });
 
-export const { useGetTournamentGamesQuery } = tournamentApi;
+export const { useGetTournamentGamesQuery, useGetAllTrnmtsQuery } = tournamentApi;

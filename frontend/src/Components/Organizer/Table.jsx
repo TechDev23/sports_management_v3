@@ -22,6 +22,7 @@ import { BiCalendarAlt } from "react-icons/bi";
 import { MdAdminPanelSettings } from "react-icons/md";
 import { BsShieldCheck } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
+import { useGetAllTrnmtsQuery } from "../../redux/api/organizer/tournamentApi";
  
 const TABS = [
   {
@@ -67,20 +68,13 @@ const TABLE_ROWS = [
     date: "19/09/2017",
     progress: 80,
     role: "Organizer",
-  },
-  /** {
-    img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-4.jpg",
-    name: "Michael Levi",
-    email: "michael@creative-tim.com",
-    job: "Programator",
-    org: "Developer",
-    online: true,
-    date: "24/12/08",
-  },*/
+  }
 ];
 
 
 function Team() {
+  
+
     return (
         <div className="flex items-center -space-x-4">
           <Avatar
@@ -121,6 +115,21 @@ export function Table() {
     const navigate = useNavigate();
     
   const [dueDate, setDueDate] = useState(null);
+
+  
+  const { data:allTournaments } = useGetAllTrnmtsQuery();
+  console.log(allTournaments?.data);
+  // {
+  //   "id": "hUvFddYbS3iTN2uL",
+  //   "name": "w",
+  //   "about": "asdfads",
+  //   "organizer_id": "WvcxehC4U4",
+  //   "start_date": "2023-08-16T17:00:00",
+  //   "end_date": "2023-08-19T17:00:00",
+  //   "is_payment_done": true,
+  //   "is_active": true
+  // },
+
 
   return (
     <Card className="h-full w-full">
@@ -166,25 +175,25 @@ export function Table() {
             </tr>
           </thead>
           <tbody>
-            {TABLE_ROWS.map(({ img, org, tournament, priority, date, role, progress }, index) => {
+            {allTournaments?.data.map((trnmt, index) => {
               const isLast = index === TABLE_ROWS.length - 1;
               const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
  
               return (
-                <tr key={org} className="hover:bg-gray-100 transition-all cursor-pointer"  onClick={() => navigate("/o/current/step1")}>
+                <tr key={trnmt?.id} className="hover:bg-gray-100 transition-all cursor-pointer"  onClick={() => navigate("/o/current/step1")}>
                   <td className={classes}>
                     <div className="flex items-center gap-3">
-                      <Avatar src={img} alt={org} size="sm" />
+                      {/* <Avatar src={img} alt={org} size="sm" /> */}
                       <div className="flex flex-col">
                         <Typography variant="small" color="blue-gray" className="font-normal">
-                          {org}
+                          {trnmt?.name}
                         </Typography>
                         <Typography
                           variant="small"
                           color="blue-gray"
                           className="font-normal opacity-70"
                         >
-                          {tournament}
+                          {trnmt?.is_active}
                         </Typography>
                       </div>
                     </div>
@@ -193,12 +202,12 @@ export function Table() {
                   
                   <td className={classes}>
                     <div className="w-max">
-                      <Chip
+                      {/* <Chip
                         variant="ghost"
                         size="sm"
                         value={priority}
                         color={priority === "low" ? "green" : priority === "medium" ? "yellow" : "red"}
-                      />
+                      /> */}
                     </div>
                   </td>
 
@@ -207,25 +216,25 @@ export function Table() {
                   <td className={classes}>
                     <Typography variant="small" color="blue-gray" className="font-normal flex items-center space-x-3">
                         <BiCalendarAlt/>
-                        <p>{date}</p>
+                        <p>{trnmt?.name}</p>
                     </Typography>
                   </td>
 
                   
-                  <td className={classes}>
+                  {/* <td className={classes}>
                     <Typography variant="small" color="blue-gray" className="font-normal flex">
                         <Tooltip content={`${progress}%`}>
                             <Progress size="sm"  value={progress} color="amber" />
                         </Tooltip>
                     </Typography>
-                  </td>
+                  </td> */}
 
 
                   <td className={classes}>
                     <div className="flex flex-row justify-start items-center space-x-2  p-0">
-                        { role === "Admin" ? <MdAdminPanelSettings className="w-6 h-6 text-orange-700"/> : <BsShieldCheck  className="w-5 h-5 text-blue-gray-700"/>}
-                      <Typography variant="small" color="blue-gray" className={`font-normal flex justify-start items-start ${role === "Admin" ?  "text-orange-700" : "text-blue-gray-700"}`}>
-                        {role}
+                        {/* { role === "Admin" ? <MdAdminPanelSettings className="w-6 h-6 text-orange-700"/> : <BsShieldCheck  className="w-5 h-5 text-blue-gray-700"/>} */}
+                      <Typography variant="small" color="blue-gray" className={`font-normal flex justify-start items-start `}>
+                      {trnmt?.name}
                       </Typography>
                     </div>
                   </td>

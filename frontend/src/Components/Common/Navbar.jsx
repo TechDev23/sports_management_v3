@@ -397,7 +397,8 @@ const [loggedIn , setLoggedIn] = useState(true);
 
         {
           loggedIn ? (
-            <ProfileMenu/>
+            // <ProfileMenu/>
+            <Button onClick={logout}>Log out</Button>
           ) : (
             <div className="hidden gap-2 lg:flex">
               <Button variant="text" size="sm" color="blue-gray" onClick={()=> navigate("/user/login")}>
