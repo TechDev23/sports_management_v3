@@ -93,18 +93,9 @@ function Login() {
   };
 
   return (
-    <section
-      className="text-gray-600 body-font w-full h-full items-center justify-center"
-      style={{
-        backgroundImage: `url(${backgroundImage})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundAttachment: "fixed",
-        minHeight: "92vh",
-      }}
-    >
-      <div className="px-5 flex  items-center justify-center md:py-10 w-full h-full">
+      <div className="px-5 bg-gray-50 flex flex-row  items-center justify-center md:py-10 w-full h-full">
 
+      {/**
         <div className="hidden md:block lg:w-3/5 md:w-1/2 md:pr-16 lg:pr-0 pr-0">
           <div className="mt-4 border-t-4 border-gray-400 w-full mb-4"></div>
           <h1 className="title-font font-bold text-5xl text-gray-400">
@@ -116,10 +107,11 @@ function Login() {
           </p>
           <div className="mt-4 border-t-4 border-gray-400 w-full"></div>
         </div>
+ */}
 
-
-        <div className="lg:w-2/6 md:w-1/2 bg-white rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0 shadow-xl">
-          <h2 className="text-gray-900 text-3xl font-bold title-font mb-5 text-center">
+        <div className=" bg-gray-50 
+        rounded-lg p-8 flex flex-col  w-full md:w-3/5 lg:w-1/2 xl:w-1/3   mt-5 md:mt-0 shadow-md">
+          <h2 className="text-gray-900 text-3xl font-bold title-font mb-5 text-left">
             Sign In
           </h2>
           <div className="relative mb-4">
@@ -130,13 +122,13 @@ function Login() {
               type="email"
               id="email"
               name="email"
-              className="w-full bg-white rounded-full border border-indigo-500 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+              className="w-full bg-white rounded-lg border  focus:border-orange-500  focus:ring-orange-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out bg-none"
               value={email}
               onChange={handleEmailChange}
               placeholder="Enter your email"
             />
             {emailError && (
-              <p className=" text-xs text-orange-500 mt-1">{emailError}</p>
+              <p className=" text-xs text-red-600 mt-1">{emailError}</p>
             )}
           </div>
           <div className="relative mb-4">
@@ -151,13 +143,13 @@ function Login() {
                 type={showPassword ? "text" : "password"}
                 id="password"
                 name="password"
-                className="w-full bg-white rounded-full border border-indigo-500 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                className="w-full rounded-lg border  focus:border-orange-500  focus:ring-orange-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out bg-gray-50"
                 value={password}
                 onChange={handlePasswordChange}
                 placeholder="Enter your password"
               />
               <button
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-transparent border-none focus:outline-none"
+                className="absolute right-3 top-1/2  -translate-y-1/2 bg-transparent border-none focus:outline-none"
                 onClick={handleTogglePasswordVisibility}
               >
                 {showPassword ? (
@@ -249,8 +241,8 @@ function Login() {
             </Link>
           </p>
         </div>
+
       </div>
-    </section>
   );
 }
 

@@ -163,83 +163,115 @@ const Reg = () => {
   };
   //Ending register api
   return (
-    <Card
-      className="font-poppins container px-5 py-24 mx-auto flex flex-wrap items-start justify-center"
-      color="transparent"
-      shadow={false}
-    >
-      <Typography variant="h4" color="blue-gray">
-        Sign Up
-      </Typography>
-      <Typography color="gray" className="mt-1 font-normal">
-        Enter your details to register.
-      </Typography>
-      <form
-        className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96"
-        onSubmit={handleSubmit(regUsr)}
+    <div className="px-5 bg-gray-50 flex flex-row  items-center justify-center md:py-10 w-full h-full">
+      <div
+        className="bg-gray-50 font-poppins w-full md:w-2/3 lg:w-1/2 xl:w-1/3 px-5 py-10 lg:py-24 items-center justify-center  rounded-lg shadow-md"
       >
-        <div className="mb-4 flex flex-col gap-6">
-          <div className="w-2/3 flex gap-2 md:flex-row flex-col">
-            <div className="flex flex-col">
-              {errors.first_name && (
-                <span className="text-red-600 text-xs pb-1 pl-1 w-full text-right">
-                  * {errors.first_name?.message}
-                </span>
-              )}
-              <Input
-                label="First name"
-                color="amber"
-                {...register("first_name")}
-              />
+        <Typography variant="h4" color="blue-gray">
+          Sign Up
+        </Typography>
+        <Typography color="gray" className="mt-1 font-normal">
+          Enter your details to register.
+        </Typography>
+        <form
+          className="mt-8 mb-2 w-full h-full"
+          onSubmit={handleSubmit(regUsr)}
+        >
+          <div className="mb-4 flex flex-col gap-6 ">
+            <div className="w-full gap-5 flex justify-between md:flex-row flex-col">
+              <div className="flex flex-col">
+                {errors.first_name && (
+                  <span className="text-red-600 text-xs pb-1 pl-1 w-full text-left">
+                    * {errors.first_name?.message}
+                  </span>
+                )}
+                <Input
+                  label="First name"
+                  color="amber"
+                  {...register("first_name")}
+                  className="p-2"
+                />
+              </div>
+              <div className="flex flex-col">
+                {errors.last_name && (
+                  <span className="text-red-600 text-xs pb-1 pl-1 w-full text-left">
+                    *{errors.last_name?.message}
+                  </span>
+                )}
+                <Input
+                  label="Last name"
+                  color="amber"
+                  {...register("last_name")}
+                  className="p-2"
+                />
+              </div>
             </div>
-            <div className="flex flex-col">
-              {errors.last_name && (
-                <span className="text-red-600 text-xs pb-1 pl-1 w-full text-right">
-                  *{errors.last_name?.message}
-                </span>
-              )}
-              <Input
-                label="Last name"
-                color="amber"
-                {...register("last_name")}
-              />
-            </div>
-          </div>
 
-          {/* Phone number started */}
-          <div className="relative flex flex-col">
-            {errors.phone_no && (
-              <span className="text-red-600 text-xs pb-1 pl-1 w-full text-left">
-                *{errors.phone_no?.message}
-              </span>
+            {/* Phone number started */}
+            <div className="relative flex flex-col">
+              {errors.phone_no && (
+                <span className="text-red-600 text-xs pb-1 pl-1 w-full text-left">
+                  *{errors.phone_no?.message}
+                </span>
+              )}
+              <div className="relative">
+              <Input
+                size="lg"
+                className="!relative tracking-widest"
+                label="Phone number"
+                color="amber"
+                disabled={mobileVerified}
+                icon={mobileVerified ? <VerifiedIcon fontSize="small"/>:<></>}
+                {...register("phone_no")}
+              />
+              <Button
+                size="sm"
+                color="orange"
+                className={`!absolute right-1 top-1.5 rounded hover:shadow-none ${mobileVerified ? "hidden" : '' }`}
+                onClick={onSignInSubmit}
+                disabled={mobileVerified}
+              >
+                {sendingOtp ? <Spinner color="amber" /> : verifyBtnMsg}
+              </Button>
+              </div>
+              
+              <div id="recaptcha-container"></div>
+            </div>
+
+            {showOtpField && (
+              <div>
+                {/* ! OTP input starts */}
+                <div className="flex flex-col">
+                  {errors.email_id && (
+                    <span className="text-red-600 text-xs pb-1 pl-1 w-full text-right">
+                      *{errors.email_id?.message}
+                    </span>
+                  )}
+                  <Input
+                    size="lg"
+                    label="Enter OTP"
+                    className="tracking-widest"
+                    color="amber"
+                    value={otpField}
+                    onChange={(e) => setOtpField(e.target.value)}
+                  />
+                  <Button
+                    className="mt-6 hover:shadow-none flex items-center justify-center"
+                    fullWidth
+                    color="orange"
+                    onClick={verifyCode}
+                  >
+                    {verifyingOtp ? <Spinner color="amber"/>: "Verify"}
+                  </Button>
+                </div>
+              </div>
             )}
-            <div className="relative">
-            <Input
-              size="lg"
-              className="!relative tracking-widest"
-              label="Phone number"
-              color="amber"
-              disabled={mobileVerified}
-              icon={mobileVerified ? <VerifiedIcon fontSize="small"/>:<></>}
-              {...register("phone_no")}
-            />
-            <Button
-              size="sm"
-              color="orange"
-              className={`!absolute right-1 top-1.5 rounded hover:shadow-none ${mobileVerified ? "hidden" : '' }`}
-              onClick={onSignInSubmit}
-              disabled={mobileVerified}
-            >
-              {sendingOtp ? <Spinner color="amber" /> : verifyBtnMsg}
-            </Button>
-            </div>
-            
-            <div id="recaptcha-container"></div>
+            {/* ! OTP input ends */}
+            {/* Phone number ended */}
           </div>
 
-          {showOtpField && (
-            <>
-              {/* ! OTP input starts */}
+          {mobileVerified ? (
+            <div className="flex flex-col gap-5">
               <div className="flex flex-col">
                 {errors.email_id && (
                   <span className="text-red-600 text-xs pb-1 pl-1 w-full text-right">
@@ -248,104 +280,75 @@ const Reg = () => {
                 )}
                 <Input
                   size="lg"
-                  label="Enter OTP"
-                  className="tracking-widest"
+                  label="Email"
                   color="amber"
-                  value={otpField}
-                  onChange={(e) => setOtpField(e.target.value)}
+                  {...register("email_id")}
                 />
-                <Button
-                  className="mt-6 hover:shadow-none flex items-center justify-center"
-                  fullWidth
-                  color="orange"
-                  onClick={verifyCode}
-                >
-                  {verifyingOtp ? <Spinner color="amber"/>: "Verify"}
-                </Button>
               </div>
-            </>
-          )}
-          {/* ! OTP input ends */}
-          {/* Phone number ended */}
-        </div>
+              <div className="flex flex-col">
+                {errors.password && (
+                  <span className="text-red-600 text-xs pb-1 pl-1 w-full text-right">
+                    * {errors.password?.message}
+                  </span>
+                )}
+                <Input
+                  type="password"
+                  size="lg"
+                  label="Password"
+                  color="amber"
+                  {...register("password")}
+                />
+              </div>
+              <div className="flex flex-col">
+                {errors.confirmPassword && (
+                  <span className="text-red-600 text-xs pb-1 pl-1 w-full text-right">
+                    *{errors.confirmPassword?.message}
+                  </span>
+                )}
+                <Input
+                  type="password"
+                  size="lg"
+                  label="Confirm password"
+                  color="amber"
+                  {...register("confirmPassword")}
+                />
+              </div>
+            </div>
+          ):null}
 
-        {mobileVerified ? (
-          <div className="flex flex-col gap-5">
-            <div className="flex flex-col">
-              {errors.email_id && (
-                <span className="text-red-600 text-xs pb-1 pl-1 w-full text-right">
-                  *{errors.email_id?.message}
-                </span>
-              )}
-              <Input
-                size="lg"
-                label="Email"
-                color="amber"
-                {...register("email_id")}
-              />
-            </div>
-            <div className="flex flex-col">
-              {errors.password && (
-                <span className="text-red-600 text-xs pb-1 pl-1 w-full text-right">
-                  * {errors.password?.message}
-                </span>
-              )}
-              <Input
-                type="password"
-                size="lg"
-                label="Password"
-                color="amber"
-                {...register("password")}
-              />
-            </div>
-            <div className="flex flex-col">
-              {errors.confirmPassword && (
-                <span className="text-red-600 text-xs pb-1 pl-1 w-full text-right">
-                  *{errors.confirmPassword?.message}
-                </span>
-              )}
-              <Input
-                type="password"
-                size="lg"
-                label="Confirm password"
-                color="amber"
-                {...register("confirmPassword")}
-              />
-            </div>
-          </div>
-        ):<></>}
-
-        <Checkbox
-          label={
-            <Typography
-              variant="small"
-              color="gray"
-              className="flex items-center font-normal"
-            >
-              Remember me
-            </Typography>
-          }
-          containerProps={{ className: "-ml-2.5" }}
-        />
-        <Button
-          type="submit"
-          color="orange"
-          className="mt-6 flex justify-center"
-          fullWidth
-        >
-          Register
-        </Button>
-        <Typography color="gray" className="mt-4 text-center font-normal">
-          Already have an account?{" "}
-          <Link
-            to={"/user/login"}
-            className="font-medium text-orange-500 transition-colors hover:text-orange-700"
+          <Checkbox
+            label={
+              <Typography
+                variant="small"
+                color="gray"
+                className="flex items-center font-normal"
+              >
+                Remember me
+              </Typography>
+            }
+            containerProps={{ className: "-ml-2.5" }}
+          />
+          <Button
+            type="submit"
+            color="orange"
+            className="mt-6 flex justify-center"
+            fullWidth
           >
-            Sign In
-          </Link>
-        </Typography>
-      </form>
-    </Card>
+            Register
+          </Button>
+          <Typography color="gray" className="mt-4 text-center font-normal">
+            Already have an account?{" "}
+            <Link
+              to={"/user/login"}
+              className="font-medium text-orange-500 transition-colors hover:text-orange-700"
+            >
+              Sign In
+            </Link>
+          </Typography>
+        </form>
+      </div>
+    
+    </div>
   );
 };
 
