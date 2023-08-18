@@ -15,8 +15,8 @@ function Content() {
   const [organizationDescription, setOrganizationDescription] = useState("");
   const [tournamentName, setTournamentName] = useState("");
   const [tournamentDescription, setTournamentDescription] = useState("");
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
 
   const { id: userId } = useAppSelector((state) => state.userState.user);
   const [createTournament, { isLoading, isError, error, isSuccess }] =
@@ -213,8 +213,8 @@ const Step1 = () => {
   const [organizationDescription, setOrganizationDescription] = useState("");
   const [tournamentName, setTournamentName] = useState("");
   const [tournamentDescription, setTournamentDescription] = useState("");
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
 
   const { id: userId } = useAppSelector((state) => state.userState.user);
   const [createTournament, { isLoading, isError, error, isSuccess }] =
@@ -249,11 +249,10 @@ const Step1 = () => {
         is_active: true,
       };
       const crtTrnmt = await createTournament(toSent).unwrap();
-      if(crtTrnmt.status === "success" && crtTrnmt.status_code === 201)
-        dispatch(setTournamentDetails(crtTrnmt?.data))
-    
+      if (crtTrnmt.status === "success" && crtTrnmt.status_code === 201)
+        dispatch(setTournamentDetails(crtTrnmt?.data));
+
       console.log("Create tournament returned", crtTrnmt);
-      
     } catch (error) {
       const errorMessage = error?.data?.detail || "An error occurred";
       toast.error(`${errorMessage}`);
@@ -262,85 +261,109 @@ const Step1 = () => {
 
   return (
     <>
-      { isSuccess ? <Success/> : 
-      <>
-      <div className=" container mx-auto">
-      <div className=" mt-2 md:mt-4 lg:mt-6 w-full sm:w-4/4 lg:w-full py-2 md:py-5 rounded-lg flex flex-col justify-center items-center">
-        <div className="flex justify-center">
-          <p className=" text-blue-gray-700 text-2xl  md:text-3xl font-bold text-center">
-            Organisational Details
-          </p>
-        </div>
-        <div className="mt-4">
-          <div className="flex">
-            <div className="text-sm w-full">
-              <label htmlFor="organization" className="block mb-1 mt-2">
-                Organisation Name
-              </label>
-              <input
-                type="text"
-                id="organization"
-                className="border border-gray-500 px-4 py-2 rounded-lg focus:outline-none w-full  focus:border-orange-500 focus:ring-2 focus:ring-orange-200 "
-                placeholder="Enter Organisation Name"
-                value={organizationName}
-                onChange={handleOrganizationNameChange}
-              />
-            </div>
-          </div>
-          <div className="mt-2">
-            <div className="text-sm ">
-              <label htmlFor="description" className="block mb-1 mt-4">
-                About Organisation{" "}
-              </label>
-              <textarea
-                id="description"
-                className="border border-gray-500 px-4 py-2 rounded-lg focus:outline-none w-full focus:border-orange-500 focus:ring-2 focus:ring-orange-200 "
-                placeholder="Enter Organisation Description"
-                value={organizationDescription}
-                onChange={handleOrganizationDescriptionChange}
-              />
-            </div>
-          </div>
+      {isSuccess ? (
+        <Success />
+      ) : (
+        <>
+          <div className=" container mx-auto">
+            <div className=" mt-2 md:mt-4 lg:mt-6 w-full sm:w-4/4 lg:w-full py-2 md:py-5 rounded-lg flex flex-col justify-center items-center">
+              <div className="flex justify-center">
+                <p className=" text-blue-gray-700 text-2xl  md:text-3xl font-bold text-center">
+                  Organisational Details
+                </p>
+              </div>
+              <div className="mt-4">
+                <div className="flex">
+                  <div className="text-sm w-full">
+                    <label htmlFor="organization" className="block mb-1 mt-2">
+                      Organisation Name
+                    </label>
+                    <input
+                      type="text"
+                      id="organization"
+                      className="border border-gray-500 px-4 py-2 rounded-lg focus:outline-none w-full  focus:border-orange-500 focus:ring-2 focus:ring-orange-200 "
+                      placeholder="Enter Organisation Name"
+                      value={organizationName}
+                      onChange={handleOrganizationNameChange}
+                    />
+                  </div>
+                </div>
+                <div className="mt-2">
+                  <div className="text-sm ">
+                    <label htmlFor="description" className="block mb-1 mt-4">
+                      About Organisation{" "}
+                    </label>
+                    <textarea
+                      id="description"
+                      className="border border-gray-500 px-4 py-2 rounded-lg focus:outline-none w-full focus:border-orange-500 focus:ring-2 focus:ring-orange-200 "
+                      placeholder="Enter Organisation Description"
+                      value={organizationDescription}
+                      onChange={handleOrganizationDescriptionChange}
+                    />
+                  </div>
+                </div>
 
-          <div>
-            <p className=" text-blue-gray-700 text-2xl md:text-3xl font-bold text-center mt-4">
-              Tournament Details
-            </p>
-          </div>
-          <div className="flex mt-2">
-            <div className="text-sm  w-full">
-              <label htmlFor="tournament" className="block mb-1 mt-2">
-                Tournament Name
-              </label>
-              <input
-                type="text"
-                id="tournament"
-                className="border border-gray-500 px-4 py-2 rounded-lg focus:outline-none w-full  focus:border-orange-500 focus:ring-2 focus:ring-orange-200 "
-                placeholder="Enter Tournament Name"
-                value={tournamentName}
-                onChange={handleTournamentNameChange}
-              />
-            </div>
-          </div>
+                <div>
+                  <p className=" text-blue-gray-700 text-2xl md:text-3xl font-bold text-center mt-4">
+                    Tournament Details
+                  </p>
+                </div>
+                <div className="flex mt-2">
+                  <div className="text-sm  w-full">
+                    <label htmlFor="tournament" className="block mb-1 mt-2">
+                      Tournament Name
+                    </label>
+                    <input
+                      type="text"
+                      id="tournament"
+                      className="border border-gray-500 px-4 py-2 rounded-lg focus:outline-none w-full  focus:border-orange-500 focus:ring-2 focus:ring-orange-200 "
+                      placeholder="Enter Tournament Name"
+                      value={tournamentName}
+                      onChange={handleTournamentNameChange}
+                    />
+                  </div>
+                </div>
 
-          <div className="mt-2">
-            <div className="text-sm l">
-              <label htmlFor="details" className="block mb-1 mt-4">
-                About Tournament{" "}
-              </label>
-              <textarea
-                id="details"
-                className="border border-gray-500 px-4 py-2 rounded-lg focus:outline-none w-full focus:border-orange-500 focus:ring-2 focus:ring-orange-200 "
-                placeholder="Enter Tournament Description"
-                value={tournamentDescription}
-                onChange={handleTournamentDescriptionChange}
-              />
-            </div>
-          </div>
+                <div className="mt-2">
+                  <div className="text-sm l">
+                    <label htmlFor="details" className="block mb-1 mt-4">
+                      About Tournament{" "}
+                    </label>
+                    <textarea
+                      id="details"
+                      className="border border-gray-500 px-4 py-2 rounded-lg focus:outline-none w-full focus:border-orange-500 focus:ring-2 focus:ring-orange-200 "
+                      placeholder="Enter Tournament Description"
+                      value={tournamentDescription}
+                      onChange={handleTournamentDescriptionChange}
+                    />
+                  </div>
+                </div>
 
-          <div className="flex flex-row mt-4 items-center justify-between">
+                <DatePicker
+                  selected={startDate}
+                  onChange={(date) => setStartDate(date)}
+                  selectsStart
+                  startDate={startDate}
+                  endDate={endDate}
+                  showTimeSelect
+                  timeFormat="HH:mm"
+                  timeIntervals={15}
+                />
+                <DatePicker
+                  selected={endDate}
+                  onChange={(date) => setEndDate(date)}
+                  selectsEnd
+                  startDate={startDate}
+                  endDate={endDate}
+                  showTimeSelect
+                  timeFormat="HH:mm"
+                  timeIntervals={15}
+                />
+
+                {/* <div className="flex flex-row mt-4 items-center justify-between">
             <div className="text-sm ">
               <DatePicker
+                showIcon
                 selected={startDate}
                 showTimeSelect
                 onChange={(date) => setStartDate(date)}
@@ -360,21 +383,21 @@ const Step1 = () => {
                 placeholderText="Select End Date"
               />
             </div>
+          </div> */}
+                <div className="flex justify-center mt-4">
+                  <button
+                    className="flex items-center justify-center bg-orange-500 hover:bg-orange-700 text-white py-2 px-4 rounded-lg w-full"
+                    onClick={handleProceed}
+                  >
+                    {isLoading ? <Spinner color="amber" /> : "Save"}
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="flex justify-center mt-4">
-            <button
-              className="flex items-center justify-center bg-orange-500 hover:bg-orange-700 text-white py-2 px-4 rounded-lg w-full"
-              onClick={handleProceed}
-            >
-              {isLoading ? <Spinner color="amber" /> : "Save"}
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-      </>}
+        </>
+      )}
     </>
-    
   );
 };
 
