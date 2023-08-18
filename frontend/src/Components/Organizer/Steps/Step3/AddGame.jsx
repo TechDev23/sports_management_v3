@@ -21,7 +21,7 @@ const AddGame = () => {
   // schedule
   const initialValues = {
     name: "game1",
-    tournament_id : "hUvFddYbS3iTN2uL",
+    tournament_id : tourId,
     game_id: 1, // hardcoded from database 1 -> cricket
     info: "very long long description",
     prize_pool: 60000,
@@ -42,10 +42,10 @@ const AddGame = () => {
     teams_per_group: 0,
     avg_duration: 45,
 
-    // start_date: "2023-08-16T15:57:35.587Z",
-    start_date: null,
-    end_date: null
-    // end_date: "2023-08-16T15:57:35.587Z"
+    start_date: "2023-08-16T15:57:35.587Z",
+    end_date: "2023-08-16T15:57:35.587Z",
+    // start_date: null,
+    // end_date: null
   };
 
   
@@ -245,11 +245,7 @@ const AddGame = () => {
                 value={qualification}
                 className="w-full text-sm"
               />
-          </div>
-          {
-            values.type === 2 && (
-              <div className="w-full flex flex-col lg:flex-row gap-5"> 
-                <Input
+              <Input
                   value={values.avg_duration}
                   type="number"
                   onChange={handleInputChange}
@@ -257,11 +253,16 @@ const AddGame = () => {
                   color="orange"
                   name="avg_duration"
                 />
+          </div>
+          {
+            values.type === 2 && (
+              <div className="w-full flex flex-col lg:flex-row gap-5"> 
+                
                 <Input
                   value={values.num_groups}
                   type="number"
                   onChange={handleInputChange}
-                  label="Average duration"
+                  label="num_groups"
                   color="orange"
                   name="num_groups"
                 />
@@ -278,7 +279,7 @@ const AddGame = () => {
             )
           }
           
-          <div className="w-full flex flex-col lg:flex-row justify-between  gap-4">
+          {/* <div className="w-full flex flex-col lg:flex-row justify-between  gap-4">
             <div className="text-sm w-full  flex items-center justify-center">
               <DatePicker
                 selected={startDate}
@@ -300,7 +301,7 @@ const AddGame = () => {
                 name="end_date"
               />
             </div>
-          </div>
+          </div> */}
 
 
           <div className="w-full flex justify-center items-center">

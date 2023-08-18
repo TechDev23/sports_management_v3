@@ -14,11 +14,11 @@ export const userApi = createApi({
   }),
   tagTypes: ["User"],
   endpoints: (builder) => ({
-    
+
     uploadDoc: builder.mutation({
       query(data) {
         return {
-          url: `users/document?token=${data.token}`,
+          url: `users/document?token=${token}`,
           body: data,
           method: "post",
         };
@@ -26,11 +26,11 @@ export const userApi = createApi({
     }),
 
     updateUserDetails: builder.mutation({
-      query(body) {
+      query(data) {
         return {
           url: `users/details?token=${token}`,
-          method: "patch",
-          body
+          method: "PATCH",
+          body: data,
         }
       },
       transformResponse: (result) => result, // This property allows us to manipulate the data returned by a query or mutation before it hits the cache.

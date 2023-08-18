@@ -44,7 +44,7 @@ export const store = configureStore({
   },
   devTools: process.env.NODE_ENV === 'development',
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({}).concat([ tournamentApi.middleware, authApi.middleware, userApi.middleware, orgApi.middleware ]),
+    getDefaultMiddleware({}).concat([tournamentApi.middleware, authApi.middleware, userApi.middleware, orgApi.middleware]),
 });
 
 
