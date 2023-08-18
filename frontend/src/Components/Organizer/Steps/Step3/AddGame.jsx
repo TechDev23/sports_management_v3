@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useState } from "react";
-import { Input, Button, Textarea, Spinner } from "@material-tailwind/react";
+import { Input, Button, Textarea, Spinner, select } from "@material-tailwind/react";
 import { useSelector, useDispatch } from "react-redux";
 import Select from "react-select";
 import { useAddGameToTnmtMutation } from "../../../../redux/api/organizer/orgApi";
@@ -52,7 +52,8 @@ const AddGame = () => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [values, setValues] = useState(initialValues);
-  const [qualification, setQualification] = useState(null);
+  const [qualification, setQualification] = useState("Single Elimination");
+  const [game, setGame] = useState("Badminton");
 
   
 
@@ -99,6 +100,15 @@ const AddGame = () => {
     "type": selectedOption.value,
   })
 }
+
+  const handleGameChange = (selectedOption) => {
+    setGame(selectedOption.label)
+    setValues({
+      ...values,
+      "type": selectedOption.value
+    })
+  }  
+
   console.log("qualification", values)
 
   const success = true;
@@ -123,28 +133,81 @@ const AddGame = () => {
           <p className="text-blue-gray-700 text-xl">
             Add new Game
           </p>
-          <div className="w-full flex flex-col lg:flex-row gap-4">
-            <div className="w-full lg:w-2/3 gap-x-2">
-              <Input
-                value={values.name}
-                onChange={handleInputChange}
-                label="Enter the name of Tournament"
-                className="min-w-1/3"
-                color="orange"
-                name="name"
+
+
+
+          <div className="w-full flex flex-col gap-4  border-2 border-red-400">
+
+          <div className="flex flex-col lg:flex-row gap-4">
+          <div className="w-full lg:w-1/2 gap-x-2">
+            <Input
+              value={values.name}
+              onChange={handleInputChange}
+              label="Enter the name of Tournament"
+              className="min-w-1/3"
+              color="orange"
+              name="name"
+            />
+          </div>
+          <div className="w-full lg:w-1/2 text-sm">
+            <Select
+              placeholder={game}
+              onChange={handleGameChange}
+              options={options}
+              value={game}
+              name="game"
+            />
+          </div>
+          
+          </div>
+            <div className="flex flex-col lg:flex-row gap-4">
+            <Input
+            value={values.avg_duration}
+            type="number"
+            onChange={handleInputChange}
+            label="Average duration"
+            color="orange"
+            name="avg_duration"
+            />
+            <Select
+                options={qualificationOptions}
+                onChange={handleQualification}
+                autoFocus={true} 
+                value={qualification}
+                className="w-full text-sm"
+                placeholder={qualification}
               />
             </div>
-            <div className="w-full lg:w-1/3 text-sm">
-              <Select
-                placeholder="Select game"
-                onChange={handleInputChange}
-                options={options}
-                name="game"
-              />
-            </div>
+            {
+              values.type === 2 && (
+                <div className="w-full flex flex-col lg:flex-row gap-5"> 
+                  
+                  <Input
+                    value={values.num_groups}
+                    type="number"
+                    onChange={handleInputChange}
+                    label="Average duration"
+                    color="orange"
+                    name="num_groups"
+                  />
+                  <Input
+                    value={values.teams_per_group}
+                    type="number"
+                    onChange={handleInputChange}
+                    label="Teams per group"
+                    color="orange"
+                    name="teams_per_group"
+                  />
+                  
+                </div>
+              )
+            }
+
           </div>
 
-          <div className="w-full flex flex-col lg:flex-row gap-4">
+
+
+          <div className="w-full flex flex-col lg:flex-row gap-4 border-2 border-blue-400">
             <Textarea
               value={values.info}
               onChange={handleInputChange}
@@ -171,7 +234,10 @@ const AddGame = () => {
             </div>
           </div>
 
-          <div className="w-full flex flex-col lg:flex-row gap-5">
+
+
+
+          <div className="w-full flex flex-col lg:flex-row gap-5 border-2 border-green-400">
             <Input
               value={values.team_size}
               onChange={handleInputChange}
@@ -198,7 +264,10 @@ const AddGame = () => {
             />
           </div>
 
-          <div className="w-full flex flex-col lg:flex-row gap-5">
+
+
+
+          <div className="w-full flex flex-col lg:flex-row gap-5 border-2 border-yellow-400">
             <Input
               value={values.min_boys}
               onChange={handleInputChange}
@@ -238,45 +307,9 @@ const AddGame = () => {
               color="orange"
               name="max_age"
             />
-            <Select
-                options={qualificationOptions}
-                onChange={handleQualification}
-                autoFocus={true} 
-                value={qualification}
-                className="w-full text-sm"
-              />
+            
           </div>
-          {
-            values.type === 2 && (
-              <div className="w-full flex flex-col lg:flex-row gap-5"> 
-                <Input
-                  value={values.avg_duration}
-                  type="number"
-                  onChange={handleInputChange}
-                  label="Average duration"
-                  color="orange"
-                  name="avg_duration"
-                />
-                <Input
-                  value={values.num_groups}
-                  type="number"
-                  onChange={handleInputChange}
-                  label="Average duration"
-                  color="orange"
-                  name="num_groups"
-                />
-                <Input
-                  value={values.teams_per_group}
-                  type="number"
-                  onChange={handleInputChange}
-                  label="Teams per group"
-                  color="orange"
-                  name="teams_per_group"
-                />
-                
-              </div>
-            )
-          }
+          
           
           <div className="w-full flex flex-col lg:flex-row justify-between  gap-4">
             <div className="text-sm w-full  flex items-center justify-center">

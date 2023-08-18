@@ -18,6 +18,8 @@ import {
   CreditCardIcon,
   LockClosedIcon,
 } from "@heroicons/react/24/solid";
+import CustomizedSteppers from "../../Common/Stepper";
+import { useNavigate } from "react-router-dom";
  
 function formatCardNumber(value) {
   const val = value.replace(/\s+/g, "").replace(/[^0-9]/gi, "");
@@ -52,10 +54,15 @@ const Step4 = () => {
     const [cardExpires, setCardExpires] = React.useState("");
 
     const [confirmPayment, setConfirmPayment] = useState(false);
+
+    const navigate = useNavigate();
    
     return (
 
-      <div className="w-full flex flex-col justify-center items-center">
+      <div className="w-full flex flex-col justify-center items-center gap-4">
+        <div className="w-full">
+          <CustomizedSteppers step={3}/>
+        </div>
       {
         confirmPayment && (
 
@@ -235,6 +242,14 @@ const Step4 = () => {
           </Tabs>
         </CardBody>
       </Card>
+      <div className="w-full flex flex-row  items-center justify-between lg:justify-between gap-4 ">
+        <Button color='orange' onClick={()=> navigate("/o/new-tournament/step3")} >
+          Prev
+        </Button>
+        <Button color='orange' onClick={()=> navigate("/o/new-tournament/step5")} >
+          Next
+        </Button>
+      </div>
 
       
       </div>

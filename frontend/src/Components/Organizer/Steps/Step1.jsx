@@ -4,11 +4,13 @@ import Select from "react-select";
 import "react-datepicker/dist/react-datepicker.css";
 import { useCreateTournamentMutation } from "../../../redux/api/organizer/orgApi";
 import { useAppSelector } from "../../../redux/store";
-import { Spinner } from "@material-tailwind/react";
+import { Button, Spinner } from "@material-tailwind/react";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { setTournamentDetails } from "../../../redux/features/tournamentSlice";
+import CustomizedSteppers from "../../Common/Stepper";
+import { useNavigate } from "react-router-dom";
 
 function Content() {
   const [organizationName, setOrganizationName] = useState("");
@@ -78,7 +80,11 @@ function Content() {
   ];
 
   return (
-    <div className=" container mx-auto">
+    <div className=" ">
+
+      <div className="w-full">
+        <CustomizedSteppers step={0}/>
+      </div>
       <div className=" mt-2 md:mt-4 lg:mt-6 w-full sm:w-4/4 lg:w-full py-2 md:py-5 rounded-lg flex flex-col justify-center items-center">
         <div className="flex justify-center">
           <p className=" text-blue-gray-700 text-2xl  md:text-3xl font-bold text-center">
@@ -191,7 +197,7 @@ function Content() {
 
 function Success() {
   return (
-    <>
+    <div>
       <div className="flex flex-col justify-center items-center gap-3">
         <p className="text-6xl">
           <CheckCircleOutlineIcon
@@ -204,7 +210,7 @@ function Success() {
           Now you can add games to tournament
         </p>
       </div>
-    </>
+    </div>
   );
 }
 
@@ -260,11 +266,16 @@ const Step1 = () => {
     }
   };
 
+  const navigate = useNavigate();
+
   return (
-    <>
+    <div className="w-full">
       { isSuccess ? <Success/> : 
-      <>
-      <div className=" container mx-auto">
+      
+      <div className="w-full gap-4">
+      <div className="w-full">
+          <CustomizedSteppers step={0}/>
+      </div>
       <div className=" mt-2 md:mt-4 lg:mt-6 w-full sm:w-4/4 lg:w-full py-2 md:py-5 rounded-lg flex flex-col justify-center items-center">
         <div className="flex justify-center">
           <p className=" text-blue-gray-700 text-2xl  md:text-3xl font-bold text-center">
@@ -371,9 +382,16 @@ const Step1 = () => {
           </div>
         </div>
       </div>
+
+      <div className="w-full flex flex-row  items-center justify-center lg:justify-end gap-4 ">
+        <Button color='orange' onClick={()=> navigate("/o/new-tournament/step2")} >
+          Next
+        </Button>
+      </div>
     </div>
-      </>}
-    </>
+
+      }
+    </div>
     
   );
 };

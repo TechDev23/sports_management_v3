@@ -28,6 +28,7 @@ import {
   TabPanel,
 } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
+import CustomizedSteppers from "../../Common/Stepper";
 
 
 export default function Step5() {
@@ -76,7 +77,10 @@ export default function Step5() {
 
   
   return (
-    <div className="w-full h-full mt-3">
+    <div className="w-full flex flex-col h-full mt-3 gap-4">
+      <div className="w-full">
+        <CustomizedSteppers step={4}/>
+      </div>
       
     <div className='w-full flex flex-col lg:flex-row gap-4 '>
       
@@ -186,7 +190,7 @@ export default function Step5() {
       <p className='hidden lg:block text-blue-gray-700'>Email</p>
     </div>
   </div>
-    <div className="w-full flex justify-center lg:justify-end mt-4">
+    <div className="w-full flex justify-center lg:justify-end my-4">
     
       <div className='border-2 w-fit flex flex-col sm:flex-row items-center gap-4 lg:px-8 p-2  rounded-xl'>
         <p className='text-blue-gray-700 text-sm lg:text-lg font-semibold text-center'>The tournament will now be available at  
@@ -199,6 +203,12 @@ export default function Step5() {
         </Button>
       </div>
     </div>
+
+      <div className="w-full flex flex-row  items-center justify-center lg:justify-start gap-4 ">
+        <Button color='orange' onClick={()=> navigate("/o/new-tournament/step4")} >
+          Prev
+        </Button>
+      </div>
     </div>
   );
 }
