@@ -1,27 +1,38 @@
 /* eslint-disable no-unused-vars */
 import { useState } from "react";
-import { Input, Button, Textarea, Spinner } from "@material-tailwind/react";
-import { useSelector, useDispatch } from "react-redux";
+import {
+  Input,
+  Button,
+  Textarea,
+  Spinner,
+  Select as MSelect,
+  Option
+} from "@material-tailwind/react";
+import { useDispatch } from "react-redux";
 import Select from "react-select";
 import { useAddGameToTnmtMutation } from "../../../../redux/api/organizer/orgApi";
 import { useAppSelector } from "../../../../redux/store";
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import DatePicker from "react-datepicker";
+import { useGetGamesQuery } from "../../../../redux/api/General/generalApi";
+import { toast } from "react-toastify";
 
 const AddGame = () => {
-  const { id: tourId } = useAppSelector((state) => state.tournament.tour_details);
+  const { id: tourId } = useAppSelector(
+    (state) => state.tournament.tour_details
+  );
   const dispatch = useDispatch();
-  const [addGameToTnmt, {isSuccess, isLoading: isAddingGame}] = useAddGameToTnmtMutation()
+  const [addGameToTnmt, { isSuccess, isLoading: isAddingGame }] =
+    useAddGameToTnmtMutation();
 
-  // entire ui can be divided into 
+  // entire ui can be divided into
   // game detail
   // participants details (ex: min age, min boys ,etc)
   // prize
   // schedule
   const initialValues = {
     name: "game1",
-    tournament_id : tourId,
+    tournament_id: tourId,
     game_id: 1, // hardcoded from database 1 -> cricket
     info: "very long long description",
     prize_pool: 60000,
@@ -37,7 +48,7 @@ const AddGame = () => {
 
     // field to be added
 
-    type: 1, // select field 
+    type: 1, // select field
     num_groups: 0,
     teams_per_group: 0,
     avg_duration: 45,
@@ -48,13 +59,25 @@ const AddGame = () => {
     // end_date: null
   };
 
-  
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [values, setValues] = useState(initialValues);
-  const [qualification, setQualification] = useState(null);
+  const [qualification, setQualification] = useState("Single Elimination");
+  const [game, setGame] = useState(null);
 
-  
+  const [allFetchedGames, setAllFetchedGames] = useState([]);
+
+  const {
+    data: fetchedGames,
+    isLoading,
+    isFetching,
+    isSuccess: successGames,
+    isError: errorWhileGamesFetch,
+  } = useGetGamesQuery({ skip: true });
+  if (errorWhileGamesFetch) {
+    toast.error("Error while fetching games from our side");
+  }
+  console.log(fetchedGames);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -64,7 +87,6 @@ const AddGame = () => {
     });
     console.log(values);
   };
-
 
   const options = [
     {
@@ -84,67 +106,116 @@ const AddGame = () => {
   const qualificationOptions = [
     {
       value: 1,
-      label: "Single Elimination"
+      label: "Single Elimination",
     },
     {
       value: 2,
-      label: "League"
-    }
+      label: "League",
+    },
   ];
 
-  const handleQualification =(selectedOption)=>{
-    setQualification(selectedOption.label)
+  const handleQualification = (selectedOption) => {
+    setQualification(selectedOption.label);
     setValues({
-    ...values,
-    "type": selectedOption.value,
-  })
-}
-  console.log("qualification", values)
+      ...values,
+      type: selectedOption.value,
+    });
+  };
 
-  const success = true;
+  const handleGameChange = (selectedId) => {
+    console.log(selectedId)
+    setValues({
+      ...values,
+      game_id: selectedId,
+    });
+  };
 
-  const addGameToDB = async()=>{
 
+  const onSelectGame = (e) => {
+    console.log(e);
+  };
+  const addGameToDB = async () => {
     try {
       const addedGame = await addGameToTnmt(values);
       console.log(addedGame);
     } catch (error) {
-      console.log(`Error while adding game to tournament${error}`)
+      console.log(`Error while adding game to tournament${error}`);
     }
-  }
+  };
+
+  console.log(values)
   return (
     <div className="w-full space-y-4 py-5 border-t-2 ">
       {isSuccess ? (
         <div className="flex items-center justify-start mx-auto text-xl font-poppins gap-3">
-          <CheckCircleIcon className="text-green-500"/> <p>Game added Successfully</p>
+          <CheckCircleIcon className="text-green-500" />{" "}
+          <p>Game added Successfully</p>
         </div>
       ) : (
         <div className="space-y-4">
-          <p className="text-blue-gray-700 text-xl">
-            Add new Game
-          </p>
-          <div className="w-full flex flex-col lg:flex-row gap-4">
-            <div className="w-full lg:w-2/3 gap-x-2">
+          <p className="text-blue-gray-700 text-xl">Add new Game</p>
+
+          <div className="w-full flex flex-col gap-4  border-2 border-red-400">
+            <div className="flex flex-col lg:flex-row gap-4">
+              <div className="w-full lg:w-1/2 gap-x-2">
+                <Input
+                  value={values.name}
+                  onChange={handleInputChange}
+                  label="Enter the name of Tournament"
+                  className="min-w-1/3"
+                  color="orange"
+                  name="name"
+                />
+              </div>
+              <div className="w-full lg:w-1/2 text-sm">
+                <MSelect onChange={handleGameChange} color="orange" label="select games">
+                  {fetchedGames && fetchedGames.map(o=>(
+                    <Option value={o.id}>{o.value}</Option>
+                  ))}
+                </MSelect>
+              </div>
+            </div>
+            <div className="flex flex-col lg:flex-row gap-4">
               <Input
-                value={values.name}
+                value={values.avg_duration}
+                type="number"
                 onChange={handleInputChange}
-                label="Enter the name of Tournament"
-                className="min-w-1/3"
+                label="Average duration"
                 color="orange"
-                name="name"
+                name="avg_duration"
               />
-            </div>
-            <div className="w-full lg:w-1/3 text-sm">
               <Select
-                placeholder="Select game"
-                onChange={handleInputChange}
-                options={options}
-                name="game"
+                options={qualificationOptions}
+                onChange={handleQualification}
+                autoFocus={true}
+                value={qualification}
+                className="w-full text-sm"
+                placeholder={qualification}
               />
             </div>
+            {values.type === 2 && (
+              <div className="w-full flex flex-col lg:flex-row gap-5">
+                <Input
+                  value={values.num_groups}
+                  type="number"
+                  onChange={handleInputChange}
+                  label="Average duration"
+                  color="orange"
+                  name="num_groups"
+                />
+                <Input
+                  value={values.teams_per_group}
+                  type="number"
+                  onChange={handleInputChange}
+                  label="Teams per group"
+                  color="orange"
+                  name="teams_per_group"
+                />
+              </div>
+            )}
           </div>
 
-          <div className="w-full flex flex-col lg:flex-row gap-4">
+          <div className="w-full flex flex-col lg:flex-row gap-4 border-2 border-blue-400">
             <Textarea
               value={values.info}
               onChange={handleInputChange}
@@ -171,7 +242,7 @@ const AddGame = () => {
             </div>
           </div>
 
-          <div className="w-full flex flex-col lg:flex-row gap-5">
+          <div className="w-full flex flex-col lg:flex-row gap-5 border-2 border-green-400">
             <Input
               value={values.team_size}
               onChange={handleInputChange}
@@ -198,7 +269,7 @@ const AddGame = () => {
             />
           </div>
 
-          <div className="w-full flex flex-col lg:flex-row gap-5">
+          <div className="w-full flex flex-col lg:flex-row gap-5 border-2 border-yellow-400">
             <Input
               value={values.min_boys}
               onChange={handleInputChange}
@@ -238,47 +309,8 @@ const AddGame = () => {
               color="orange"
               name="max_age"
             />
-            <Select
-                options={qualificationOptions}
-                onChange={handleQualification}
-                autoFocus={true} 
-                value={qualification}
-                className="w-full text-sm"
-              />
-              <Input
-                  value={values.avg_duration}
-                  type="number"
-                  onChange={handleInputChange}
-                  label="Average duration"
-                  color="orange"
-                  name="avg_duration"
-                />
           </div>
-          {
-            values.type === 2 && (
-              <div className="w-full flex flex-col lg:flex-row gap-5"> 
-                
-                <Input
-                  value={values.num_groups}
-                  type="number"
-                  onChange={handleInputChange}
-                  label="num_groups"
-                  color="orange"
-                  name="num_groups"
-                />
-                <Input
-                  value={values.teams_per_group}
-                  type="number"
-                  onChange={handleInputChange}
-                  label="Teams per group"
-                  color="orange"
-                  name="teams_per_group"
-                />
-                
-              </div>
-            )
-          }
-          
+
           {/* <div className="w-full flex flex-col lg:flex-row justify-between  gap-4">
             <div className="text-sm w-full  flex items-center justify-center">
               <DatePicker
@@ -303,9 +335,12 @@ const AddGame = () => {
             </div>
           </div> */}
 
-
           <div className="w-full flex justify-center items-center">
-            <Button onClick={addGameToDB} className="flex justify-center items-center" color="orange">
+            <Button
+              onClick={addGameToDB}
+              className="flex justify-center items-center"
+              color="orange"
+            >
               {isAddingGame ? <Spinner color="amber" /> : "Add game"}
             </Button>
           </div>

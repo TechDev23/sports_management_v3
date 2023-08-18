@@ -29,6 +29,7 @@ import orgReducer from './features/orgSlice';
 import sidebarReducer from './features/SidebarSlice';
 import tournamentReducer from './features/tournamentSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { generalApi } from './api/General/generalApi';
 
 
 export const store = configureStore({
@@ -37,6 +38,7 @@ export const store = configureStore({
     [userApi.reducerPath]: userApi.reducer,
     [orgApi.reducerPath]: orgApi.reducer,
     [tournamentApi.reducerPath]: tournamentApi.reducer,
+    [generalApi.reducerPath]: generalApi.reducer,
     userState: userReducer,
     orgState: orgReducer,
     sidebar: sidebarReducer,
@@ -44,7 +46,7 @@ export const store = configureStore({
   },
   devTools: process.env.NODE_ENV === 'development',
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({}).concat([tournamentApi.middleware, authApi.middleware, userApi.middleware, orgApi.middleware]),
+    getDefaultMiddleware({}).concat([tournamentApi.middleware, authApi.middleware, userApi.middleware, orgApi.middleware, generalApi.middleware]),
 });
 
 

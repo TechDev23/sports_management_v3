@@ -11,6 +11,8 @@ import Select from "react-select";
 
 import check from "../../../assets/icons/check.png"
 import copy from "../../../assets/icons/copy.png"
+import CustomizedSteppers from '../../Common/Stepper';
+import { useNavigate } from 'react-router-dom';
 
 const Step2 = () => {
 
@@ -42,9 +44,15 @@ const Step2 = () => {
   ]
 
   const [idName, setIdName] = useState();
+  const navigate = useNavigate();
 
   return (
-    <div className="w-full h-full container  mt-4 space-y-4 border-b-2">
+    <div className="w-full h-full mt-4 gap-4 border-b-2">
+
+      <div className="w-full">
+        <CustomizedSteppers step={1} />
+      </div>
+
       <div className=''>
         <p className='text-2xl lg:text-3xl font-bold text-blue-gray-700'>Add Collaborators</p>
       </div>
@@ -144,7 +152,7 @@ const Step2 = () => {
         </div>
 
       </div>
-      <div className='w-full p-2 flex items-center justify-center gap-5 border-y mt-4'>
+      <div className='w-full p-2 flex flex-row items-center justify-center gap-4 border-y mt-4'>
         <div className='item-center flex flex-col items-center justify-center '>
             <img
             className="h-10 w-10 rounded-full object-cover object-center border cursor-pointer"
@@ -191,6 +199,15 @@ const Step2 = () => {
           />
           <p className='hidden lg:block text-blue-gray-700'>Email</p>
         </div>
+      </div>
+
+      <div className="w-full flex flex-row  items-center justify-between lg:justify-between gap-4 ">
+        <Button color='orange' onClick={()=> navigate("/o/new-tournament/step1")} >
+          Prev
+        </Button>
+        <Button color='orange' onClick={()=> navigate("/o/new-tournament/step3")} >
+          Next
+        </Button>
       </div>
 
     </div>

@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import AddGame from './AddGame';
 import { Button } from "@material-tailwind/react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import CustomizedSteppers from "../../../Common/Stepper";
 const Step3 = () => {
 
   const dispatch = useDispatch();
@@ -19,10 +20,15 @@ const Step3 = () => {
     }
   };
 
+  const navigate = useNavigate();
+
   return (
 
-    <div className='w-full'>
-      <div className="w-full flex justify-end">
+    <div className='w-full gap-4'>
+     <div className="w-full">
+        <CustomizedSteppers step={2}/>
+     </div>
+     <div className="w-full flex justify-end">
       <Link to={'/o/new-tournament/added-games'} className="font-poppins text-gray-600 hover:text-orange-500">See previous added games</Link>
       </div>
       <div className="space-y-4">
@@ -36,6 +42,15 @@ const Step3 = () => {
       </Button>
         <Button color="amber" onClick={handleAddGame} className="bg-orange-500 text-white px-4 py-2 ">
           Add Game
+        </Button>
+      </div>
+
+      <div className="w-full flex flex-row  items-center justify-between lg:justify-between gap-4 ">
+        <Button color='orange' onClick={()=> navigate("/o/new-tournament/step2")} >
+          Prev
+        </Button>
+        <Button color='orange' onClick={()=> navigate("/o/new-tournament/step4")} >
+          Next
         </Button>
       </div>
       
