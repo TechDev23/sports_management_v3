@@ -34,6 +34,7 @@ export default function ComplexNavbar() {
     email_id: user?.email_id,
     emergency_contact: "null",
     dob: user?.dob,
+    gender:user?.gender || "Male"
   };
   const [updateUserDetails, { isLoading, isSuccess }] =
   useUpdateUserDetailsMutation();
@@ -470,6 +471,7 @@ export default function ComplexNavbar() {
                         <>
                           <div className="flex sm:flex-col items-center sm:items-start gap-2">
                             <DatePicker
+                              showIcon
                               selected={editedDOB}
                               onChange={(date) => setEditedDOB(date)}
                               showYearDropdown
