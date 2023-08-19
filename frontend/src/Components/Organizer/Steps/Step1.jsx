@@ -215,6 +215,7 @@ function Success() {
 }
 
 const Step1 = () => {
+  
   const [organizationName, setOrganizationName] = useState("");
   const [organizationDescription, setOrganizationDescription] = useState("");
   const [tournamentName, setTournamentName] = useState("");
@@ -366,7 +367,7 @@ const Step1 = () => {
                   placeholderText="Select start Date"
                   selectsStart
                   name="start_date"
-                  dateFormat="yyyy-mm-dd hh:mm:aa"
+                  dateFormat="yyyy-MM-dd hh:mm:aa"
                   startDate={startDate}
                   endDate={endDate}
                 />
@@ -379,7 +380,7 @@ const Step1 = () => {
                   placeholderText="Select End Date"  
                   selectsStart
                   name="end_date"
-                  dateFormat="yyyy-mm-dd hh:mm:aa"
+                  dateFormat="yyyy-MM-dd hh:mm aa"
                   
                   startDate={startDate}
                   endDate={endDate}

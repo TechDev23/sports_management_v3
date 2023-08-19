@@ -20,6 +20,7 @@ import {
 } from "@heroicons/react/24/solid";
 import CustomizedSteppers from "../../Common/Stepper";
 import { useNavigate } from "react-router-dom";
+
  
 function formatCardNumber(value) {
   const val = value.replace(/\s+/g, "").replace(/[^0-9]/gi, "");

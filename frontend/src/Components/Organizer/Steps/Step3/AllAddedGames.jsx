@@ -90,7 +90,7 @@ function UpdateDialog() {
     console.log(values);
   };
   return (
-    <>
+    <div>
       <Button color="amber" variant="outlined" onClick={handleOpen} className="hover:text-white hover:bg-orange-500 flex gap-2 items-center justify-center w-auto border-none">
         <EditIcon/><p>Edit</p> 
       </Button>
@@ -142,7 +142,7 @@ function UpdateDialog() {
           </Button>
         </DialogFooter>
       </Dialog>
-    </>
+    </div>
   );
 }
 
@@ -176,8 +176,9 @@ export default function AllAddedGames() {
       </div>
 
       <div className="grid grid-auto-fit-[25rem] gap-6">
-        {allGames?.data.map((game) => (
-          <>
+
+        {allGames?.data.map((game, index) => (
+          <div key={index}>
             <Card className="w-fit">
               <CardBody>
                 <Typography
@@ -196,8 +197,11 @@ export default function AllAddedGames() {
                 <UpdateDialog />
               </CardFooter>
             </Card>
-          </>
+          </div>
         ))}
+        
+
+
       </div>
     </div>
   );
