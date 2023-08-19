@@ -24,19 +24,23 @@ const Step3 = () => {
 
   return (
 
-    <div className='w-full gap-4'>
+    <div className='w-full flex flex-col gap-4'>
      <div className="w-full">
         <CustomizedSteppers step={2}/>
      </div>
-     <div className="w-full flex justify-end">
-      <Link to={'/o/new-tournament/added-games'} className="font-poppins text-gray-600 hover:text-orange-500">See previous added games</Link>
+     <div className="w-full flex justify-center sm:justify-end">
+          <Link to={'/o/new-tournament/added-games'} className="font-poppins text-gray-600 hover:text-orange-500">
+            <Button color="orange">
+            See previous added games
+            </Button>
+          </Link>
       </div>
-      <div className="space-y-4">
+      <div className="space-y-4 w-full ">
         {Array.from({ length: gameCount }, (_, index) => (
           <AddGame key={index} gameIndex={index} />
         ))}
       </div>
-      <div className="flex justify-end  mb-3">
+      <div className="flex justify-center ">
       <Button color="red" onClick={handleRemoveGame} className=" bg-gray-400 shadow-none hover:bg-red-400 text-white px-4 py-2 mr-2">
         Remove Game
       </Button>

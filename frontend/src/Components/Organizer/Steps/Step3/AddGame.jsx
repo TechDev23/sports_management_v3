@@ -25,6 +25,41 @@ import { toast } from "react-toastify";
 
 // icons
 
+
+const DateSelector = () => {
+
+  const [hours, setHours] = useState();
+  const [minutes, setMinutes] = useState();
+  const [startDate, setStartDate] = useState(
+    setHours(setMinutes(new Date(), 30), 16)
+  );
+  const [endDate, setEndDate] = useState(new Date("2014/02/10"));
+  return (
+    <div>
+      <DatePicker
+        selected={startDate}
+        onChange={(date) => setStartDate(date)}
+        selectsStart
+        startDate={startDate}
+        endDate={endDate}
+        showTimeSelect
+        dateFormat="MMMM d, yyyy h:mm aa"
+      />
+      <DatePicker
+        selected={endDate}
+        onChange={(date) => setEndDate(date)}
+        selectsEnd
+        startDate={startDate}
+        endDate={endDate}
+        showTimeSelect
+        dateFormat="MMMM d, yyyy h:mm aa"
+        minDate={startDate}
+      />
+    </div>
+  );
+};
+
+
 const AddGame = () => {
   const { id: tourId } = useAppSelector(
     (state) => state.tournament.tour_details
@@ -84,6 +119,7 @@ const AddGame = () => {
     isError: errorWhileGamesFetch,
   } = useGetGamesQuery({ skip: true });
   if (errorWhileGamesFetch) {
+
     toast.error("Error while fetching games from our side");
   }
 
@@ -170,25 +206,23 @@ const AddGame = () => {
 
   console.log(values);
   return (
-    <div className="w-full space-y-8 py-5 border-t-2 ">
+    <div className="w-full gap-8 py-5 border-t-2 ">
       {isSuccess ? (
         <div className="flex items-center justify-start mx-auto text-xl font-poppins gap-3">
           <CheckCircleIcon className="text-green-500" />{" "}
           <p>Game added Successfully</p>
         </div>
       ) : (
-        <div className="space-y-4 shadow-lg p-4">
+        <div className="space-y-4 shadow-sm md:p-4 w-full ">
           <p className=" text-xl text-center font-poppins font-bold">
             Add new Game
           </p>
 
           {/* GAme details div starts */}
-          <div className="w-full p-6 border border-black-100 rounded-lg flex flex-col gap-4">
-            <div className="flex gap-4">
+          <div className="w-full lg:p-4 border border-black-100 rounded-lg flex flex-col gap-6">
               <p className="font-semibold font-poppins text-blue-gray-700">
                 Enter game details{" "}
               </p>
-            </div>
             <div className="flex flex-col lg:flex-row gap-4">
               <div className="w-full lg:w-1/2 gap-x-2">
                 <Input
@@ -207,8 +241,8 @@ const AddGame = () => {
                   label="select game to be played"
                 >
                   {successGames ? (
-                    fetchedGames.map((o) => (
-                      <Option className="capitalize" value={o.id}>
+                    fetchedGames.map((o, index) => (
+                      <Option key={index} className="capitalize" value={o.id}>
                         {o.value}
                       </Option>
                     ))
@@ -240,8 +274,8 @@ const AddGame = () => {
                 color="orange"
                 label="Type of Game"
               >
-                {qualificationOptions.map((op) => (
-                  <Option className="capitalize" value={op.value}>
+                {qualificationOptions.map((op, index) => (
+                  <Option key={index} className="capitalize" value={op.value}>
                     {op.label}
                   </Option>
                 ))}
@@ -308,41 +342,21 @@ const AddGame = () => {
           {/* GAme details div ends */}
 
           {/* Participants div starts */}
-          <div className="p-6 border border-black-100 rounded-lg space-y-4">
+          <div className="lg:p-4 border border-black-100 rounded-lg space-y-4">
             <div className="flex gap-4">
               <p className="font-semibold font-poppins text-blue-gray-700">
                 Who can participate?
               </p>
             </div>
             <div className="w-full flex flex-col lg:flex-row gap-5">
-              {/* <Input
-              value={values.min_boys}
-              onChange={handleInputChange}
-              label="Minimum Boys"
-              color="orange"
-              name="min_boys"
-            />
-            <Input
-              value={values.min_girls}
-              onChange={handleInputChange}
-              label="Minimum girls"
-              color="orange"
-              name="min_girls"
-            />
-            <Input
-              label="open to"
-              color="orange"
-              name="open_to"
-              value={values.open_to}
-              onChange={handleInputChange}
-            /> */}
-              <List className=" w-full flex-row">
+          
+              <List className=" w-full flex-row ">
                 <ListItem className="p-0">
                   <label
                     htmlFor="horizontal-list-react"
-                    className="flex w-full cursor-pointer items-center px-3 py-2"
+                    className="flex w-full cursor-pointer items-center  py-2"
                   >
-                    <ListItemPrefix className="mr-3">
+                    <ListItemPrefix className="">
                       <Radio
                         color="amber"
                         name="horizontal-list"
@@ -356,15 +370,16 @@ const AddGame = () => {
                         }}
                       />
                     </ListItemPrefix>
-                    <Typography color="blue-gray" className="font-medium">
+                    <Typography color="blue-gray" className="font-medium text-sm">
                       Only Girls
                     </Typography>
                   </label>
                 </ListItem>
+
                 <ListItem className="p-0">
                   <label
                     htmlFor="horizontal-list-vue"
-                    className="flex w-full cursor-pointer items-center px-3 py-2"
+                    className="flex w-full cursor-pointer items-center  py-2"
                   >
                     <ListItemPrefix className="mr-3">
                       <Radio
@@ -380,7 +395,7 @@ const AddGame = () => {
                         onChange={() => handleParticipantRadio(1)}
                       />
                     </ListItemPrefix>
-                    <Typography color="blue-gray" className="font-medium">
+                    <Typography color="blue-gray" className="font-medium text-sm">
                       Only Boys
                     </Typography>
                   </label>
@@ -388,7 +403,7 @@ const AddGame = () => {
                 <ListItem className="p-0">
                   <label
                     htmlFor="horizontal-list-svelte"
-                    className="flex w-full cursor-pointer items-center px-3 py-2"
+                    className="flex w-full cursor-pointer items-center  py-2"
                   >
                     <ListItemPrefix className="mr-3">
                       <Radio
@@ -404,7 +419,7 @@ const AddGame = () => {
                         onChange={() => handleParticipantRadio(2)}
                       />
                     </ListItemPrefix>
-                    <Typography color="blue-gray" className="font-medium">
+                    <Typography color="blue-gray" className="font-medium text-sm">
                       Both
                     </Typography>
                   </label>
@@ -433,13 +448,14 @@ const AddGame = () => {
           {/* Participants div ends */}
 
           {/* Prize and schedule div starts */}
-          <div className="w-full p-6 border border-black-100 flex md:justify-between flex-col lg:flex-row gap-6">
-            <div className="w-1/3 flex flex-col gap-5">
-              <div className="flex gap-4">
+          <div className="w-full lg:p-4  border border-black-100 flex md:justify-between flex-col lg:flex-row gap-4">
+
+            <div className="w-full flex flex-col gap-4 ">
                 <p className="font-semibold font-poppins text-blue-gray-700">
                   Fess and Prizes{" "}
                 </p>
-              </div>
+              <div className="flex flex-col lg:flex-row gap-5">
+              
               <Input
                 value={values.prize_pool}
                 onChange={handleInputChange}
@@ -454,33 +470,46 @@ const AddGame = () => {
                 color="orange"
                 name="participation_fees"
               />
+              </div>
             </div>
 
             {/* Schedule div starts */}
-            <div className="w-full flex flex-col gap-5">
-              <div className="flex gap-4">
+            <div className="w-full flex flex-col gap-4">
                 <p className="font-semibold font-poppins text-blue-gray-700">
                   Schedule{" "}
                 </p>
-              </div>
-              <div className="flex items-center gap-2">
+
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-2">
+
                 <DatePicker
                   selected={startDate}
                   showTimeSelect
                   onChange={(date) => setStartDate(date)}
-                  className="w-60 border border-gray-500 px-4 py-2 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200 text-xs md:text-normal"
+                  className="w-64 sm:w-56 md:w-60 lg:w-48 xl:w-60 border border-gray-500 p-4 py-2 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200 text-sm md:text-normal"
                   placeholderText="Select start Date"
+                  selectsStart
                   name="start_date"
+                  dateFormat="yyyy-mm-dd hh:mm:aa"
+                  startDate={startDate}
+                  endDate={endDate}
                 />
-                <p>To</p>
+                <p className="font-poppins p-2 bg-gray-100 rounded-lg">To</p>
                 <DatePicker
                   selected={endDate}
                   showTimeSelect
                   onChange={(date) => setEndDate(date)}
-                  className="w-60 border border-gray-500 px-4 py-2 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200  text-xs md:text-normal"
-                  placeholderText="Select End Date"
+                  className="w-64 sm:w-56 md:w-60 lg:w-48 xl:w-60 border border-gray-500 p-4 py-2 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200  text-sm md:text-normal"
+                  placeholderText="Select End Date"  
+                  selectsStart
                   name="end_date"
+                  dateFormat="yyyy-mm-dd hh:mm:aa"
+                  
+                  startDate={startDate}
+                  endDate={endDate}
+                  minDate={startDate}
                 />
+
+                
               </div>
             </div>
             {/* Schedule div ends */}

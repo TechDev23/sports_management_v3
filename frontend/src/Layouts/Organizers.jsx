@@ -17,7 +17,7 @@ const Organizers = () => {
           <Sidebar /> 
         </div>
 
-          <div className="w-full h-full p-5 bg-white">
+          <div className=" w-full h-full p-5 bg-white  font-poppins ">
             <Outlet />
           </div>
       </div>

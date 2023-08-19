@@ -269,57 +269,63 @@ const Step1 = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="w-full">
+    <div className="w-full h-full">
       { isSuccess ? 
         <Success/> : 
       
-      <div className="w-full gap-4">
+      <div className="w-full space-y-4">
+
+
+
       <div className="w-full">
           <CustomizedSteppers step={0}/>
       </div>
-      <div className=" mt-2 md:mt-4 lg:mt-6 w-full sm:w-4/4 lg:w-full py-2 md:py-5 rounded-lg flex flex-col justify-center items-center">
-        <div className="flex justify-center">
-          <p className=" text-blue-gray-700 text-2xl  md:text-3xl font-bold text-center">
+      <div className=" mt-2 md:mt-4 lg:mt-6 w-full sm:w-4/4 lg:w-full py-2 md:py-5 rounded-lg flex flex-col  justify-center items-center shadow-md">
+        
+      <div className="flex flex-col lg:flex-row gap-4 justify-between w-full">
+      
+        <div className="flex flex-col justify-start w-full ">
+
+          <p className=" text-blue-gray-700 text-2xl  md:text-3xl font-poppins font-bold ">
             Organisational Details
           </p>
-        </div>
-        <div className="mt-4">
-          <div className="flex">
-            <div className="text-sm w-full">
-              <label htmlFor="organization" className="block mb-1 mt-2">
-                Organisation Name
-              </label>
-              <input
-                type="text"
-                id="organization"
-                className="border border-gray-500 px-4 py-2 rounded-lg focus:outline-none w-full  focus:border-orange-500 focus:ring-2 focus:ring-orange-200 "
-                placeholder="Enter Organisation Name"
-                value={organizationName}
-                onChange={handleOrganizationNameChange}
-              />
-            </div>
-          </div>
-          <div className="mt-2">
-            <div className="text-sm ">
-              <label htmlFor="description" className="block mb-1 mt-4">
-                About Organisation{" "}
-              </label>
-              <textarea
-                id="description"
-                className="border border-gray-500 px-4 py-2 rounded-lg focus:outline-none w-full focus:border-orange-500 focus:ring-2 focus:ring-orange-200 "
-                placeholder="Enter Organisation Description"
-                value={organizationDescription}
-                onChange={handleOrganizationDescriptionChange}
-              />
-            </div>
+        
+          <div className="mt-4 font-poppins ">
+              <div className="text-sm w-full">
+                <label htmlFor="organization" className="block mb-1 mt-2  ">
+                  Organisation Name
+                </label>
+                <input
+                  type="text"
+                  id="organization"
+                  className="border border-gray-500 px-4 py-2 rounded-lg focus:outline-none w-full  focus:border-orange-500 focus:ring-2 focus:ring-orange-200 "
+                  placeholder="Enter Organisation Name"
+                  value={organizationName}
+                  onChange={handleOrganizationNameChange}
+                />
+              </div>
+              <div className="text-sm mt-6">
+                <label htmlFor="description" className="block mb-1 mt-4">
+                  About Organisation{" "}
+                </label>
+                <textarea
+                  id="description"
+                  className="border border-gray-500 px-4 py-2 rounded-lg focus:outline-none w-full focus:border-orange-500 focus:ring-2 focus:ring-orange-200 "
+                  placeholder="Enter Organisation Description"
+                  value={organizationDescription}
+                  onChange={handleOrganizationDescriptionChange}
+                />
+              </div>
           </div>
 
-          <div>
-            <p className=" text-blue-gray-700 text-2xl md:text-3xl font-bold text-center mt-4">
+        </div>
+
+        <div className="flex flex-col justify-start w-full ">
+
+            <p className=" text-blue-gray-700 text-2xl md:text-3xl font-bold  ">
               Tournament Details
             </p>
-          </div>
-          <div className="flex mt-2">
+          <div className="flex mt-4">
             <div className="text-sm  w-full">
               <label htmlFor="tournament" className="block mb-1 mt-2">
                 Tournament Name
@@ -350,28 +356,44 @@ const Step1 = () => {
             </div>
           </div>
 
-          <div className="flex flex-row mt-4 items-center justify-between">
-            <div className="text-sm ">
-              <DatePicker
-                selected={startDate}
-                showTimeSelect
-                onChange={(date) => setStartDate(date)}
-                className="border border-gray-500 px-4 py-2 rounded-lg focus:outline-none w-full focus:border-orange-500 focus:ring-2 focus:ring-orange-200 text-xs md:text-normal"
-                placeholderText="Select Start Date"
-              />
-            </div>
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-2 mt-4">
 
-            <p className=" my-auto mx-4 text-normal text-gray-500">to</p>
+                <DatePicker
+                  selected={startDate}
+                  showTimeSelect
+                  onChange={(date) => setStartDate(date)}
+                  className="w-64 sm:w-56 md:w-60 lg:w-48 xl:w-60 border border-gray-500 p-4 py-2 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200 text-sm md:text-normal"
+                  placeholderText="Select start Date"
+                  selectsStart
+                  name="start_date"
+                  dateFormat="yyyy-mm-dd hh:mm:aa"
+                  startDate={startDate}
+                  endDate={endDate}
+                />
+                <p className="font-poppins p-2 bg-gray-100 rounded-lg">To</p>
+                <DatePicker
+                  selected={endDate}
+                  showTimeSelect
+                  onChange={(date) => setEndDate(date)}
+                  className="w-64 sm:w-56 md:w-60 lg:w-48 xl:w-60 border border-gray-500 p-4 py-2 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200  text-sm md:text-normal"
+                  placeholderText="Select End Date"  
+                  selectsStart
+                  name="end_date"
+                  dateFormat="yyyy-mm-dd hh:mm:aa"
+                  
+                  startDate={startDate}
+                  endDate={endDate}
+                  minDate={startDate}
+                />
 
-            <div className="text-sm">
-              <DatePicker
-                selected={endDate}
-                showTimeSelect
-                onChange={(date) => setEndDate(date)}
-                className="border border-gray-500 px-4 py-2 rounded-lg focus:outline-none w-full focus:border-orange-500 focus:ring-2 focus:ring-orange-200  text-xs md:text-normal"
-                placeholderText="Select End Date"
-              />
-            </div>
+                
+              </div>
+
+
+          </div>
+
+
+
           </div>
           <div className="flex justify-center mt-4">
             <button
@@ -381,7 +403,9 @@ const Step1 = () => {
               {isLoading ? <Spinner color="amber" /> : "Save"}
             </button>
           </div>
-        </div>
+
+
+
       </div>
 
       <div className="w-full flex flex-row  items-center justify-center lg:justify-end gap-4 ">
@@ -389,7 +413,9 @@ const Step1 = () => {
           Next
         </Button>
       </div>
-    </div>
+    
+
+      </div>
 
       }
     </div>
