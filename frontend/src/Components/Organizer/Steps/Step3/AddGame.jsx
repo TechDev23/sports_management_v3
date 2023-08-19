@@ -50,9 +50,9 @@ const AddGame = () => {
     team_size: 1,
     max_teams: 8,
     total_rounds: 3,
-    min_boys: 1,
-    min_girls: 0,
-    open_to: 1,
+    min_boys: null,
+    min_girls: null,
+    open_to: 2,
     min_age: 18,
     max_age: 23,
 
@@ -74,8 +74,7 @@ const AddGame = () => {
   const [values, setValues] = useState(initialValues);
   const [qualification, setQualification] = useState("Single Elimination");
   const [game, setGame] = useState(null);
-
-  const [allFetchedGames, setAllFetchedGames] = useState([]);
+  const [whoCanParticipate, setWhoCanParticipate] = useState(2)
 
   const {
     data: fetchedGames,
@@ -87,7 +86,6 @@ const AddGame = () => {
   if (errorWhileGamesFetch) {
     toast.error("Error while fetching games from our side");
   }
-  // console.log(fetchedGames);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -95,23 +93,8 @@ const AddGame = () => {
       ...values,
       [name]: value,
     });
-    // console.log(values);
   };
 
-  const options = [
-    {
-      value: "Cricket",
-      label: "Cricket",
-    },
-    {
-      value: "Football",
-      label: "Football",
-    },
-    {
-      value: "Badminton",
-      label: "Badminton",
-    },
-  ];
 
   const qualificationOptions = [
     {
@@ -139,6 +122,41 @@ const AddGame = () => {
       game_id: selectedId,
     });
   };
+
+  const handleParticipantRadio = (value)=>{
+    setWhoCanParticipate(value);
+    console.log(value)
+    setValues({
+      ...values,
+      open_to: value,
+    });
+
+    if(value === 0){
+      setValues({
+        ...values, 
+        min_girls: value,
+        min_boys:null,
+        open_to: value,
+      })
+    }
+    else if(value === 1){
+      setValues({
+        ...values,
+        min_boys: value,
+        min_girls: null,
+        open_to: value,
+      })
+    }
+    else if(value === 2){
+      setValues({
+        ...values,
+        min_boys: 1,
+        min_girls: 0,
+        open_to: value,
+      })
+    }
+
+  }
 
   const addGameToDB = async () => {
     try {
@@ -326,10 +344,12 @@ const AddGame = () => {
                   >
                     <ListItemPrefix className="mr-3">
                       <Radio
-                      color="amber"
+                        color="amber"
                         name="horizontal-list"
                         id="horizontal-list-react"
                         ripple={false}
+                        checked={whoCanParticipate === 0}
+                        onChange={() => handleParticipantRadio(0)}
                         className="hover:before:opacity-0 "
                         containerProps={{
                           className: "p-0",
@@ -356,6 +376,8 @@ const AddGame = () => {
                         containerProps={{
                           className: "p-0",
                         }}
+                        checked={whoCanParticipate === 1}
+                        onChange={() => handleParticipantRadio(1)}
                       />
                     </ListItemPrefix>
                     <Typography color="blue-gray" className="font-medium">
@@ -378,6 +400,8 @@ const AddGame = () => {
                         containerProps={{
                           className: "p-0",
                         }}
+                        checked={whoCanParticipate === 2}
+                        onChange={() => handleParticipantRadio(2)}
                       />
                     </ListItemPrefix>
                     <Typography color="blue-gray" className="font-medium">
