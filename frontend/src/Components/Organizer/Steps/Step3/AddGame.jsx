@@ -25,7 +25,7 @@ import { toast } from "react-toastify";
 
 // icons
 
-const AddGame = () => {
+const AddGame = ({ key }) => {
   const { id: tourId } = useAppSelector(
     (state) => state.tournament.tour_details
   );
@@ -74,7 +74,7 @@ const AddGame = () => {
   const [values, setValues] = useState(initialValues);
   const [qualification, setQualification] = useState("Single Elimination");
   const [game, setGame] = useState(null);
-  const [whoCanParticipate, setWhoCanParticipate] = useState(2)
+  const [whoCanParticipate, setWhoCanParticipate] = useState(2);
 
   const {
     data: fetchedGames,
@@ -82,6 +82,7 @@ const AddGame = () => {
     isFetching,
     isSuccess: successGames,
     isError: errorWhileGamesFetch,
+    error: errGameFetch,
   } = useGetGamesQuery({ skip: true });
   if (errorWhileGamesFetch) {
     toast.error("Error while fetching games from our side");
@@ -94,7 +95,6 @@ const AddGame = () => {
       [name]: value,
     });
   };
-
 
   const qualificationOptions = [
     {
@@ -123,54 +123,127 @@ const AddGame = () => {
     });
   };
 
-  const handleParticipantRadio = (value)=>{
+  const handleParticipantRadio = (value) => {
     setWhoCanParticipate(value);
-    console.log(value)
+    console.log(value);
     setValues({
       ...values,
       open_to: value,
     });
 
-    if(value === 0){
+    if (value === 0) {
       setValues({
-        ...values, 
+        ...values,
         min_girls: value,
-        min_boys:null,
+        min_boys: null,
         open_to: value,
-      })
-    }
-    else if(value === 1){
+      });
+    } else if (value === 1) {
       setValues({
         ...values,
         min_boys: value,
         min_girls: null,
         open_to: value,
-      })
-    }
-    else if(value === 2){
+      });
+    } else if (value === 2) {
       setValues({
         ...values,
         min_boys: 1,
         min_girls: 0,
         open_to: value,
-      })
-    }
-
-  }
-
-  const addGameToDB = async () => {
-    try {
-      const addedGame = await addGameToTnmt(values);
-      console.log(addedGame);
-    } catch (e) {
-      const err = e?.data.detail || "Unknown error";
-      toast.success(`Error while adding game to tournament${err}`);
+      });
     }
   };
 
+  const addGameToDB = async () => {
+    const ressponse = await addGameToTnmt(values);
+    if (errorWhileAddingGame) {
+      toast.error(errGameFetch);
+    }
+    if (ressponse?.error) {
+      toast.error(ressponse?.error?.data.detail);
+    }
+  };
+
+  const GenderRadioButtons = ({key}) => (
+    <List key={key} className=" w-full flex-row">
+      <ListItem className="p-0">
+        <label
+          htmlFor="horizontal-list-react"
+          className="flex w-full cursor-pointer items-center px-3 py-2"
+        >
+          <ListItemPrefix className="mr-3">
+            <Radio
+              color="amber"
+              name="horizontal-list"
+              id="horizontal-list-react"
+              ripple={false}
+              checked={whoCanParticipate === 0}
+              onChange={() => handleParticipantRadio(0)}
+              className="hover:before:opacity-0 "
+              containerProps={{
+                className: "p-0",
+              }}
+            />
+          </ListItemPrefix>
+          <Typography color="blue-gray" className="font-medium">
+            Only Girls
+          </Typography>
+        </label>
+      </ListItem>
+      <ListItem className="p-0">
+        <label
+          htmlFor="horizontal-list-vue"
+          className="flex w-full cursor-pointer items-center px-3 py-2"
+        >
+          <ListItemPrefix className="mr-3">
+            <Radio
+              color="amber"
+              name="horizontal-list"
+              id="horizontal-list-vue"
+              ripple={false}
+              className="hover:before:opacity-0"
+              containerProps={{
+                className: "p-0",
+              }}
+              checked={whoCanParticipate === 1}
+              onChange={() => handleParticipantRadio(1)}
+            />
+          </ListItemPrefix>
+          <Typography color="blue-gray" className="font-medium">
+            Only Boys
+          </Typography>
+        </label>
+      </ListItem>
+      <ListItem className="p-0">
+        <label
+          htmlFor="horizontal-list-svelte"
+          className="flex w-full cursor-pointer items-center px-3 py-2"
+        >
+          <ListItemPrefix className="mr-3">
+            <Radio
+              color="amber"
+              name="horizontal-list"
+              id="horizontal-list-svelte"
+              ripple={false}
+              className="hover:before:opacity-0"
+              containerProps={{
+                className: "p-0",
+              }}
+              checked={whoCanParticipate === 2}
+              onChange={() => handleParticipantRadio(2)}
+            />
+          </ListItemPrefix>
+          <Typography color="blue-gray" className="font-medium">
+            Both
+          </Typography>
+        </label>
+      </ListItem>
+    </List>
+  );
   console.log(values);
   return (
-    <div className="w-full space-y-8 py-5 border-t-2 ">
+    <div key={key} className="w-full space-y-8 py-5 border-t-2 ">
       {isSuccess ? (
         <div className="flex items-center justify-start mx-auto text-xl font-poppins gap-3">
           <CheckCircleIcon className="text-green-500" />{" "}
@@ -336,80 +409,7 @@ const AddGame = () => {
               value={values.open_to}
               onChange={handleInputChange}
             /> */}
-              <List className=" w-full flex-row">
-                <ListItem className="p-0">
-                  <label
-                    htmlFor="horizontal-list-react"
-                    className="flex w-full cursor-pointer items-center px-3 py-2"
-                  >
-                    <ListItemPrefix className="mr-3">
-                      <Radio
-                        color="amber"
-                        name="horizontal-list"
-                        id="horizontal-list-react"
-                        ripple={false}
-                        checked={whoCanParticipate === 0}
-                        onChange={() => handleParticipantRadio(0)}
-                        className="hover:before:opacity-0 "
-                        containerProps={{
-                          className: "p-0",
-                        }}
-                      />
-                    </ListItemPrefix>
-                    <Typography color="blue-gray" className="font-medium">
-                      Only Girls
-                    </Typography>
-                  </label>
-                </ListItem>
-                <ListItem className="p-0">
-                  <label
-                    htmlFor="horizontal-list-vue"
-                    className="flex w-full cursor-pointer items-center px-3 py-2"
-                  >
-                    <ListItemPrefix className="mr-3">
-                      <Radio
-                      color="amber"
-                        name="horizontal-list"
-                        id="horizontal-list-vue"
-                        ripple={false}
-                        className="hover:before:opacity-0"
-                        containerProps={{
-                          className: "p-0",
-                        }}
-                        checked={whoCanParticipate === 1}
-                        onChange={() => handleParticipantRadio(1)}
-                      />
-                    </ListItemPrefix>
-                    <Typography color="blue-gray" className="font-medium">
-                      Only Boys
-                    </Typography>
-                  </label>
-                </ListItem>
-                <ListItem className="p-0">
-                  <label
-                    htmlFor="horizontal-list-svelte"
-                    className="flex w-full cursor-pointer items-center px-3 py-2"
-                  >
-                    <ListItemPrefix className="mr-3">
-                      <Radio
-                      color="amber"
-                        name="horizontal-list"
-                        id="horizontal-list-svelte"
-                        ripple={false}
-                        className="hover:before:opacity-0"
-                        containerProps={{
-                          className: "p-0",
-                        }}
-                        checked={whoCanParticipate === 2}
-                        onChange={() => handleParticipantRadio(2)}
-                      />
-                    </ListItemPrefix>
-                    <Typography color="blue-gray" className="font-medium">
-                      Both
-                    </Typography>
-                  </label>
-                </ListItem>
-              </List>
+            <GenderRadioButtons key={key}/>
             </div>
 
             <div className="w-full flex flex-col lg:flex-row gap-5">

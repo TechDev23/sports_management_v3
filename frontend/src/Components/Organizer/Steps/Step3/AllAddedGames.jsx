@@ -176,15 +176,16 @@ export default function AllAddedGames() {
       </div>
 
       <div className="grid grid-auto-fit-[25rem] gap-6">
-        {allGames?.data.map((game) => (
-          <>
+        {/* {allGames?.data.map((game) => (
+          <> */}
             <Card className="w-fit">
               <CardBody>
                 <Typography
                   variant="h5"
                   className="mb-2 capitalize"
                 >
-                  {game?.name}
+                  {/* {game?.name} */}
+                  game name
                 </Typography>
                 <Typography>
                   The place is close to Barceloneta Beach and bus stop just 2
@@ -196,8 +197,8 @@ export default function AllAddedGames() {
                 <UpdateDialog />
               </CardFooter>
             </Card>
-          </>
-        ))}
+          {/* </>
+        ))} */}
       </div>
     </div>
   );
