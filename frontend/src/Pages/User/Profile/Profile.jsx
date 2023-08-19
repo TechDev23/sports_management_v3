@@ -1,31 +1,11 @@
 import { React, useState } from "react";
-import user from './logo1.avif'
+import user from "./logo1.avif";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { Typography, Button, Avatar } from "@material-tailwind/react";
 import {
-  Navbar,
-  MobileNav,
-  Typography,
-  Button,
-  Menu,
-  MenuHandler,
-  MenuList,
-  MenuItem,
-  Avatar,
-  IconButton,
-} from "@material-tailwind/react";
-import {
-  CubeTransparentIcon,
   UserCircleIcon,
-  CodeBracketSquareIcon,
-  Square3Stack3DIcon,
-  ChevronDownIcon,
   Cog6ToothIcon,
-  InboxArrowDownIcon,
-  LifebuoyIcon,
-  PowerIcon,
-  RocketLaunchIcon,
-  Bars2Icon,
   ShoppingBagIcon,
   PresentationChartBarIcon,
   InboxIcon,
@@ -40,51 +20,46 @@ import {
   Chip,
 } from "@material-tailwind/react";
 import { useAppSelector } from "../../../redux/store";
-
-// function generateUniqueTag() {
-//   const characters =
-//     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-//   let tag = "";
-//   for (let i = 0; i < 6; i++) {
-//     tag += characters.charAt(Math.floor(Math.random() * characters.length));
-//   }
-//   return tag;
-// }
+import { useUpdateUserDetailsMutation } from "../../../redux/api/userApi";
+import { Link } from "react-router-dom";
 
 export default function ComplexNavbar() {
   const user = useAppSelector((state) => state.userState.user);
 
   const userInformation = {
-    mobile_number: user?.phone_no || "931352345",
-    name: user?.first_name || "name",
-    verified: user?.verified || false,
+    mobile_number: user?.phone_no,
+    name: user?.first_name + " " + user?.last_name,
+    verified: user?.verified,
     createdAt: user?.createdAt,
-    email_id: user?.email_id || "om@gmail.com",
+    email_id: user?.email_id,
     emergency_contact: "null",
     dob: user?.dob,
-    gender:user?.gender || "Male"
   };
+  const [updateUserDetails, { isLoading, isSuccess }] =
+  useUpdateUserDetailsMutation();
 
-   const [isNameEditing, setIsNameEditing] = useState(false);
-   const [editedName, setEditedName] = useState(userInformation.name);
+  const [isNameEditing, setIsNameEditing] = useState(false);
+  const [editedName, setEditedName] = useState(userInformation.name);
 
-   const [isEmailEditing, setIsEmailEditing] = useState(false);
+  const [isEmailEditing, setIsEmailEditing] = useState(false);
   const [editedEmail, setEditedEmail] = useState(userInformation.email_id);
 
   const [isMobileEditing, setIsMobileEditing] = useState(false);
-  const [editedMobile, setEditedMobile] = useState(userInformation.mobile_number);
+  const [editedMobile, setEditedMobile] = useState(
+    userInformation.mobile_number
+  );
 
   const [isEmergencyEditing, setIsEmergencyEditing] = useState(false);
-  const [editedEmergency, setEditedEmergency] = useState(userInformation.emergency_contact);
+  const [editedEmergency, setEditedEmergency] = useState(
+    userInformation.emergency_contact
+  );
 
   const [isDOBEditing, setIsDOBEditing] = useState(false);
   const [editedDOB, setEditedDOB] = useState(new Date(userInformation.dob));
 
-  const [isGenderEditing, setIsGenderEditing] = useState(false);
-const [editedGender, setEditedGender] = useState(userInformation.gender);
-
-  const handleSaveName = () => {
-
+  const handleSaveName = async() => {
+    const handleName = await updateUserDetails({"name":editedName}).unwrap()
+    console.log(handleName)
     setIsNameEditing(false);
     userInformation.name = editedName;
   };
@@ -114,6 +89,9 @@ const [editedGender, setEditedGender] = useState(userInformation.gender);
 
   const handleSaveMobile = () => {
     setIsMobileEditing(false);
+    console.log(editedMobile)
+    const data = { phone_no : editedMobile}
+    saveDetails(data)
     userInformation.mobile_number = editedMobile;
   };
 
@@ -154,18 +132,19 @@ const [editedGender, setEditedGender] = useState(userInformation.gender);
     setIsDOBEditing(true);
   };
 
-  const handleSaveGender = () => {
-    setIsGenderEditing(false);
-    userInformation.gender = editedGender;
-  };
   
-  const handleCancelGender = () => {
-    setIsGenderEditing(false);
-    setEditedGender(userInformation.gender);
-  };
-  
-  const handleEditGender = () => {
-    setIsGenderEditing(true);
+  const saveDetails = async (dataToUpdate) => {
+    try {
+      console.log("save details called ");
+      // const dataToUpdate = {
+      //   gender: 1,
+      //   phone_no: 982511,
+      // }
+      const updatedUser = await updateUserDetails(dataToUpdate).unwrap();
+      console.log(updatedUser);
+    } catch (error) {
+      console.log(`Error while saving details ${error}`);
+    }
   };
 
   return (
@@ -220,372 +199,360 @@ const [editedGender, setEditedGender] = useState(userInformation.gender);
           </List>
         </Card>
 
-        <div className="flex-col w-full mr-64 lg:ml-32 max-w-[80rem] p-8 flex">
-        <Card className="p-4 border-4 hover:shadow-xl  hover:shadow-blue-gray-150/5 transition-all duration-300 w-full md:max-w-[20rem] lg:max-w-[60rem]">
-          <div className="profile-image relative">
-          <div className="flex-row">
-            <Avatar
-              variant="circular"
-              size="xl"
-              alt="User Profile"
-              src={user}
-              className="mx-0 md:mx-auto md:ml-4 lg:ml-16 md:mt-16"
-            />
-           <div className="w-160 lg:ml-8 md:ml-0 mt-4 custom-id-text">
-              <div className="text-blue-400 font-normal px-8 flex">
-                <p className="mr-1">G-Sport ID: </p>
-                <p className="ml-1">{user?.name}</p>
-              </div>
-            </div>
-            </div>
-          </div>
-
-          
-          <div className="ml-0 md:ml-4 lg:ml-16 sm:ml-4 mr-80 flex w-2/4">
-          
-            <div className="text-center md:text-left mt-16">
-              <div className="mb-8">
-                <Typography variant="h6" color="blue-gray" className="sm:text-left">
-                  Full Name
-                </Typography>
-                <div className="flex sm:flex-row items-center gap-2">
-                {isNameEditing ? (
-               
-  
-        <>
-        <div className="flex sm:flex-col items-center sm:items-start gap-2">
-          <input
-            type="text"
-            value={editedName}
-            onChange={(e) => setEditedName(e.target.value)}
-            className="border rounded px-2 py-1"
-          />
-          <div className="flex sm:flex-row gap-2">
-           <div className="rounded-lg border border-blue-500 px-4 bg-blue-400">
-            <button
-            onClick={handleSaveName}
-            className="text-white"
-          >Save</button>
-          </div>
-          <div className="flex sm:flex-row gap-2">
-          <div className="rounded-lg border border-blue-500 px-4 bg-blue-50">
-            <button
-            onClick={handleCancelName}
-            className="text-gray-900"
-            >Cancel</button>
-            </div>
-            </div>
-            </div>
-            </div>
-        </>
-      ) : (
-        <>
-        
-          <Typography variant="body" color="gray">
-            {userInformation.name}
-          </Typography>
-          
-          <div className="flex-grow"></div>
-          
-            <button 
-            onClick={handleEditName}
-            className="text-blue-500 lg:ml-80"
-          >Edit</button>
-          
-          
-        </>
-      )}
+        {user && (
+          <div className="flex-col w-full mr-64 lg:ml-32 max-w-[80rem] p-8 flex">
+            <Card className="p-4 border-4 hover:shadow-xl  hover:shadow-blue-gray-150/5 transition-all duration-300 w-full md:max-w-[20rem] lg:max-w-[60rem]">
+              <div className="profile-image relative">
+                <div className="flex-row">
+                  <Avatar
+                    variant="circular"
+                    size="xl"
+                    alt="User Profile"
+                    src={user?.profile_url}
+                    className="mx-0 md:mx-auto md:ml-4 lg:ml-16 md:mt-16"
+                  />
+                  <div className="w-160 lg:ml-8 md:ml-0 mt-4 custom-id-text">
+                    <div className="text-blue-400 font-normal px-8 flex">
+                      <p className="mr-1">G-Sport ID: </p>
+                      <p className="ml-1">{user?.id}</p>
+                    </div>
+                  </div>
                 </div>
-                <hr className="my-2 hr-light" style={{ width: "170%"}} />
               </div>
-              <div className="mb-8">
-                <Typography variant="h6" color="blue-gray" className="sm:text-left">
-                  Email
-                </Typography>
-                <div className="flex sm:flex-row items-center gap-2">
-                {isEmailEditing ? (
-                      <>
-                      <div className="flex sm:flex-col items-center sm:items-start gap-2">
-                        <input
-                          type="text"
-                          value={editedEmail}
-                          onChange={(e) => setEditedEmail(e.target.value)}
-                          className="border rounded px-2 py-1"
-                        />
-                        <div className="flex sm:flex-row gap-2">
-                        <div className="rounded-lg border border-blue-500 px-4 bg-blue-400">
+
+              <div className="ml-0 md:ml-4 lg:ml-16 sm:ml-4 mr-80 flex w-2/4">
+                <div className="text-center md:text-left mt-16">
+                  <div className="mb-8">
+                    <Typography
+                      variant="h6"
+                      color="blue-gray"
+                      className="sm:text-left"
+                    >
+                      Full Name
+                    </Typography>
+                    <div className="flex sm:flex-row items-center gap-2">
+                      {isNameEditing ? (
+                        <>
+                          <div className="flex sm:flex-col items-center sm:items-start gap-2">
+                            <input
+                              type="text"
+                              value={editedName}
+                              onChange={(e) => setEditedName(e.target.value)}
+                              className="border rounded px-2 py-1"
+                            />
+                            <div className="flex sm:flex-row gap-2">
+                              <div className="rounded-lg border border-blue-500 px-4 bg-blue-400">
+                                <button
+                                  onClick={handleSaveName}
+                                  className="text-white"
+                                >
+                                  Save
+                                </button>
+                              </div>
+                              <div className="flex sm:flex-row gap-2">
+                                <div className="rounded-lg border border-blue-500 px-4 bg-blue-50">
+                                  <button
+                                    onClick={handleCancelName}
+                                    className="text-gray-900"
+                                  >
+                                    Cancel
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <Typography variant="body" color="gray">
+                            {userInformation?.name}
+                          </Typography>
+
+                          <div className="flex-grow"></div>
+
                           <button
-                            onClick={handleSaveEmail}
-                            className="text-white"
+                            onClick={handleEditName}
+                            className="text-blue-500 lg:ml-80"
                           >
-                            Save
+                            Edit
                           </button>
-                        </div>
-                        <div className="flex sm:flex-row gap-2">
-                        <div className="rounded-lg border border-blue-500 px-4 bg-blue-50">
-                          <button
-                            onClick={handleCancelEmail}
-                            className="text-gray-900"
-                          >
-                            Cancel
-                          </button>
-                        </div>
-                        </div>
-                        </div>
-                        </div>
-                      </>
-                    ) : (
-                      <>
-                        <Typography variant="body" color="gray">
-                          {userInformation.email_id}
-                        </Typography>
-                        <div className="flex-grow md:flex-grow"></div>
-                        
+                        </>
+                      )}
+                    </div>
+                    <hr className="my-2 hr-light" style={{ width: "170%" }} />
+                  </div>
+                  <div className="mb-8">
+                    <Typography
+                      variant="h6"
+                      color="blue-gray"
+                      className="sm:text-left"
+                    >
+                      Email
+                    </Typography>
+                    <div className="flex sm:flex-row items-center gap-2">
+                      {isEmailEditing ? (
+                        <>
+                          <div className="flex sm:flex-col items-center sm:items-start gap-2">
+                            <input
+                              type="text"
+                              value={editedEmail}
+                              onChange={(e) => setEditedEmail(e.target.value)}
+                              className="border rounded px-2 py-1"
+                            />
+                            <div className="flex sm:flex-row gap-2">
+                              <div className="rounded-lg border border-blue-500 px-4 bg-blue-400">
+                                <button
+                                  onClick={handleSaveEmail}
+                                  className="text-white"
+                                >
+                                  Save
+                                </button>
+                              </div>
+                              <div className="flex sm:flex-row gap-2">
+                                <div className="rounded-lg border border-blue-500 px-4 bg-blue-50">
+                                  <button
+                                    onClick={handleCancelEmail}
+                                    className="text-gray-900"
+                                  >
+                                    Cancel
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <Typography variant="body" color="gray">
+                            {userInformation.email_id}
+                          </Typography>
+                          <div className="flex-grow md:flex-grow"></div>
+
                           <button
                             onClick={handleEditEmail}
                             className="text-blue-500 hover:text-blue-700"
                           >
                             Edit
                           </button>
-                        
-                      </>
-                    )}
-                </div>
-                <hr className="my-2 hr-light" style={{ width: "170%" }} />
-              </div>
-              <div className="mb-8">
-                <Typography variant="h6" color="blue-gray"  className="sm:text-left">
-                  Mobile
-                </Typography>
-                <div className="flex sm:flex-row items-center gap-2">
-                {isMobileEditing ? (
-                      <>
-                      <div className="flex sm:flex-col items-center sm:items-start gap-2">
-                        <input
-                          type="number"
-                          value={editedMobile}
-                          onChange={(e) => setEditedMobile(e.target.value)}
-                          className="border rounded px-2 py-1"
-                        />
-                        <div className="flex sm:flex-row gap-2">
-                        <div className="rounded-lg border border-blue-500 px-4 bg-blue-400">
-                          <button
-                            onClick={handleSaveMobile}
-                            className="text-white"
-                          >
-                            Save
-                          </button>
-                        </div>
-                        <div className="flex sm:flex-row gap-2">
-                        <div className="rounded-lg border border-blue-500 px-4 bg-blue-50">
-                          <button
-                            onClick={handleCancelMobile}
-                            className="text-gray-900"
-                          >
-                            Cancel
-                          </button>
-                        </div>
-                        </div>
-                        </div>
-                        </div>
-                      </>
-                    ) : (
-                      <>
-                        <Typography variant="body" color="gray">
-                          {userInformation.mobile_number}
-                        </Typography>
-                        <div className="flex-grow"></div>
-                        
+                        </>
+                      )}
+                    </div>
+                    <hr className="my-2 hr-light" style={{ width: "170%" }} />
+                  </div>
+                  <div className="mb-8">
+                    <Typography
+                      variant="h6"
+                      color="blue-gray"
+                      className="sm:text-left"
+                    >
+                      Mobile
+                    </Typography>
+                    <div className="flex sm:flex-row items-center gap-2">
+                      {isMobileEditing ? (
+                        <>
+                          <div className="flex sm:flex-col items-center sm:items-start gap-2">
+                            <input
+                              type="number"
+                              value={editedMobile}
+                              onChange={(e) => setEditedMobile(e.target.value)}
+                              className="border rounded px-2 py-1"
+                            />
+                            <div className="flex sm:flex-row gap-2">
+                              <div className="rounded-lg border border-blue-500 px-4 bg-blue-400">
+                                <button
+                                  onClick={handleSaveMobile}
+                                  className="text-white"
+                                >
+                                  Save
+                                </button>
+                              </div>
+                              <div className="flex sm:flex-row gap-2">
+                                <div className="rounded-lg border border-blue-500 px-4 bg-blue-50">
+                                  <button
+                                    onClick={handleCancelMobile}
+                                    className="text-gray-900"
+                                  >
+                                    Cancel
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <Typography variant="body" color="gray">
+                            {userInformation.mobile_number}
+                          </Typography>
+                          <div className="flex-grow"></div>
+
                           <button
                             onClick={handleEditMobile}
                             className="text-blue-500 hover:text-blue-700"
                           >
                             Edit
                           </button>
-                        
-                      </>
-                    )}
-                </div>
-                <hr className="my-2 hr-light" style={{ width: "170%" }} />
-              </div>
-              <div className="mb-8">
-                <Typography variant="h6" color="blue-gray"  className="sm:text-left">
-                  Emergency contact
-                </Typography>
-                <div className="flex sm:flex-row items-center gap-2">
-                {isEmergencyEditing ? (
-                      <>
-                      <div className="flex sm:flex-col items-center sm:items-start gap-2">
-                        <input
-                          type="number"
-                          value={editedEmergency}
-                          onChange={(e) => setEditedEmergency(e.target.value)}
-                          className="border rounded px-2 py-1"
-                        />
-                        <div className="flex sm:flex-row gap-2">
-                        <div className="rounded-lg border border-blue-500 px-4 bg-blue-400">
-                          <button
-                            onClick={handleSaveEmergency}
-                            className="text-white"
-                          >
-                            Save
-                          </button>
-                        </div>
-                        <div className="flex sm:flex-row gap-2">
-                        <div className="rounded-lg border border-blue-500 px-4 bg-blue-50">
-                          <button
-                            onClick={handleCancelEmergency}
-                            className="text-gray-900"
-                          >
-                            Cancel
-                          </button>
-                        </div>
-                        </div>
-                        </div>
-                        </div>
-                      </>
-                    ) : (
-                      <>
-                        <Typography variant="body" color="gray">
-                          {userInformation.emergency_contact}
-                        </Typography>
-                        <div className="flex-grow"></div>
-                        
+                        </>
+                      )}
+                    </div>
+                    <hr className="my-2 hr-light" style={{ width: "170%" }} />
+                  </div>
+                  <div className="mb-8">
+                    <Typography
+                      variant="h6"
+                      color="blue-gray"
+                      className="sm:text-left"
+                    >
+                      Emergency contact
+                    </Typography>
+                    <div className="flex sm:flex-row items-center gap-2">
+                      {isEmergencyEditing ? (
+                        <>
+                          <div className="flex sm:flex-col items-center sm:items-start gap-2">
+                            <input
+                              type="number"
+                              value={editedEmergency}
+                              onChange={(e) =>
+                                setEditedEmergency(e.target.value)
+                              }
+                              className="border rounded px-2 py-1"
+                            />
+                            <div className="flex sm:flex-row gap-2">
+                              <div className="rounded-lg border border-blue-500 px-4 bg-blue-400">
+                                <button
+                                  onClick={handleSaveEmergency}
+                                  className="text-white"
+                                >
+                                  Save
+                                </button>
+                              </div>
+                              <div className="flex sm:flex-row gap-2">
+                                <div className="rounded-lg border border-blue-500 px-4 bg-blue-50">
+                                  <button
+                                    onClick={handleCancelEmergency}
+                                    className="text-gray-900"
+                                  >
+                                    Cancel
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <Typography variant="body" color="gray">
+                            {userInformation.emergency_contact}
+                          </Typography>
+                          <div className="flex-grow"></div>
+
                           <button
                             onClick={handleEditEmergency}
                             className="text-blue-500 hover:text-blue-700"
                           >
                             Edit
                           </button>
-                        
-                      </>
-                    )}
-                </div>
-                <hr className="my-2 hr-light" style={{ width: "170%" }} />
-              </div>
-              <div className="mb-8">
-                <Typography variant="h6" color="blue-gray"  className="sm:text-left">
-                  Date of Birth
-                </Typography>
-                <div className="flex sm:flex-row items-center gap-2">
-                {isDOBEditing ? (
-                      <>
-                      <div className="flex sm:flex-col items-center sm:items-start gap-2">
-                        <DatePicker
-                          selected={editedDOB}
-                          onChange={(date) => setEditedDOB(date)}
-                          showYearDropdown
-                          scrollableYearDropdown
-                          yearDropdownItemNumber={70}
-                          yearDropdownMin={1950}
-                          className="border rounded px-2 py-1"
-                        />
-                        <div className="flex sm:flex-row gap-2">
-                        <div className="rounded-lg border border-blue-500 px-4 bg-blue-400">
-                          <button
-                            onClick={handleSaveDOB}
-                            className="text-white"
-                          >
-                            Save
-                          </button>
-                        </div>
-                        <div className="flex sm:flex-row gap-2">
-                        <div className="rounded-lg border border-blue-500 px-4 bg-blue-50">
-                          <button
-                            onClick={handleCancelDOB}
-                            className="text-gray-900"
-                          >
-                            Cancel
-                          </button>
-                        </div>
-                        </div>
-                        </div>
-                        </div>
-                      </>
-                    ) : (
-                      <>
-                        <Typography variant="body" color="gray">
-                          {editedDOB.toDateString()}
-                        </Typography>
-                        <div className="flex-grow"></div>
-                       
+                        </>
+                      )}
+                    </div>
+                    <hr className="my-2 hr-light" style={{ width: "170%" }} />
+                  </div>
+                  <div className="mb-8">
+                    <Typography
+                      variant="h6"
+                      color="blue-gray"
+                      className="sm:text-left"
+                    >
+                      Date of Birth
+                    </Typography>
+                    <div className="flex sm:flex-row items-center gap-2">
+                      {isDOBEditing ? (
+                        <>
+                          <div className="flex sm:flex-col items-center sm:items-start gap-2">
+                            <DatePicker
+                              selected={editedDOB}
+                              onChange={(date) => setEditedDOB(date)}
+                              showYearDropdown
+                              scrollableYearDropdown
+                              yearDropdownItemNumber={70}
+                              yearDropdownMin={1950}
+                              className="border rounded px-2 py-1"
+                            />
+                            <div className="flex sm:flex-row gap-2">
+                              <div className="rounded-lg border border-blue-500 px-4 bg-blue-400">
+                                <button
+                                  onClick={handleSaveDOB}
+                                  className="text-white"
+                                >
+                                  Save
+                                </button>
+                              </div>
+                              <div className="flex sm:flex-row gap-2">
+                                <div className="rounded-lg border border-blue-500 px-4 bg-blue-50">
+                                  <button
+                                    onClick={handleCancelDOB}
+                                    className="text-gray-900"
+                                  >
+                                    Cancel
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <Typography variant="body" color="gray">
+                            {editedDOB.toDateString()}
+                          </Typography>
+                          <div className="flex-grow"></div>
+
                           <button
                             onClick={handleEditDOB}
                             className="text-blue-500 hover:text-blue-700"
                           >
                             Edit
                           </button>
-                        
-                      </>
-                    )}
+                        </>
+                      )}
+                    </div>
+                    <hr className="my-2 hr-light" style={{ width: "170%" }} />
+                  </div>
+                  <div className="mb-8">
+                    <Typography
+                      variant="h6"
+                      color="blue-gray"
+                      className="sm:text-left"
+                    >
+                      Created at
+                    </Typography>
+                    <Typography
+                      variant="body"
+                      color="gray"
+                      className="sm:text-left"
+                    >
+                      {userInformation.createdAt}
+                    </Typography>
+                  </div>
+
+                  {/* Submit button  */}
+                  <div className="flex justify-start items-center gap-6">
+                    <Button
+                      color="amber"
+                      className="text-white"
+                      onClick={saveDetails}
+                    >
+                      Update details
+                    </Button>
+                    <Link to={"/user/upload"}>
+                      <p className="hover:text-orange-500"> Upload docs</p>
+                    </Link>
+                  </div>
                 </div>
-                <hr className="my-2 hr-light" style={{ width: "170%" }} />
               </div>
-              <div className="mb-8">
-  <Typography variant="h6" color="blue-gray" className="sm:text-left">
-    Gender
-  </Typography>
-  <div className="flex sm:flex-row items-center gap-2">
-    {isGenderEditing ? (
-      <>
-       <div className="flex sm:flex-col items-center sm:items-start gap-2">
-        <select
-          value={editedGender}
-          onChange={(e) => setEditedGender(e.target.value)}
-          className="border rounded px-2 py-1"
-        >
-          <option value="male">Male</option>
-          <option value="female">Female</option>
-          <option value="other">Other</option>
-        </select>
-        <div className="flex sm:flex-row gap-2">
-          <div className="rounded-lg border border-blue-500 px-4 bg-blue-400">
-            <button onClick={handleSaveGender} className="text-white">
-              Save
-            </button>
+            </Card>
           </div>
-          <div className="flex sm:flex-row gap-2">
-            <div className="rounded-lg border border-blue-500 px-4 bg-blue-50">
-              <button
-                onClick={handleCancelGender}
-                className="text-gray-900"
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        </div>
-        </div>
-      </>
-    ) : (
-      <>
-        <Typography variant="body" color="gray">
-          {userInformation.gender}
-        </Typography>
-        <div className="flex-grow"></div>
-        <button
-          onClick={handleEditGender}
-          className="text-blue-500 hover:text-blue-700"
-        >
-          Edit
-        </button>
-      </>
-    )}
-  </div>
-  <hr className="my-2 hr-light" style={{ width: "170%" }} />
-</div>
-              <div className="mb-8">
-                <Typography variant="h6" color="blue-gray"  className="sm:text-left">
-                  Created at
-                </Typography>
-                <Typography variant="body" color="gray"  className="sm:text-left">
-                  {userInformation.createdAt}
-                </Typography>
-              </div>
-            </div>
-          </div>
-          </Card>
-        </div>
+        )}
       </div>
     </div>
   );
