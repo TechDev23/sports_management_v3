@@ -270,7 +270,8 @@ const Step1 = () => {
 
   return (
     <div className="w-full">
-      { isSuccess ? <Success/> : 
+      { isSuccess ? 
+        <Success/> : 
       
       <div className="w-full gap-4">
       <div className="w-full">
