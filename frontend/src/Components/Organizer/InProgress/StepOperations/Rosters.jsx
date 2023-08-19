@@ -280,55 +280,59 @@ export default function Rosters() {
             disabled="true"
           ></textarea>
 
-          <div className="w-72 my-5">
+          <div className="md:w-72 my-5">
             <p className="text-[14px] bg-gray-200 h-10 rounded-md flex items-center justify-center">
               Player 1
             </p>
           </div>
-          <div className="w-full">
-            <ButtonGroup color="orange">
-              {buttonStates.map((isActive, index) => (
-                <Button
-                  className={isActive ? "bg-white text-black border" : ""}
-                  key={index}
-                  variant={isActive ? "contained" : "outlined"}
-                  onClick={() => handleButtonClick(index)}
-                >
-                  {index + 1}
-                </Button>
-              ))}
-            </ButtonGroup>
-          </div>
+          <div className="w-full" style={{ display: 'flex', overflowX: 'auto' }}>
+  <ButtonGroup color="orange">
+    {buttonStates.map((isActive, index) => (
+      <Button
+        className={isActive ? "bg-white text-black border" : ""}
+        key={index}
+        variant={isActive ? "contained" : "outlined"}
+        onClick={() => handleButtonClick(index)}
+        style={{ minWidth: '40px', flex: '0 0 auto' }}
+      >
+        {index + 1}
+      </Button>
+    ))}
+  </ButtonGroup>
+</div>
 
-          <div className="my-5 flex flex-row items-center justify-center mr-[17rem]">
+
+          <div className="my-5 flex flex-row items-center justify-center md:mr-[17rem]">
             <Button color="orange">VS</Button>
           </div>
 
-          <div className="w-72 my-5">
+          <div className="md:w-72 my-5">
             <p className="text-[14px] bg-gray-200 h-10 rounded-md flex items-center justify-center">
-              Player 1
+              Player 2
             </p>
           </div>
-          <div className="w-full">
-            <ButtonGroup color="orange">
-              {buttonStates2.map((isActive, index) => (
-                <Button
-                  className={isActive ? "bg-white text-black border" : ""}
-                  key={index}
-                  variant={isActive ? "contained" : "outlined"}
-                  onClick={() => handleButtonClick2(index)}
-                >
-                  {index + 1}
-                </Button>
-              ))}
-            </ButtonGroup>
-          </div>
+          <div className="w-full" style={{ display: 'flex', overflowX: 'auto' }}>
+  <ButtonGroup color="orange">
+    {buttonStates2.map((isActive, index) => (
+      <Button
+        className={isActive ? "bg-white text-black border" : ""}
+        key={index}
+        variant={isActive ? "contained" : "outlined"}
+        onClick={() => handleButtonClick2(index)}
+        style={{ minWidth: '40px', flex: '0 0 auto' }}
+      >
+        {index + 1}
+      </Button>
+    ))}
+  </ButtonGroup>
+</div>
+
         </div>
       ) : isTeam ? (
         <div>
-          <div className="flex flex-row  items-center justify-between gap-4  ">
+          <div className="flex md:flex-row flex-col items-center justify-between gap-4  ">
             <div className="flex flex-row items-center gap-4">
-              <div className="w-72">
+              <div className="md:w-72 w-[7rem]">
                 <p className="text-[14px] bg-gray-200 h-10 rounded-md flex items-center justify-center">
                   Team 1
                 </p>
@@ -336,14 +340,14 @@ export default function Rosters() {
 
               <Button color="orange">VS</Button>
 
-              <div className="w-72">
+              <div className="md:w-72 w-[7rem]">
                 <p className="text-[14px] bg-gray-200 h-10 rounded-md flex items-center justify-center">
                   Team 2
                 </p>
               </div>
             </div>
             <div>
-              <div className="w-72">
+              <div className="md:w-72 w-[19.5rem]">
                 <Select label="Match Details">
                   <Option>Material Tailwind HTML</Option>
                   <Option>Material Tailwind React</Option>
@@ -361,62 +365,67 @@ export default function Rosters() {
             disabled="true"
           ></textarea>
 
-          <div className="grid grid-cols-7 gap-4">
+          <div className="md:grid md:grid-cols-7 gap-4">
             <div className="col-start-1 col-end-6">
               <div className="flex flex-row justify-center items-center">
                 <p className="text-[18px] font-semibold">Goal Score</p>
               </div>
 
-              <div className="flex flex-row items-center justify-between border p-3 rounded-md">
-                <div className="bg-gray-200 w-[12rem] h-[4rem] flex items-center justify-center rounded-sm">
+              <div className="flex md:flex-row flex-col md:gap-0 gap-2  items-center justify-between border p-3 w-full rounded-md">
+                <div className="bg-gray-200 md:w-[12rem] w-full h-[4rem] flex items-center justify-center rounded-sm">
                   Team A
                 </div>
 
-                <div className="w-[1rem] ">0|0</div>
-                <div className="bg-gray-200 w-[12rem] h-[4rem] flex items-center justify-center rounded-sm">
+                <div className="bg-white border w-[12rem] h-[4rem] flex flex-row items-center justify-between px-12 rounded-sm"><span>0</span> | <span>0</span></div>
+                <div className="bg-gray-200 w-full md:w-[12rem] h-[4rem] flex items-center justify-center rounded-sm">
                   Team A
                 </div>
 
-                <div className="bg-white w-[10rem] border-orange-400 border rounded-lg h-[4rem] flex items-center justify-center text-black">
+                <div className="flex flex-row gap-4 justify-between items-center">
+
+                
+                <div className="bg-white md:w-[10rem] w-[6rem] h-[3rem] border-orange-400 border rounded-lg md:h-[4rem] flex items-center justify-center text-black">
                   45:02
                 </div>
-                <div className="bg-white w-[10rem] border-orange-400 border rounded-lg h-[4rem] flex items-center justify-center text-black">
+                <div className="bg-white md:w-[10rem] w-[6rem] h-[3rem] border-orange-400 border rounded-lg md:h-[4rem] flex items-center justify-center text-black">
                   +05:00
+                </div>
+
                 </div>
               </div>
 
-              <div className="grid grid-cols-4 gap-4">
+              <div className="md:grid md:grid-cols-4 gap-4">
                 <div className="col-start-1 col-end-3">
-                  <div className="flex flex-row items-center my-5 gap-5">
+                  <div className="flex flex-row items-center justify-between md:justify-start my-5 gap-5">
                     <Button color="orange">Team A Goal</Button>
                     <Button color="orange">Team B Goal</Button>
                   </div>
 
-                  <div className="w-72">
+                  <div className="md:w-[19rem] ">
                     <Select label="Goal Type">
                       <Option>Normal Goal</Option>
                       <Option>Set Piece</Option>
                       <Option>Own Goal by Team B</Option>
                     </Select>
                   </div>
-                  <div className="flex flex-row items-center my-5 gap-5">
+                  <div className="flex flex-row items-center justify-between md:justify-start my-5 gap-5">
                     <Button color="orange">Team A Card</Button>
                     <Button color="orange">Team B Card</Button>
                   </div>
-                  <div className="w-72 mb-5">
+                  <div className="md:w-[19rem] mb-5">
                     <Select label="Card Type">
                       <Option>Yellow</Option>
                       <Option>Red</Option>
                     </Select>
                   </div>
 
-                  <Button color="orange">Shoot OUT</Button>
+                  <Button className="w-full md:w-[55%]" color="orange">Shoot OUT</Button>
 
-                  <div className="p-4">
+                  <div className=" mt-2">
                     <table className="w-full border-collapse border border-gray-300">
                       <thead>
-                        <tr>
-                          <th className="border p-2">Teams</th>
+                        <tr className="">
+                          <th className="border p-2 flex flex-row items-start">Teams</th>
                           {titles.map((title) => (
                             <th key={title} className="border p-2">
                               {title}
@@ -427,7 +436,7 @@ export default function Rosters() {
                       <tbody>
                         {teams.map((team) => (
                           <tr key={team}>
-                            <td className="border p-2">{team}</td>
+                            <td className="border p-2 flex">{team}</td>
                             {titles.map((title) => (
                               <td key={title} className="border p-2">
                                 <input
@@ -473,8 +482,8 @@ export default function Rosters() {
             <div className="col-end-8 col-span-2">
               <div className="flex flex-row gap-4 items-center justify-between mt-7">
                 <div className="flex flex-col justify-center items-center gap-3">
-                  <Button color="orange">Team A</Button>
-                  <div className="flex flex-col gap-4">
+                  <Button className="w-full" color="orange">Team A</Button>
+                  <div className="flex flex-col gap-4 border md:p-10 p-8 shadow-lg">
                     <p>Player 1</p>
                     <p>Player 2</p>
                     <p>Player 3</p>
@@ -488,8 +497,8 @@ export default function Rosters() {
                   </div>
                 </div>
                 <div className="flex flex-col items-center justify-center gap-3">
-                  <Button color="orange">Team B</Button>
-                  <div className="flex flex-col gap-4">
+                  <Button className="w-full" color="orange">Team B</Button>
+                  <div className="flex flex-col gap-4 border md:p-10 p-8 shadow-lg">
                     <p>Player 1</p>
                     <p>Player 2</p>
                     <p>Player 3</p>
@@ -514,8 +523,11 @@ export default function Rosters() {
               onClick={userDetails}
               className=" p-2 border w-full rounded-lg"
             >
-              <div className="flex flex-row  items-center justify-between gap-4  ">
-                <div className="w-72">
+              <div className="flex md:flex-row flex-col  items-center justify-between gap-4  ">
+                <div className="flex flex-row items-center justify-center gap-4">
+
+                
+                <div className="md:w-72 w-24">
                   <p className="text-[14px] bg-gray-200 h-10 rounded-md flex items-center justify-center">
                     Player 1
                   </p>
@@ -523,10 +535,12 @@ export default function Rosters() {
 
                 <Button color="orange">VS</Button>
 
-                <div className="w-72">
+                <div className="md:w-72 w-24">
                   <p className="text-[14px] bg-gray-200 h-10 rounded-md flex items-center justify-center">
                     Player 2
                   </p>
+                </div>
+
                 </div>
                 <textarea
                   className="flex-grow w-full h-10 border border-gray-500 px-4 py-2 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200"
@@ -541,8 +555,11 @@ export default function Rosters() {
               onClick={teamDetails}
               className=" p-2 border w-full rounded-lg"
             >
-              <div className="flex flex-row  items-center justify-between gap-4  ">
-                <div className="w-72">
+              <div className="flex md:flex-row flex-col  items-center justify-between gap-4  ">
+                <div className="flex flex-row items-center justify-center gap-4">
+
+                
+                <div className="md:w-72 w-24">
                   <p className="text-[14px] bg-gray-200 h-10 rounded-md flex items-center justify-center">
                     Team 1
                   </p>
@@ -550,10 +567,12 @@ export default function Rosters() {
 
                 <Button color="orange">VS</Button>
 
-                <div className="w-72">
+                <div className="md:w-72 w-24">
                   <p className="text-[14px] bg-gray-200 h-10 rounded-md flex items-center justify-center">
                     Team 2
                   </p>
+                </div>
+
                 </div>
                 <textarea
                   className="flex-grow w-full h-10 border border-gray-500 px-4 py-2 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200"
@@ -566,7 +585,7 @@ export default function Rosters() {
 
             {/* ================================ */}
 
-            <div className="flex flex-row w-full px-20 justify-between items-center">
+            <div className="flex flex-row md:w-full gap-4 items-center">
               <Button color="orange">Customize Roster</Button>
               <Button color="orange">Declear Roster</Button>
             </div>
@@ -575,10 +594,16 @@ export default function Rosters() {
           <div className="my-10 border-t-2"></div>
 
           <div className="flex flex-col w-full items-start justify-center gap-6">
-            <h1 className="font-semibold">Roster Round 2</h1>
-            <button className=" p-2 border w-full rounded-lg">
-              <div className="flex flex-row  items-center justify-between gap-4  ">
-                <div className="w-72">
+            <h1 className="font-semibold">Roster 2</h1>
+            <button
+              onClick={userDetails}
+              className=" p-2 border w-full rounded-lg"
+            >
+              <div className="flex md:flex-row flex-col  items-center justify-between gap-4  ">
+                <div className="flex flex-row items-center justify-center gap-4">
+
+                
+                <div className="md:w-72 w-24">
                   <p className="text-[14px] bg-gray-200 h-10 rounded-md flex items-center justify-center">
                     Player 1
                   </p>
@@ -586,10 +611,12 @@ export default function Rosters() {
 
                 <Button color="orange">VS</Button>
 
-                <div className="w-72">
+                <div className="md:w-72 w-24">
                   <p className="text-[14px] bg-gray-200 h-10 rounded-md flex items-center justify-center">
                     Player 2
                   </p>
+                </div>
+
                 </div>
                 <textarea
                   className="flex-grow w-full h-10 border border-gray-500 px-4 py-2 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200"
@@ -600,20 +627,28 @@ export default function Rosters() {
               </div>
             </button>
 
-            <button className=" p-2 border w-full rounded-lg">
-              <div className="flex flex-row  items-center justify-between gap-4  ">
-                <div className="w-72">
+            <button
+              onClick={teamDetails}
+              className=" p-2 border w-full rounded-lg"
+            >
+              <div className="flex md:flex-row flex-col  items-center justify-between gap-4  ">
+                <div className="flex flex-row items-center justify-center gap-4">
+
+                
+                <div className="md:w-72 w-24">
                   <p className="text-[14px] bg-gray-200 h-10 rounded-md flex items-center justify-center">
-                    Player 3
+                    Team 1
                   </p>
                 </div>
 
                 <Button color="orange">VS</Button>
 
-                <div className="w-72">
+                <div className="md:w-72 w-24">
                   <p className="text-[14px] bg-gray-200 h-10 rounded-md flex items-center justify-center">
-                    Player 4
+                    Team 2
                   </p>
+                </div>
+
                 </div>
                 <textarea
                   className="flex-grow w-full h-10 border border-gray-500 px-4 py-2 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200"
@@ -626,11 +661,16 @@ export default function Rosters() {
 
             {/* ================================ */}
 
-            <div className="flex flex-row w-full px-20 justify-between items-center">
+            <div className="flex flex-row md:w-full gap-4 items-center">
               <Button color="orange">Customize Roster</Button>
               <Button color="orange">Declear Roster</Button>
             </div>
           </div>
+
+
+
+
+
         </div>
       )}
     </div>
