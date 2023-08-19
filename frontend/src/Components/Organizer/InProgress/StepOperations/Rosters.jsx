@@ -10,6 +10,11 @@ import {
   Input,
   Spinner,
 } from "@material-tailwind/react";
+
+import { Dropdown } from 'react-nested-dropdown';
+import 'react-nested-dropdown/dist/styles.css';
+
+
 import { ButtonGroup } from "@material-tailwind/react";
 import { Select, Option } from "@material-tailwind/react";
 import {
@@ -114,6 +119,72 @@ function WinnerDialog({
     </Dialog>
   );
 }
+
+
+const items = [
+  {
+    label: 'Normal Goal',
+    items: [
+      {
+        label: 'Assist by',
+        onSelect: () => console.log('Assist by selected'),
+      },
+    ],
+  },
+  {
+    label: 'Set Piece',
+    items: [
+      {
+        label: 'penalty',
+        onSelect: () => console.log('penalty selected'),
+      },
+      {
+        label: 'Direct Free Kick',
+        onSelect: () => console.log('Direct Free Kick selected'),
+      },
+      {
+        label: 'Direct Corner',
+        onSelect: () => console.log('Direct Corner selected'),
+      },
+      {
+        label: 'Direct Throw in',
+        onSelect: () => console.log('Direct Throw in selected'),
+      },
+    ],
+  },
+  {
+    label: 'Own Goal by Team B',
+
+    onSelect: () => console.log('Own Goal by Team B by selected'),
+
+    
+  },
+];
+
+
+
+const Carditems = [
+  {
+    label: 'Yellow',
+    items: [
+      {
+        label: 'Assist by',
+        onSelect: () => console.log('Assist by selected'),
+      },
+    ],
+  },
+  {
+    label: 'Red',
+    items: [
+      {
+        label: 'penalty',
+        onSelect: () => console.log('penalty selected'),
+      },
+    ],
+  },
+];
+
+
 
 function Match({ match }) {
   const [team1Score, setTeam1Score] = useState("");
@@ -401,25 +472,62 @@ export default function Rosters() {
                     <Button color="orange">Team B Goal</Button>
                   </div>
 
-                  <div className="md:w-[19rem] ">
-                    <Select label="Goal Type">
-                      <Option>Normal Goal</Option>
-                      <Option>Set Piece</Option>
-                      <Option>Own Goal by Team B</Option>
-                    </Select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                  <div className="md:w-[19rem]  ">
+                  <Dropdown className=" border rounded-md  p-3 w-full" items={items} containerWidth="300px">
+      {({ isOpen, onClick }) => (
+        <button className=" w-full h-full flex flex-row items-start" type="button" onClick={onClick}>
+          Goal Type
+        </button>
+      )}
+    </Dropdown>
                   </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
                   <div className="flex flex-row items-center justify-between md:justify-start my-5 gap-5">
                     <Button color="orange">Team A Card</Button>
                     <Button color="orange">Team B Card</Button>
                   </div>
-                  <div className="md:w-[19rem] mb-5">
-                    <Select label="Card Type">
-                      <Option>Yellow</Option>
-                      <Option>Red</Option>
-                    </Select>
+
+
+
+                  <div className="md:w-[19rem]  ">
+                  <Dropdown className=" border rounded-md  p-3 w-full" items={Carditems} containerWidth="300px">
+      {({ isOpen, onClick }) => (
+        <button className=" w-full h-full flex flex-row items-start" type="button" onClick={onClick}>
+          Card Type
+        </button>
+      )}
+    </Dropdown>
                   </div>
 
-                  <Button className="w-full md:w-[55%]" color="orange">Shoot OUT</Button>
+
+
+
+                  <Button className="w-full md:w-[55%] my-4" color="orange">Shoot OUT</Button>
 
                   <div className=" mt-2">
                     <table className="w-full border-collapse border border-gray-300">
