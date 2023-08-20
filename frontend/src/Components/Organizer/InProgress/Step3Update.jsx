@@ -22,6 +22,9 @@ import {
   DialogBody,
 } from '@material-tailwind/react';
 
+import { ImCross } from "react-icons/im"
+
+
 import { useDispatch } from 'react-redux';
 import Select from "react-select";
 import { useAddGameToTnmtMutation } from '../../../redux/api/organizer/orgApi';
@@ -33,7 +36,6 @@ import DatePicker from "react-datepicker";
 import { useGetGamesQuery } from '../../../redux/api/General/generalApi';
 import { toast } from 'react-toastify';
 
-import sports6 from "../../../assets/images/sports6.jpg";
 import { useNavigate } from 'react-router-dom';
 
 const DateSelector = () => {
@@ -276,9 +278,6 @@ const Step3Update = () => {
         {
           games.map((game, index) => (
             <Card className="" key={index}>
-        <CardHeader floated={false} className="">
-          <img src={sports6} alt="profile-picture" />
-        </CardHeader>
         <CardBody className="text-left">
           <Typography variant="h5" color="blue-gray" className="mb-2">
             {game.title}
@@ -318,9 +317,15 @@ const Step3Update = () => {
       handler={handleOpen}
       className="lg:scroll-smooth shadow-none"
     >
-        <DialogHeader>
+        <DialogHeader className='flex justify-between'>
           <p className=" text-xl text-center font-poppins font-bold">
             Add new Game
+          </p>
+          <p 
+            onClick={handleOpen}
+            className='w-8 h-8 rounded-lg bg-red-400 p-2 text-white hover:bg-red-600 cursor-pointer'
+          >
+            <ImCross className='w-4 h-4'/>
           </p>
         </DialogHeader>
         <DialogBody divider className="h-[40rem] overflow-scroll">

@@ -13,7 +13,9 @@ import {
   Teams,
   Messages
 } from "../Pages/Organizer";
+
 import { AllAddedGames } from "../Components/Organizer";
+
 import { 
   Step1, 
   Step2, 
@@ -22,6 +24,7 @@ import {
   Step5 
 } from "../Components/Organizer/Steps";
 
+
 import {
   Step1Update,
   Step2Update,
@@ -29,6 +32,7 @@ import {
   Step4Update,
   Step5Update
 } from "../Components/Organizer/InProgress"
+import { Certifications, Details, Participants, Rosters, SetOperations } from "../Components/Organizer/InProgress/StepOperations";
 
 export const OrganizerRoutes = {
   path: "o/",
@@ -101,8 +105,30 @@ export const OrganizerRoutes = {
                   element: <Step4Update/>
                 },
                 {
-                  path: "step5",
-                  element: <Step5Update/>
+                  path: "step5/",
+                  element: <Step5Update/>,
+                  children: [
+                    {
+                      path: "details",
+                      element: <Details/>
+                    },
+                    {
+                      path: "rosters",
+                      element: <Rosters/>
+                    },
+                    {
+                      path: "participants",
+                      element: <Participants/>
+                    },
+                    {
+                      path: "operations",
+                      element: <SetOperations/>
+                    },
+                    {
+                      path: "certifications",
+                      element: <Certifications/>
+                    }
+                  ]
                 },
               ]
             },
@@ -114,8 +140,6 @@ export const OrganizerRoutes = {
               path: "messages",
               element: <Messages/>
             },
-            // all added games to tournments
-            
 
           // ],
         // },

@@ -1,7 +1,7 @@
 import { Button, ButtonGroup } from "@material-tailwind/react";
 import React, { Fragment, useState } from "react";
 
-export default function SetScore() {
+export default function SetScoreForTennis() {
     
   const [buttonStates, setButtonStates] = useState(Array(21).fill(false));
 
