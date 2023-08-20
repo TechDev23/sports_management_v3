@@ -79,6 +79,19 @@ export const orgApi = createApi({
         };
       },
     }),
+
+
+    // Fixtures routes starts
+    getFixtures: build.query({
+      query(data){
+        return{
+          url:`organizer/tournament/${data.tournament_id}/games/${data.tour_game_id}/fixtures/?game_id=${data.game_id}&token=${token}`
+        }
+      }
+    })
+    // Fixtures routes ends
+
+
   }),
 });
 

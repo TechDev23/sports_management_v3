@@ -11,6 +11,7 @@ import {
   Tab,
   TabPanel,
 } from "@material-tailwind/react";
+import CurrentStepper from "../../Common/CurrentStepper";
 
 
 export default function Step5Update() {
@@ -45,10 +46,13 @@ export default function Step5Update() {
   
   return (
     <div className="w-full h-full mt-3">
+      <div className="w-full">
+      <CurrentStepper step={4}/>
+    </div>
       <div className="my-5 min-w-100% min-h-full flex flex-row">
         <Tabs value="details" className="w-full">
           <TabsHeader
-            className="min-w-full text-sm flex flex-row items-center justify-center bg-orange-600 p-1 rounded-md lg:mb-4 space-x-1 sm:space-x-1 text-white hover:text-orange-600 focus:text-orange-400"
+            className="font-poppins min-w-full text-sm flex flex-row items-center justify-center bg-orange-600 p-1 rounded-md lg:mb-4 space-x-1 sm:space-x-1 text-white hover:text-orange-600 focus:text-orange-400"
             indicatorProps={{
               className:
                 "hover:shadow-lg rounded-md bg-orange-600 hover:text-orange-600 focus:bg-white focus:text-orange-400",

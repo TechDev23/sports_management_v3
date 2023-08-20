@@ -15,7 +15,7 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import Select from "react-select";
-import EditIcon from '@mui/icons-material/Edit';
+import EditIcon from "@mui/icons-material/Edit";
 
 // entire ui can be divided into
 
@@ -82,46 +82,51 @@ function UpdateDialog() {
     },
   ];
 
-  const handleGameChangeSelect = (game)=>{
+  const handleGameChangeSelect = (game) => {
     setSelectedGame(game);
     console.log(`Option selected:`, game);
-  }
+  };
   const addGameToDB = async () => {
     console.log(values);
   };
   return (
-    <>
-      <Button color="amber" variant="outlined" onClick={handleOpen} className="hover:text-white hover:bg-orange-500 flex gap-2 items-center justify-center w-auto border-none">
-        <EditIcon/><p>Edit</p> 
+    <div>
+      <Button
+        color="amber"
+        variant="outlined"
+        onClick={handleOpen}
+        className="hover:text-white hover:bg-orange-500 flex gap-2 items-center justify-center w-auto border-none"
+      >
+        <EditIcon />
+        <p>Edit</p>
       </Button>
       <Dialog open={open} handler={handleOpen} size="xxl">
         <DialogHeader className="font-poppins">Edit game details</DialogHeader>
-        <DialogBody divider  className="font-poppins  overflow-y-scroll">
+        <DialogBody divider className="font-poppins  overflow-y-scroll">
           <div className="w-full flex flex-col p-4 gap-2">
-
             <div className="w-full h-52 space-y-2 border-2 border-red-500">
               <p className="font-bold text-black">Game Details</p>
               <div className="w-full flex flex-col lg:flex-row gap-4">
-            <div className="w-full lg:w-2/3 gap-x-2">
-              <Input
-                value={values.name}
-                onChange={handleInputChange}
-                label="Enter the name of Tournament"
-                className="min-w-1/3"
-                color="orange"
-                name="name"
-              />
-            </div>
-            <div className="w-full lg:w-1/3 text-sm">
-              <Select
-                placeholder="Select game"
-                options={options}
-                onChange={handleGameChangeSelect}
-                autoFocus={true} 
-                value={selectedGame}
-              />
-            </div>
-          </div>
+                <div className="w-full lg:w-2/3 gap-x-2">
+                  <Input
+                    value={values.name}
+                    onChange={handleInputChange}
+                    label="Enter the name of Tournament"
+                    className="min-w-1/3"
+                    color="orange"
+                    name="name"
+                  />
+                </div>
+                <div className="w-full lg:w-1/3 text-sm">
+                  <Select
+                    placeholder="Select game"
+                    options={options}
+                    onChange={handleGameChangeSelect}
+                    autoFocus={true}
+                    value={selectedGame}
+                  />
+                </div>
+              </div>
             </div>
             <div className="w-full h-52 border-2 border-green-500"></div>
             <div className="w-full h-52 border-2 border-purple-500"></div>
@@ -142,7 +147,7 @@ function UpdateDialog() {
           </Button>
         </DialogFooter>
       </Dialog>
-    </>
+    </div>
   );
 }
 
@@ -176,14 +181,11 @@ export default function AllAddedGames() {
       </div>
 
       <div className="grid grid-auto-fit-[25rem] gap-6">
-        {/* {allGames?.data.map((game) => (
-          <> */}
+        {allGames?.data.map((game) => (
+          <>
             <Card className="w-fit">
               <CardBody>
-                <Typography
-                  variant="h5"
-                  className="mb-2 capitalize"
-                >
+                <Typography variant="h5" className="mb-2 capitalize">
                   {/* {game?.name} */}
                   game name
                 </Typography>
@@ -197,8 +199,8 @@ export default function AllAddedGames() {
                 <UpdateDialog />
               </CardFooter>
             </Card>
-          {/* </>
-        ))} */}
+          </>
+        ))}
       </div>
     </div>
   );

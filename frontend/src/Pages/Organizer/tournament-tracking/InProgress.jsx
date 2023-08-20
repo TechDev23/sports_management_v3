@@ -22,6 +22,7 @@ import {
     Step5Update 
 } from '../../../Components/Organizer/InProgress';
 import { Outlet, useNavigate } from 'react-router-dom';
+import { BiEdit, BiPlus } from 'react-icons/bi';
 
 // import { useNavigate } from "react-router-dom";
 
@@ -74,60 +75,30 @@ const InProgress = () => {
 
 
   return (
-    <div className="w-full min-h-full flex flex-col-reverse md:flex-row md:space-x-5">
+    <div className="mt-4 md:mt-0  md:border-none border-t-2 bg-white px-2 h-full w-full md:w-full  flex flex-col items-center gap-4">
+    <div className='flex justify-between w-full items-center'>
+    <p className=" text-blue-gray-700 text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold ">
+      Current Tournament
+    </p>
 
-    <div className="mt-4 md:mt-0  md:border-none border-t-2 bg-white px-2 min-h-full w-full md:w-full  flex flex-col items-center ">
-
-    <div className="w-full py-4 px-4 lg:px-8">
-      <Stepper
-        activeStep={activeStep-1}
-        isLastStep={(value) => setIsLastStep(value)}
-        isFirstStep={(value) => setIsFirstStep(value)}
-        activeLineClassName="bg-orange-400 flex flex-col"
-      
-      >
-        <Step activeClassName="bg-orange-500 shadow-none scale-105"
-        completedClassName="bg-orange-500" className="h-4 w-4"  />
-        <Step activeClassName="bg-orange-500 shadow-none scale-105"
-        completedClassName="bg-orange-500" className="h-4 w-4" />
-        <Step activeClassName="bg-orange-500 shadow-none scale-105"
-        completedClassName="bg-orange-500" className="h-4 w-4"  />
-        <Step activeClassName="bg-orange-500 shadow-none scale-105"
-        completedClassName="bg-orange-500" className="h-4 w-4" />
-        <Step activeClassName="bg-orange-500 shadow-none scale-105"
-        completedClassName="bg-orange-500" className="h-4 w-4" />
-      </Stepper>
+    <Button 
+      color='orange'
+      className='hidden md:block'
+      onClick={() => navigate("/o/current/step1")}
+    >
+      Update Tournament
+    </Button>
+    <Button
+      color='orange'
+      className='md:hidden'
+      onClick={() => navigate("/o/current/step1")}
+    >
+      <BiPlus className='w-6 h-6'/>
+    </Button>
+ 
     </div>
 
-      <p className=" text-blue-gray-700 text-3xl font-bold my-4 lg:mt-0 w-full">
-        Current Tournament
-      </p>
-      
       <Outlet/>
-    
-    
-      <div className="flex justify-center my-2">
-      <button
-        className="bg-gray-300 hover:bg-gray-500 text-gray-800 py-2 px-4 rounded-lg"
-        onClick={handleAutoSave}
-      >
-        Auto Save All the Details
-      </button>
-    </div>
-    
-    
-      <div className="w-full flex flex-row px-4 justify-between space-x-2">
-      <Button color='orange' onClick={handlePrev} disabled={isFirstStep}>
-        Prev
-      </Button>
-      <Button color='orange' onClick={handleNext} disabled={isLastStep}>
-        Next
-      </Button>
-      </div>
-
-
-    </div>
-
 
     </div>
   )

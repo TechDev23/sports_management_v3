@@ -37,6 +37,7 @@ function Success() {
 }
 
 const Step1 = () => {
+  
   const [organizationName, setOrganizationName] = useState("");
   const [organizationDescription, setOrganizationDescription] = useState("");
   const [tournamentName, setTournamentName] = useState("");

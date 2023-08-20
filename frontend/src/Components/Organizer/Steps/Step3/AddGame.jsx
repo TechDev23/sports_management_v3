@@ -508,7 +508,7 @@ const AddGame = ({ key }) => {
                   placeholderText="Select start Date"
                   selectsStart
                   name="start_date"
-                  dateFormat="yyyy-mm-dd hh:mm:aa"
+                  dateFormat="yyyy-MM-dd hh:mm:aa"
                   startDate={startDate}
                   endDate={endDate}
                 />
@@ -521,7 +521,7 @@ const AddGame = ({ key }) => {
                   placeholderText="Select End Date"  
                   selectsStart
                   name="end_date"
-                  dateFormat="yyyy-mm-dd hh:mm:aa"
+                  dateFormat="yyyy-MM-dd hh:mm:aa"
                   
                   startDate={startDate}
                   endDate={endDate}
