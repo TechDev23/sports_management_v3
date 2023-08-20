@@ -47,15 +47,15 @@ const Step2 = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="w-full h-full mt-4 gap-4 border-b-2">
+    <div className="w-full h-full  gap-4 ">
 
-      <div className="w-full">
+      <div className="w-full ">
         <CustomizedSteppers step={1} />
       </div>
 
-      <div className=''>
-        <p className='text-2xl lg:text-3xl font-bold text-blue-gray-700'>Add Collaborators</p>
-      </div>
+      <div className='gap-4  mt-4 flex flex-col'>
+        <p className='text-2xl lg:text-2xl font-bold text-blue-gray-700'>Add Collaborators</p>
+      
 
       <div className='w-full flex flex-col lg:flex-row gap-4 justify-between items-center '>
         <div className='w-full lg:w-1/2'>
@@ -92,7 +92,8 @@ const Step2 = () => {
           name="game"
           />
       </div>
-      <div className='w-full flex flex-col lg:flex-row gap-4 '>
+      </div>
+      <div className='w-full flex flex-col lg:flex-row gap-4 mt-4 '>
       
         <div className='w-full lg:w-1/2 lg:border-r-2 p-4 items-center justify-center  space-y-4'>
           <div>
