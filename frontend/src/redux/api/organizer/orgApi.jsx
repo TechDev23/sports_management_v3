@@ -85,7 +85,7 @@ export const orgApi = createApi({
     getFixtures: build.query({
       query(data){
         return{
-          url:`organizer/tournament/${data.tournament_id}/games/${data.tour_game_id}/fixtures/?game_id=${data.game_id}&token=${token}`
+          url:`organizer/tournament/${data.tournament_id}/games/${data.tournament_game_id}/fixtures/?game_id=${data.game_id}&token=${data.token}`
         }
       }
     })
@@ -98,4 +98,5 @@ export const orgApi = createApi({
 export const { useCreateTournamentMutation, 
   useAddGameToTnmtMutation,
   useGetRgstrdTeamsQuery,
+  useGetFixturesQuery
 } = orgApi;
