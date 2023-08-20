@@ -2,41 +2,79 @@ import React from "react";
 import { Button } from "@material-tailwind/react";
 import { useGetFixturesQuery } from "../../../../../redux/api/organizer/orgApi";
 import { Fragment } from "react";
+import EditIcon from "@mui/icons-material/Edit";
 
 function FixtureList({ fixtures }) {
-  console.log("fixtures", fixtures)
+  console.log("fixtures", fixtures);
   return (
-    <div className="p-2 border w-full rounded-lg">
+    <div className="p-6 border w-full rounded-lg shadow-xl ">
       {/* Display the round number */}
-      <p>Round {fixtures[0].round_no}</p>
+      <p className="font-poppins text-2xl font-bold">
+        Round {fixtures[0].round_no}
+      </p>
 
       {/* Map over fixtures for this round */}
       {fixtures.map((fixture) => (
         <Fragment key={fixture.id}>
-          <div className="my-2">
-            
-          <div className="flex flex-row items-center justify-between gap-4">
-            <div className="w-72">
-              <p className="text-[14px] bg-gray-200 h-10 rounded-md flex items-center justify-center">
-                {fixture?.team_1?.name}
-              </p>
-            </div>
+          <div className="group my-8 p-6 flex gap-x-16 w-full items-start justify-between hover:bg-gray-100 transition-all duration-200">
+            <div className="flex flex-row items-center justify-between gap-4 border-b-2 border-orange-500">
+              <div className="w-60 pl-6">
+                <p className="text-xl capitalize italic rounded-md flex items-center justify-start">
+                  🎖️{fixture?.team_1?.name}
+                </p>
+              </div>
 
-            <Button color="orange">vs</Button>
+              <div className="bg-orange-500 text-xl text-white px-4 py-2 font-bold italic">
+                vs
+              </div>
 
-            <div className="w-72">
-              <p className="text-[14px] bg-gray-200 h-10 rounded-md flex items-center justify-center">
-              {fixture?.team_2?.name}
-              </p>
+              <div className="w-60 pl-6">
+                <p className="text-xl capitalize italic rounded-md flex items-center justify-end">
+                  {fixture?.team_2?.name}
+                </p>
+              </div>
             </div>
-            <textarea
-              className="flex-grow w-full h-10 border border-gray-500 px-4 py-2 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200"
-              placeholder="Time Place and Responsible details"
-              rows={10}
-              disabled="true"
-            ></textarea>
-          </div>
-          
+            {/* Match details starts */}
+            <div className="w-full h-auto p-2 pt-0 font-poppins flex justify-between">
+              <div>
+                <p className=" font-semibold text-xl">
+                  Match Number {fixture?.match_number}
+                </p>
+                <p className="font-semibold text-lg text-orange-500">
+                  Winner:{" "}
+                  <span className="font-normal italic pl-3">
+                    {fixture?.winner?.name}
+                  </span>
+                </p>
+                <p className="font-medium text-lg">
+                  Umpire:{" "}
+                  <span className="font-normal italic pl-3">
+                    {fixture?.umpire?.first_name}
+                  </span>
+                </p>
+                <p className="font-medium text-lg">
+                  Location:{" "}
+                  <span className="font-normal italic pl-3">
+                    {fixture?.ground?.location}
+                  </span>
+                </p>
+                <p className="font-medium text-lg">
+                  Ground name:{" "}
+                  <span className="font-normal italic pl-3">
+                    {fixture?.ground?.name}
+                  </span>
+                </p>
+              </div>
+
+              {/* Edit game starts */}
+              <div className="hidden group-hover:block">
+                <Button variant="outlined" color="amber" className="flex items-center gap-2 bg-white font-poppins tracking-wider">
+                <EditIcon/> Update score
+                </Button>
+              </div>
+              {/* Edit game ends */}
+            </div>
+            {/* Match details ends */}
           </div>
         </Fragment>
       ))}
