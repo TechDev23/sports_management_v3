@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "@material-tailwind/react";
-import { useGetFixturesQuery } from "../../../../../redux/api/organizer/orgApi";
+import { useGetFixturesQuery } from "../../../../../../redux/api/organizer/orgApi";
 import { Fragment } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import { toast } from "react-toastify";

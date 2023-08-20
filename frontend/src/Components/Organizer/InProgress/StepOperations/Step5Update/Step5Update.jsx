@@ -2,7 +2,7 @@
 // import { Input, Select, Option, ButtonGroup, Button, Textarea } from "@material-tailwind/react";
 import { useState } from "react";
 
-import { Rosters, Details, Participants, SetOperations, Certifications } from "./StepOperations";
+import { Rosters, Details, Participants, SetOperations, Certifications } from "..";
 
 import {
   Tabs,
@@ -11,7 +11,8 @@ import {
   Tab,
   TabPanel,
 } from "@material-tailwind/react";
-import CurrentStepper from "../../Common/CurrentStepper";
+import CurrentStepper from "../../../../Common/CurrentStepper";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 
 
 export default function Step5Update() {
@@ -43,6 +44,7 @@ export default function Step5Update() {
     },
   ];
 
+  const navigate = useNavigate();
   
   return (
     <div className="w-full h-full mt-3">
@@ -59,17 +61,16 @@ export default function Step5Update() {
             }}
           >
             {data.map(({ label, value }) => (
-              <Tab key={value} value={value} className="text-white text-sm  px-0.5">
+              
+              <Tab onClick={() => navigate(`/o/current/step5/${value}`)}  key={value} value={value} className="text-white text-sm  px-0.5">
+              <Link>
                 {label}
+              </Link>
               </Tab>
             ))}
           </TabsHeader>
           <TabsBody className="">
-            {data.map(({ value, desc }) => (
-              <TabPanel key={value} value={value}>
-                <div className="w-full">{desc}</div>
-              </TabPanel>
-            ))}
+            <Outlet/>
           </TabsBody>
         </Tabs>
       </div>
