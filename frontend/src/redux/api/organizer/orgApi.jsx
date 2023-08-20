@@ -6,7 +6,7 @@ const BASE_URL = "http://127.0.0.1:8000";
 
 const cookie = new Cookies();
 // const token = cookie.get("jwt_auth_token");
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTI1MzEyODksInN1YiI6Imp1RDNSTm52RUEifQ.BvmkdnfQrxRvMiP0AoTegNRul6C5jDhK9A_F7jWfhMQ"
+const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTI1MzQ5MjksInN1YiI6Imp1RDNSTm52RUEifQ.G_uA3tDwtdIl7SfG4sRwyQl-QcDpTwPDOVIjgQvXj1Y"
 
 export const orgApi = createApi({
   reducerPath: "orgApi",
@@ -56,7 +56,7 @@ export const orgApi = createApi({
     addGrndUmpire: build.mutation({
       query(data) {
         return {
-          url: `organizer/tournament/${data.tournament_id}/games/${data.game_id}?token=${data.token}`,
+          url: `organizer/tournament/${data.tournament_id}/games/${data.tournament_game_id}?token=${data.token}`,
           method: "post",
           body: data.req_body,
         };
@@ -66,7 +66,7 @@ export const orgApi = createApi({
     getRgstrdTeams: build.query({
       query(data) {
         return {
-          url: `organizer/tournament/${data.tournament_id}/games/${data.tournament_game_id}/teams?token=${data.token}`,
+          url: `organizer/tournament/${data.tournament_id}/games/${data.tournament_game_id}/teams?token=${token}`,
         };
       },
     }),
