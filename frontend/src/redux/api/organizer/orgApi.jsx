@@ -6,7 +6,7 @@ const BASE_URL = "http://127.0.0.1:8000";
 
 const cookie = new Cookies();
 // const token = cookie.get("jwt_auth_token");
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTI1MzQ5MjksInN1YiI6Imp1RDNSTm52RUEifQ.G_uA3tDwtdIl7SfG4sRwyQl-QcDpTwPDOVIjgQvXj1Y"
+const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTI2Mjk5NTUsInN1YiI6Imp1RDNSTm52RUEifQ.--0W2XREnEtINgqUZOr5yZsMMoPb0T7ww-IzhZW5TKk"
 
 export const orgApi = createApi({
   reducerPath: "orgApi",

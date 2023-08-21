@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import CustomizedSteppers from "../../../Common/Stepper";
 const Step3 = () => {
-
+  
   const dispatch = useDispatch();
 
   const [gameCount, setGameCount] = useState(1); // State to track the number of games
@@ -37,6 +37,7 @@ const Step3 = () => {
       </div>
       <div className="space-y-4 w-full ">
         {Array.from({ length: gameCount }, (_, index) => (
+
           <AddGame key={index} gameIndex={index} />
         ))}
       </div>

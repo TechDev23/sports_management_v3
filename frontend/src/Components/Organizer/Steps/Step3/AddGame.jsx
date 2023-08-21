@@ -60,7 +60,8 @@ const DateSelector = () => {
 };
 
 
-const AddGame = ({ key }) => {
+const AddGame = ({ key, gameIndex }) => {
+  console.log(gameIndex)
   const { id: tourId } = useAppSelector(
     (state) => state.tournament.tour_details
   );
@@ -70,11 +71,6 @@ const AddGame = ({ key }) => {
     { isSuccess, isLoading: isAddingGame, isError: errorWhileAddingGame },
   ] = useAddGameToTnmtMutation();
 
-  // entire ui can be divided into
-  // game detail
-  // participants details (ex: min age, min boys ,etc)
-  // prize
-  // schedule
   const initialValues = {
     name: "game1",
     tournament_id: tourId,
@@ -201,8 +197,8 @@ const AddGame = ({ key }) => {
     }
   };
 
-  const GenderRadioButtons = ({key}) => (
-    <List key={key} className=" w-full flex-row">
+  const GenderRadioButtons = ({gameIndex}) => (
+    <List key={gameIndex} className=" w-full flex-row">
       <ListItem className="p-0">
         <label
           htmlFor="horizontal-list-react"
@@ -212,7 +208,7 @@ const AddGame = ({ key }) => {
             <Radio
               color="amber"
               name="horizontal-list"
-              id="horizontal-list-react"
+              id={gameIndex+1}
               ripple={false}
               checked={whoCanParticipate === 0}
               onChange={() => handleParticipantRadio(0)}
@@ -236,7 +232,7 @@ const AddGame = ({ key }) => {
             <Radio
               color="amber"
               name="horizontal-list"
-              id="horizontal-list-vue"
+              id={gameIndex+2}
               ripple={false}
               className="hover:before:opacity-0"
               containerProps={{
@@ -260,7 +256,7 @@ const AddGame = ({ key }) => {
             <Radio
               color="amber"
               name="horizontal-list"
-              id="horizontal-list-svelte"
+              id={gameIndex+3}
               ripple={false}
               className="hover:before:opacity-0"
               containerProps={{
@@ -443,7 +439,7 @@ const AddGame = ({ key }) => {
               value={values.open_to}
               onChange={handleInputChange}
             /> */}
-            <GenderRadioButtons key={key}/>
+            <GenderRadioButtons gameIndex={gameIndex}/>
             </div>
 
             <div className="w-full flex flex-col lg:flex-row gap-5">
