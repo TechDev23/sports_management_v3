@@ -4,6 +4,13 @@ import { useState } from "react";
 
 import { Rosters, Details, Participants, SetOperations, Certifications } from "..";
 
+import { BiSolidUserDetail } from "react-icons/bi";
+import { RiTeamFill } from "react-icons/ri";
+import { FaTasks } from "react-icons/fa";
+import { TbTournament } from "react-icons/tb";
+import { AiFillStar } from "react-icons/ai";
+
+
 import {
   Tabs,
   TabsHeader,
@@ -19,26 +26,31 @@ export default function Step5Update() {
   const data = [
     {
       label: "DETAILS",
+      icon: <BiSolidUserDetail className="w-5 h-5"/>,
       value: "details",
       desc: <Details/>,
     },
     {
       label: "PARTICIPANTS",
+      icon: <RiTeamFill className="w-5 h-5"/>,
       value: "participants",
       desc: <Participants/>,
     },
     {
       label: "OPERATIONS",
+      icon: <FaTasks className="w-5 h-5"/>,
       value: "operations",
       desc: <SetOperations/>,
     },
     {
       label: "ROSTERS",
+      icon: <TbTournament className="w-5 h-5"/>,
       value: "rosters",
       desc: <Rosters />,
     },
     {
       label: "CERTIFICATIONS",
+      icon: <AiFillStar className="w-5 h-5"/>,
       value: "certifications",
       desc: <Certifications/>,
     },
@@ -60,11 +72,17 @@ export default function Step5Update() {
                 "hover:shadow-lg rounded-md bg-orange-600 hover:text-orange-600 focus:bg-white focus:text-orange-400",
             }}
           >
-            {data.map(({ label, value }) => (
+            {data.map(({ label, icon, value }) => (
               
               <Tab onClick={() => navigate(`/o/current/step5/${value}`)}  key={value} value={value} className="text-white text-sm  px-0.5">
               <Link>
+              <p className="block md:hidden">
+                {icon}
+              </p>
+
+              <p className="hidden md:block">
                 {label}
+              </p>
               </Link>
               </Tab>
             ))}
