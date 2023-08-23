@@ -1,1 +1,5 @@
-export { default as Dashboard } from  "./dashboard/Dashboard"
+export { default as PDashboard } from "./dashboard/PDashboard"
+export { default as Calendar } from "./calendar/Calendar"
+export { default as TournamentTracking } from "./tournament-tracking/TournamentTracking"
+export { default as Messages } from "./messages/Messages"
+export { default as Teams } from "./teams/Teams"

@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { Button, Card, CardBody, CardHeader } from "@material-tailwind/react";
+import { Button, Card, CardBody } from "@material-tailwind/react";
 import { FiFacebook } from "react-icons/fi";
 import { BiLink } from "react-icons/bi";
 
-const Dashboard = () => {
+const PDashboard = () => {
 
   const games = [
     {
@@ -46,7 +46,7 @@ const Dashboard = () => {
       startDate: "22-08-2023",
       endDate: "01-09-2023"
     },
-  ]
+  ];
 
   return (
     <div className="w-full h-full font-poppins flex flex-col gap-4 ">
@@ -76,7 +76,7 @@ const Dashboard = () => {
               </div>
                 <p className="text-gray-700 text-sm">{desc}</p>
               <div className="w-full flex flex-col sm:flex-row gap-4">
-                <div className="flex  gap-4 items-center lg:pr-2 w-full text-sm sm:w-2/3">
+                <div className="flex  gap-4 items-center md:pr-2 w-full text-xs xl:text-sm sm:w-2/3">
                   <p className="bg-green-50 text-green-500 p-2 rounded-lg">{startDate}</p>
                   <p className="bg-red-50 text-red-500 p-2 rounded-lg">{endDate}</p>
                 </div>
@@ -97,6 +97,6 @@ const Dashboard = () => {
 
     </div>
   );
-};
+}
 
-export default Dashboard;
+export default PDashboard;
