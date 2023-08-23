@@ -10,7 +10,7 @@ const PDashboard = () => {
       organization: "Pune Institute of Computer Technology",
       tournament: "Elevate 2.0",
       organizer: "Priyanshu PM",
-      desc: "The organizer is the main component of the sports management website and it can be differentiated with the player",
+      desc: "The organizer is the main component of the sports management website and it can be differentiated with the player. The organizer is the main component of the sports management website and it can be differentiated with the player. The organizer is the main component of the sports management website and it can be differentiated with the player. The organizer is the main component of the sports management website and it can be differentiated with the player. The organizer is the main component of the sports management website and it can be differentiated with the player. ",
       startDate: "22-08-2023",
       endDate: "01-09-2023"
     },
@@ -18,7 +18,7 @@ const PDashboard = () => {
       organization: "Pune Institute of Computer Technology",
       tournament: "Elevate 2.0",
       organizer: "Priyanshu PM",
-      desc: "The organizer is the main component of the sports management website and it can be differentiated with the player",
+      desc: "The organizer is the main component of the sports management website and it can be differentiated with the player. The organizer is the main component of the sports management website and it can be differentiated with the player. The organizer is the main component of the sports management website and it can be differentiated with the player. The organizer is the main component of the sports management website and it can be differentiated with the player. The organizer is the main component of the sports management website and it can be differentiated with the player. ",
       startDate: "22-08-2023",
       endDate: "01-09-2023"
     },
@@ -26,7 +26,7 @@ const PDashboard = () => {
       organization: "Pune Institute of Computer Technology",
       tournament: "Elevate 2.0",
       organizer: "Priyanshu PM",
-      desc: "The organizer is the main component of the sports management website and it can be differentiated with the player",
+      desc: "The organizer is the main component of the sports management website and it can be differentiated with the player. The organizer is the main component of the sports management website and it can be differentiated with the player. The organizer is the main component of the sports management website and it can be differentiated with the player. The organizer is the main component of the sports management website and it can be differentiated with the player. The organizer is the main component of the sports management website and it can be differentiated with the player. ",
       startDate: "22-08-2023",
       endDate: "01-09-2023"
     },
@@ -34,7 +34,7 @@ const PDashboard = () => {
       organization: "Pune Institute of Computer Technology",
       tournament: "Elevate 2.0",
       organizer: "Priyanshu PM",
-      desc: "The organizer is the main component of the sports management website and it can be differentiated with the player",
+      desc: "The organizer is the main component of the sports management website and it can be differentiated with the player. The organizer is the main component of the sports management website and it can be differentiated with the player. The organizer is the main component of the sports management website and it can be differentiated with the player. The organizer is the main component of the sports management website and it can be differentiated with the player. The organizer is the main component of the sports management website and it can be differentiated with the player. ",
       startDate: "22-08-2023",
       endDate: "01-09-2023"
     },
@@ -42,7 +42,7 @@ const PDashboard = () => {
       organization: "Pune Institute of Computer Technology",
       tournament: "Elevate 2.0",
       organizer: "Priyanshu PM",
-      desc: "The organizer is the main component of the sports management website and it can be differentiated with the player",
+      desc: "The organizer is the main component of the sports management website and it can be differentiated with the player. The organizer is the main component of the sports management website and it can be differentiated with the player. The organizer is the main component of the sports management website and it can be differentiated with the player. The organizer is the main component of the sports management website and it can be differentiated with the player. The organizer is the main component of the sports management website and it can be differentiated with the player. ",
       startDate: "22-08-2023",
       endDate: "01-09-2023"
     },
@@ -74,7 +74,7 @@ const PDashboard = () => {
                   <p className="text-sm text-gray-700">Organizer : <span className="text-orange-500 italic px-2 bg-gray-100 rounded-lg">{organizer}</span></p>
                 </div>
               </div>
-                <p className="text-gray-700 text-sm">{desc}</p>
+                <p className="text-gray-700 text-sm">{ desc.length < 100 ? desc: `${desc.substring(0, 100)}...`}</p>
               <div className="w-full flex flex-col sm:flex-row gap-4">
                 <div className="flex  gap-4 items-center md:pr-2 w-full text-xs xl:text-sm sm:w-2/3">
                   <p className="bg-green-50 text-green-500 p-2 rounded-lg">{startDate}</p>
