@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import { Link, Outlet } from "react-router-dom";
 
 function AllFixturesList({ fixtures }) {
-  // console.log("fixtures", fixtures);
+  console.log("fixtures", fixtures);
   return (
     <div className="p-6 border w-full rounded-lg shadow-xl ">
       {/* Display the round number */}
@@ -70,7 +70,7 @@ function AllFixturesList({ fixtures }) {
 
               {/* Edit game starts */}
               <div className="hidden group-hover:block">
-                <Link to={`/o/current/step5/rosters/fixture/452/`}>
+                <Link to={`/o/current/step5/rosters/fixture/${fixture?.id}`}>
                 <Button variant="outlined" color="amber" className="flex items-center gap-2 bg-white font-poppins tracking-wider">
                 <EditIcon/> Update score
                 </Button>
@@ -108,7 +108,7 @@ export default function fixtureList() {
     return <p className="text-2xl font-poppins flex items-center justify-center">...Loading fixtures</p>
   }
   if(isError){
-    toast.error(error?.data.detail)
+    toast.error(error?.data?.detail)
   }
 
   const fixturesByRound = {};

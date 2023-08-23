@@ -5,13 +5,14 @@ import Cookies from "universal-cookie";
 const BASE_URL = "http://127.0.0.1:8000";
 
 const cookie = new Cookies();
-// const token = cookie.get("jwt_auth_token");
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTI2Mjk5NTUsInN1YiI6Imp1RDNSTm52RUEifQ.--0W2XREnEtINgqUZOr5yZsMMoPb0T7ww-IzhZW5TKk"
+const token = cookie.get("jwt_auth_token");
+console.log(token)
+// const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTI3Njg5OTQsInN1YiI6Imp1RDNSTm52RUEifQ.2ahL8jbd2HccsNxIdbUzEznllahT46kZesvfl8wbbcA"
 
 export const orgApi = createApi({
   reducerPath: "orgApi",
   baseQuery: fetchBaseQuery({ baseUrl: `${BASE_URL}/` }),
-  tagTypes: ["Posts"],
+  tagTypes: ["org"],
   endpoints: (build) => ({
     createTournament: build.mutation({
       query(body) {
@@ -99,33 +100,6 @@ export const orgApi = createApi({
       }
     }),
     
-
-    postMatchResult: build.mutation({
-      query(data){
-        return{
-          url:`organizer/tournament/${data.tournament_id}/games/${data.tournament_game_id}/fixtures/${data.fixture_id}/results?token=${token}`,
-          method:'post',
-          body: data
-          // here request body is like below
-          // {
-          //   "winner_id": "14",
-          //   "points": 0,
-          //   "nr": 0
-          // }
-        }
-      }
-    }),
-
-    updateLosingTeamPoints: build.mutation({
-      query(data){
-        return{
-          url:`organizer/tournament/${data.tournament_id}/games/${data.tournament_game_id}/fixtures/${data.fixture_id}/lost?token=${token}`,
-          method:'post',
-        }
-      }
-    }),
-
-
     // Fixtures api's ends
 
 

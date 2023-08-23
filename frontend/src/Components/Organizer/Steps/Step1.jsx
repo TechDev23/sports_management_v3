@@ -13,8 +13,6 @@ import CustomizedSteppers from "../../Common/Stepper";
 import { useNavigate } from "react-router-dom";
 
 import { registerLocale, setDefaultLocale } from "react-datepicker";
-import fr from "date-fns/locale/fr";
-registerLocale('fr', fr)
 
 
 function Success() {
@@ -37,7 +35,7 @@ function Success() {
 }
 
 const Step1 = () => {
-  
+  const navigate = useNavigate()
   const [organizationName, setOrganizationName] = useState("");
   const [organizationDescription, setOrganizationDescription] = useState("");
   const [tournamentName, setTournamentName] = useState("");
@@ -72,29 +70,37 @@ const Step1 = () => {
         name: tournamentName,
         about: tournamentDescription,
         organizer_id: userId,
-        start_date: startDate,
-        end_date: endDate,
+        organizer_name: organizationName,
+        organizer_info: organizationDescription,
+        start_date: new Date(startDate).toISOString(),
+        end_date: new Date(endDate).toISOString(),
         is_payment_done: true,
         is_active: true,
       };
-      // const crtTrnmt = await createTournament(toSent).unwrap();
-      // if (crtTrnmt.status === "success" && crtTrnmt.status_code === 201)
-      //   dispatch(setTournamentDetails(crtTrnmt?.data));
-      // console.log("Create tournament returned", crtTrnmt);
-      console.log("start", new Date(startDate).toISOString());
-    console.log("end", new Date(endDate).toISOString());
+      const crtTrnmt = await createTournament(toSent).unwrap();
+      if (crtTrnmt.status === "success" && crtTrnmt.status_code === 201)
+        dispatch(setTournamentDetails(crtTrnmt?.data));
+      console.log("Create tournament returned", crtTrnmt);
     } catch (error) {
       const errorMessage = error?.data?.detail || "An error occurred";
       toast.error(`${errorMessage}`);
     }
   };
 
-  const navigate = useNavigate();
-  
   return (
     <div className="w-full h-full">
       {isSuccess ? (
+        <>
         <Success />
+        <div className="w-full flex flex-row  items-center justify-center lg:justify-end gap-4 ">
+            <Button
+              color="orange"
+              onClick={() => navigate("/o/new-tournament/step2")}
+            >
+              Next
+            </Button>
+          </div>
+        </>
       ) : (
         <div className="w-full space-y-4">
           <div className="w-full">
@@ -123,7 +129,7 @@ const Step1 = () => {
                   </div>
                   <div className="text-sm mt-6">
                     <label htmlFor="description" className="block mb-1 mt-4">
-                      About Organisation{" "}
+                      About Organisation {" "}
                     </label>
                     <textarea
                       id="description"
@@ -175,7 +181,8 @@ const Step1 = () => {
                   <DatePicker
                     selected={startDate}
                     showTimeSelect
-                    onChange={(date) => setStartDate(date)}
+                    onChange={(date) =>
+                      setStartDate(date) }
                     className="w-64 sm:w-56 md:w-60 lg:w-48 xl:w-60 border border-gray-500 p-4 py-2 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200 text-sm md:text-normal"
                     placeholderText="Select start Date"
                     selectsStart
@@ -202,15 +209,15 @@ const Step1 = () => {
               </div>
             </div>
             <div className="flex justify-center mt-4">
-              <button
+              <Button
                 className="flex items-center justify-center bg-orange-500 hover:bg-orange-700 text-white py-2 px-4 rounded-lg w-full"
                 onClick={handleProceed}
               >
                 {isLoading ? <Spinner color="amber" /> : "Save"}
-              </button>
+              </Button>
             </div>
           </div>
-
+{/* 
           <div className="w-full flex flex-row  items-center justify-center lg:justify-end gap-4 ">
             <Button
               color="orange"
@@ -218,7 +225,7 @@ const Step1 = () => {
             >
               Next
             </Button>
-          </div>
+          </div> */}
         </div>
       )}
     </div>

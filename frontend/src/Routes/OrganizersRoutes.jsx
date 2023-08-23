@@ -31,6 +31,7 @@ import {
   FixtureList,
   Participants,
   Rosters,
+  ScoreBoard,
   SetOperations,
   SetScoreForTennis,
 } from "../Components/Organizer/InProgress/StepOperations";
@@ -129,6 +130,7 @@ export const OrganizerRoutes = {
                 {
                   path: "fixture/:fixtureId",
                   element: <SetScoreForTennis />,
+                  // element: <ScoreBoard />,
                 },
               ],
             },

@@ -6,7 +6,8 @@ const BASE_URL = "http://127.0.0.1:8000";
 
 const cookie = new Cookies();
 const token = cookie.get("jwt_auth_token");
-// const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTIyNzI5MDUsInN1YiI6Ild2Y3hlaEM0VTQifQ.DPoYgdlSKjkZb5ZqUZXa4imGSDEcrubCIegu8udclLY";
+console.log(token)
+// const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTI3Njg5OTQsInN1YiI6Imp1RDNSTm52RUEifQ.2ahL8jbd2HccsNxIdbUzEznllahT46kZesvfl8wbbcA";
 
 export const fixturesApi = createApi({
   reducerPath: "fixturesApi",
@@ -23,7 +24,7 @@ export const fixturesApi = createApi({
     addScoreVtb: build.mutation({
       query(data) {
         return {
-          url: `id/${data.fixtureId}/VTB/score?token=${token}`,
+          url: `VTB/id/${data[0].fixture_id}/score?token=${token}`,
           method: 'post',
           body: data,
         };
@@ -33,4 +34,4 @@ export const fixturesApi = createApi({
   }),
 });
 
-export const { useGetTournamentGamesQuery, useGetAllTrnmtsQuery } = fixturesApi;
+export const { useGetFixtureByIdQuery, useAddScoreVtbMutation } = fixturesApi;

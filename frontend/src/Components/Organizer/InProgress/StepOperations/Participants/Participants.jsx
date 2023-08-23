@@ -5,10 +5,8 @@ import { toast } from "react-toastify";
 
 export default function Participants() {
   const toSend = {
-    tournament_id: "HRTirSchGzYehTGx",
-    tournament_game_id: "HSohQ8E22JU5oeXQ",
-    token:
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTI1MzQ5MjksInN1YiI6Imp1RDNSTm52RUEifQ.G_uA3tDwtdIl7SfG4sRwyQl-QcDpTwPDOVIjgQvXj1Y",
+    tournament_id: "e6WVHnG5v8T8YoXY",
+    tournament_game_id: "VZWnFwkQ8fpsZ6wz",
   };
   const {
     data: allTeams,

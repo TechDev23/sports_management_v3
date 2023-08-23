@@ -8,3 +8,5 @@ export { default as Details } from "./Details"
 export { default as SetScoreForTennis } from './Step5Update/GameScore/SetScoreForTennis'
 
 export { default as FixtureList } from './Step5Update/Rosters/FixtureList'
+
+export { default as ScoreBoard } from './Step5Update/GameScore/ScoreBoard'
