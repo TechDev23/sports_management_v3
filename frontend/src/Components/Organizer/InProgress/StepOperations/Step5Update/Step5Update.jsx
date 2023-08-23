@@ -85,7 +85,7 @@ export default function Step5Update() {
               </Tab>
             ))}
           </TabsHeader>
-          <TabsBody className="">
+          <TabsBody className="mt-4">
             <Outlet/>
           </TabsBody>
         </Tabs>

@@ -35,6 +35,7 @@ import {
   SetOperations,
   SetScoreForTennis,
 } from "../Components/Organizer/InProgress/StepOperations";
+import LeagueFixtures from "../Components/Organizer/InProgress/StepOperations/Step5Update/Rosters/LeagueFixtures";
 
 export const OrganizerRoutes = {
   path: "o/",
@@ -124,7 +125,7 @@ export const OrganizerRoutes = {
               children: [
                 {
                   path: "",
-                  element: <FixtureList />,
+                  element: <LeagueFixtures/> ,
                 },
                 {
                   path: "fixture/:fixtureId",
