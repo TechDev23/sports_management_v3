@@ -71,7 +71,7 @@ const PDashboard = () => {
                 </div>
                 <p className="text-md text-gray-700">{organization}</p>
                 <div className="">
-                  <p className="text-sm text-gray-700">Organizer : <span className="text-orange-500 italic">{organizer}</span></p>
+                  <p className="text-sm text-gray-700">Organizer : <span className="text-orange-500 italic px-2 bg-gray-100 rounded-lg">{organizer}</span></p>
                 </div>
               </div>
                 <p className="text-gray-700 text-sm">{desc}</p>
