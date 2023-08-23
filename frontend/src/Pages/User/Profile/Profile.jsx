@@ -31,7 +31,8 @@ export default function ComplexNavbar() {
     name: user?.first_name + " " + user?.last_name,
     verified: user?.verified,
     createdAt: user?.createdAt,
-    email_id: user?.email_id,
+    // email_id: user?.email_id,
+    email_id: "kcpdsports@gmail.com",
     emergency_contact: "null",
     dob: user?.dob,
   };
@@ -148,9 +149,11 @@ export default function ComplexNavbar() {
   };
 
   return (
-    <div className="min-h-screen">
-      <div className="flex flex-col lg:flex-row">
-        <Card className="h-[calc(100vh-2rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5 border-4 ml-32  mt-16 sticky top-48">
+    <div className="w-full h-full">
+      <div className="flex flex-col lg:flex-row w-full h-full">
+
+
+        <div className="h-screen  w-1/5 p-4 border-2 ">
           <div className="mb-2 p-4">
             <Typography variant="h5" color="blue-gray" className="text-3xl">
               Account Settings
@@ -197,32 +200,30 @@ export default function ComplexNavbar() {
               </ListItemSuffix>
             </ListItem>
           </List>
-        </Card>
+        </div>
+
 
         {user && (
-          <div className="flex-col w-full mr-64 lg:ml-32 max-w-[80rem] p-8 flex">
-            <Card className="p-4 border-4 hover:shadow-xl  hover:shadow-blue-gray-150/5 transition-all duration-300 w-full md:max-w-[20rem] lg:max-w-[60rem]">
-              <div className="profile-image relative">
-                <div className="flex-row">
-                  <Avatar
-                    variant="circular"
-                    size="xl"
-                    alt="User Profile"
-                    src={user?.profile_url}
-                    className="mx-0 md:mx-auto md:ml-4 lg:ml-16 md:mt-16"
-                  />
-                  <div className="w-160 lg:ml-8 md:ml-0 mt-4 custom-id-text">
-                    <div className="text-blue-400 font-normal px-8 flex">
-                      <p className="mr-1">G-Sport ID: </p>
-                      <p className="ml-1">{user?.id}</p>
-                    </div>
-                  </div>
+          <div className="h-full flex flex-col w-full border  p-8 gap-4">
+            <div className="flex flex-row gap-4 ">
+              <Avatar
+                variant="circular"
+                size="lg"
+                alt="User Profile"
+                src={user?.profile_url}
+                className=" border"
+              />
+              <div className="flex flex-col justify-center items-center  ">
+                <div className="text-blue-400 font-normal  flex">
+                  <p className="">G-Sport ID: </p>
+                  <p className="">{user?.id}</p>
                 </div>
               </div>
+            </div>
 
-              <div className="ml-0 md:ml-4 lg:ml-16 sm:ml-4 mr-80 flex w-2/4">
-                <div className="text-center md:text-left mt-16">
-                  <div className="mb-8">
+              <div className="">
+                <div className="">
+                  <div className="">
                     <Typography
                       variant="h6"
                       color="blue-gray"
@@ -232,54 +233,51 @@ export default function ComplexNavbar() {
                     </Typography>
                     <div className="flex sm:flex-row items-center gap-2">
                       {isNameEditing ? (
-                        <>
-                          <div className="flex sm:flex-col items-center sm:items-start gap-2">
+                          <div className="flex flex-col md:flex-row items-center sm:items-start gap-4">
                             <input
                               type="text"
                               value={editedName}
                               onChange={(e) => setEditedName(e.target.value)}
                               className="border rounded px-2 py-1"
                             />
-                            <div className="flex sm:flex-row gap-2">
-                              <div className="rounded-lg border border-blue-500 px-4 bg-blue-400">
-                                <button
+                            <div className="flex sm:flex-row items-center  gap-2">
+                                <Button
+                                  color="blue"
+                                  size="sm"
                                   onClick={handleSaveName}
                                   className="text-white"
                                 >
                                   Save
-                                </button>
-                              </div>
-                              <div className="flex sm:flex-row gap-2">
-                                <div className="rounded-lg border border-blue-500 px-4 bg-blue-50">
-                                  <button
+                                </Button>
+                              <div className="flex sm:flex-row ">
+                                  <Button
+                                    variant="outlined"
+                                    size="sm"
                                     onClick={handleCancelName}
                                     className="text-gray-900"
                                   >
                                     Cancel
-                                  </button>
-                                </div>
+                                  </Button>
                               </div>
                             </div>
                           </div>
-                        </>
                       ) : (
-                        <>
+                        <div className="flex flex-row gap-4">
                           <Typography variant="body" color="gray">
                             {userInformation?.name}
                           </Typography>
 
-                          <div className="flex-grow"></div>
 
                           <button
                             onClick={handleEditName}
-                            className="text-blue-500 lg:ml-80"
+                            className="text-blue-500 "
                           >
                             Edit
                           </button>
-                        </>
+                        </div>
                       )}
                     </div>
-                    <hr className="my-2 hr-light" style={{ width: "170%" }} />
+                    <hr className="my-2 hr-light"  />
                   </div>
                   <div className="mb-8">
                     <Typography
@@ -291,8 +289,8 @@ export default function ComplexNavbar() {
                     </Typography>
                     <div className="flex sm:flex-row items-center gap-2">
                       {isEmailEditing ? (
-                        <>
-                          <div className="flex sm:flex-col items-center sm:items-start gap-2">
+                        <div>
+                          <div className="flex flex-col md:flex-row items-center sm:items-start gap-4">
                             <input
                               type="text"
                               value={editedEmail}
@@ -300,33 +298,30 @@ export default function ComplexNavbar() {
                               className="border rounded px-2 py-1"
                             />
                             <div className="flex sm:flex-row gap-2">
-                              <div className="rounded-lg border border-blue-500 px-4 bg-blue-400">
-                                <button
-                                  onClick={handleSaveEmail}
-                                  className="text-white"
+                              <Button
+                                size="sm"
+                                color="blue"
+                                onClick={handleSaveEmail}
+                                className="text-white"
+                              >
+                                Save
+                              </Button>
+                                <Button
+                                  size="sm"
+                                  variant="outlined"
+                                  onClick={handleCancelEmail}
+                                  className="text-gray-900"
                                 >
-                                  Save
-                                </button>
-                              </div>
-                              <div className="flex sm:flex-row gap-2">
-                                <div className="rounded-lg border border-blue-500 px-4 bg-blue-50">
-                                  <button
-                                    onClick={handleCancelEmail}
-                                    className="text-gray-900"
-                                  >
-                                    Cancel
-                                  </button>
-                                </div>
-                              </div>
+                                  Cancel
+                              </Button>
                             </div>
                           </div>
-                        </>
+                        </div>
                       ) : (
-                        <>
+                        <div className="flex flex-row gap-4">
                           <Typography variant="body" color="gray">
                             {userInformation.email_id}
                           </Typography>
-                          <div className="flex-grow md:flex-grow"></div>
 
                           <button
                             onClick={handleEditEmail}
@@ -334,10 +329,10 @@ export default function ComplexNavbar() {
                           >
                             Edit
                           </button>
-                        </>
+                        </div>
                       )}
                     </div>
-                    <hr className="my-2 hr-light" style={{ width: "170%" }} />
+                    <hr className="my-2 hr-light" />
                   </div>
                   <div className="mb-8">
                     <Typography
@@ -349,8 +344,7 @@ export default function ComplexNavbar() {
                     </Typography>
                     <div className="flex sm:flex-row items-center gap-2">
                       {isMobileEditing ? (
-                        <>
-                          <div className="flex sm:flex-col items-center sm:items-start gap-2">
+                          <div className="flex flex-row items-center sm:items-start gap-4">
                             <input
                               type="number"
                               value={editedMobile}
@@ -358,29 +352,28 @@ export default function ComplexNavbar() {
                               className="border rounded px-2 py-1"
                             />
                             <div className="flex sm:flex-row gap-2">
-                              <div className="rounded-lg border border-blue-500 px-4 bg-blue-400">
-                                <button
+                                <Button
+                                  size="sm"
+                                  color="blue"
                                   onClick={handleSaveMobile}
                                   className="text-white"
                                 >
                                   Save
-                                </button>
-                              </div>
+                                </Button>
                               <div className="flex sm:flex-row gap-2">
-                                <div className="rounded-lg border border-blue-500 px-4 bg-blue-50">
-                                  <button
+                                  <Button
+                                    size="sm"
+                                    variant="outlined"
                                     onClick={handleCancelMobile}
                                     className="text-gray-900"
                                   >
                                     Cancel
-                                  </button>
-                                </div>
+                                  </Button>
                               </div>
                             </div>
                           </div>
-                        </>
                       ) : (
-                        <>
+                        <div>
                           <Typography variant="body" color="gray">
                             {userInformation.mobile_number}
                           </Typography>
@@ -392,10 +385,10 @@ export default function ComplexNavbar() {
                           >
                             Edit
                           </button>
-                        </>
+                        </div>
                       )}
                     </div>
-                    <hr className="my-2 hr-light" style={{ width: "170%" }} />
+                    <hr className="my-2 hr-light"  />
                   </div>
                   <div className="mb-8">
                     <Typography
@@ -407,8 +400,7 @@ export default function ComplexNavbar() {
                     </Typography>
                     <div className="flex sm:flex-row items-center gap-2">
                       {isEmergencyEditing ? (
-                        <>
-                          <div className="flex sm:flex-col items-center sm:items-start gap-2">
+                          <div className="flex  items-center sm:items-start gap-4">
                             <input
                               type="number"
                               value={editedEmergency}
@@ -418,29 +410,28 @@ export default function ComplexNavbar() {
                               className="border rounded px-2 py-1"
                             />
                             <div className="flex sm:flex-row gap-2">
-                              <div className="rounded-lg border border-blue-500 px-4 bg-blue-400">
-                                <button
+                                <Button
+                                  size="sm"
+                                  color="blue"
                                   onClick={handleSaveEmergency}
                                   className="text-white"
                                 >
                                   Save
-                                </button>
-                              </div>
+                                </Button>
                               <div className="flex sm:flex-row gap-2">
-                                <div className="rounded-lg border border-blue-500 px-4 bg-blue-50">
-                                  <button
+                                  <Button
+                                    size="sm"
+                                    variant="outlined"
                                     onClick={handleCancelEmergency}
                                     className="text-gray-900"
                                   >
                                     Cancel
-                                  </button>
-                                </div>
+                                  </Button>
                               </div>
                             </div>
                           </div>
-                        </>
                       ) : (
-                        <>
+                        <div className="flex justify-start gap-4">
                           <Typography variant="body" color="gray">
                             {userInformation.emergency_contact}
                           </Typography>
@@ -452,10 +443,10 @@ export default function ComplexNavbar() {
                           >
                             Edit
                           </button>
-                        </>
+                        </div>
                       )}
                     </div>
-                    <hr className="my-2 hr-light" style={{ width: "170%" }} />
+                    <hr className="my-2 hr-light" />
                   </div>
                   <div className="mb-8">
                     <Typography
@@ -467,8 +458,7 @@ export default function ComplexNavbar() {
                     </Typography>
                     <div className="flex sm:flex-row items-center gap-2">
                       {isDOBEditing ? (
-                        <>
-                          <div className="flex sm:flex-col items-center sm:items-start gap-2">
+                          <div className="flex  items-center sm:items-start gap-4">
                             <DatePicker
                               selected={editedDOB}
                               onChange={(date) => setEditedDOB(date)}
@@ -479,29 +469,24 @@ export default function ComplexNavbar() {
                               className="border rounded px-2 py-1"
                             />
                             <div className="flex sm:flex-row gap-2">
-                              <div className="rounded-lg border border-blue-500 px-4 bg-blue-400">
-                                <button
+                                <Button
                                   onClick={handleSaveDOB}
                                   className="text-white"
                                 >
                                   Save
-                                </button>
-                              </div>
+                                </Button>
                               <div className="flex sm:flex-row gap-2">
-                                <div className="rounded-lg border border-blue-500 px-4 bg-blue-50">
-                                  <button
+                                  <Button
                                     onClick={handleCancelDOB}
                                     className="text-gray-900"
                                   >
                                     Cancel
-                                  </button>
-                                </div>
+                                  </Button>
                               </div>
                             </div>
                           </div>
-                        </>
                       ) : (
-                        <>
+                        <div className="flex justify-start gap-4">
                           <Typography variant="body" color="gray">
                             {editedDOB.toDateString()}
                           </Typography>
@@ -513,10 +498,10 @@ export default function ComplexNavbar() {
                           >
                             Edit
                           </button>
-                        </>
+                        </div>
                       )}
                     </div>
-                    <hr className="my-2 hr-light" style={{ width: "170%" }} />
+                    <hr className="my-2 hr-light" />
                   </div>
                   <div className="mb-8">
                     <Typography
@@ -550,7 +535,8 @@ export default function ComplexNavbar() {
                   </div>
                 </div>
               </div>
-            </Card>
+
+
           </div>
         )}
       </div>
