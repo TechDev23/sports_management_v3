@@ -17,7 +17,7 @@ const Players = () => {
           <Sidebar /> 
         </div>
 
-          <div className=" w-full h-full p-5 bg-white  font-poppins ">
+          <div className=" w-full h-full p-5 bg-gray-50  font-poppins ">
             <Outlet />
           </div>
       </div>
