@@ -24,6 +24,7 @@ import { authApi } from './api/authApi';
 import { userApi } from './api/userApi';
 import { orgApi } from './api/organizer/orgApi';
 import { tournamentApi } from './api/organizer/tournamentApi';
+import { fixturesApi } from './api/organizer/fixturesApi';
 import userReducer from './features/userSlice';
 import orgReducer from './features/orgSlice';
 import sidebarReducer from './features/SidebarSlice';
@@ -39,6 +40,7 @@ export const store = configureStore({
     [orgApi.reducerPath]: orgApi.reducer,
     [tournamentApi.reducerPath]: tournamentApi.reducer,
     [generalApi.reducerPath]: generalApi.reducer,
+    [fixturesApi.reducerPath]: fixturesApi.reducer,
     userState: userReducer,
     orgState: orgReducer,
     sidebar: sidebarReducer,
@@ -46,7 +48,7 @@ export const store = configureStore({
   },
   devTools: process.env.NODE_ENV === 'development',
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({}).concat([tournamentApi.middleware, authApi.middleware, userApi.middleware, orgApi.middleware, generalApi.middleware]),
+    getDefaultMiddleware({}).concat([fixturesApi.middleware, tournamentApi.middleware, authApi.middleware, userApi.middleware, orgApi.middleware, generalApi.middleware]),
 });
 
 

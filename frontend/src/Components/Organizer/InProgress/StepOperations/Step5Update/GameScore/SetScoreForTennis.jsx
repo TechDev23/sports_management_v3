@@ -1,90 +1,86 @@
 import { Button, ButtonGroup } from "@material-tailwind/react";
 import React, { Fragment, useState } from "react";
+import {
+  useGetFixtureByIdQuery,
+  useAddScoreVtbMutation,
+  fixturesApi,
+} from "../../../../../../redux/api/organizer/fixturesApi";
+import { useParams } from "react-router-dom";
+import { ScoreBoard } from "../..";
+
+
 
 export default function SetScoreForTennis() {
-    
-  const [buttonStates, setButtonStates] = useState(Array(21).fill(false));
+  const { fixtureId } = useParams();
 
-  const handleButtonClick = (index) => {
-    const newButtonStates = Array(21).fill(false);
-    newButtonStates[index] = true;
-    setButtonStates(newButtonStates);
-  };
+  const {
+    data: fixtureData,
+    isFetching,
+    isLoading,
+  } = useGetFixtureByIdQuery(fixtureId);
+  console.log("SetscoreForTennis" , fixtureData?.data);
 
-  const [buttonStates2, setButtonStates2] = useState(Array(21).fill(false));
+  // const { game_id } = fixtureData?.data 
+  
 
-  const handleButtonClick2 = (index) => {
-    const newButtonStates = Array(21).fill(false);
-    newButtonStates[index] = true;
-    setButtonStates2(newButtonStates);
-  };
   return (
     <Fragment>
-      <div className="flex flex-row  items-center gap-4  ">
-        <div className="w-72">
-          <p className="text-[14px] bg-gray-200 h-10 rounded-md flex items-center justify-center">
-            Player 1
-          </p>
+      {/* Team dettails div starts */}
+      <div className="group my-8 p-6 flex gap-x-16 w-full items-start justify-between">
+        <div className="flex flex-row items-center justify-between gap-4 border-b-2 border-orange-500">
+          <div className="w-60 pl-6">
+            <p className="text-xl capitalize italic rounded-md flex items-center justify-start">
+              🎖️{fixtureData?.data?.team_1?.name}
+            </p>
+          </div>
+
+          <div className="bg-orange-500 text-xl text-white px-4 py-2 font-bold italic">
+            vs
+          </div>
+
+          <div className="w-60 pl-6">
+            <p className="text-xl capitalize italic rounded-md flex items-center justify-end">
+              {fixtureData?.data?.team_2?.name}
+            </p>
+          </div>
         </div>
-
-        <Button color="orange">VS</Button>
-
-        <div className="w-72">
-          <p className="text-[14px] bg-gray-200 h-10 rounded-md flex items-center justify-center">
-            Player 2
-          </p>
+        {/* Match details starts */}
+        <div className="w-full h-auto p-2 pt-0 font-poppins flex justify-between">
+          <div>
+            <p className=" font-semibold text-xl">
+              Match Number {fixtureData?.data?.match_number}
+            </p>
+            <p className="font-medium text-lg">
+              Umpire:{" "}
+              <span className="font-normal italic pl-3">
+                {fixtureData?.data?.umpire?.first_name}
+              </span>
+            </p>
+            <p className="font-medium text-lg">
+              Location:{" "}
+              <span className="font-normal italic pl-3">
+                {fixtureData?.data?.ground?.location}
+              </span>
+            </p>
+            <p className="font-medium text-lg">
+              Ground name:{" "}
+              <span className="font-normal italic pl-3">
+                {fixtureData?.data?.ground?.name}
+              </span>
+            </p>
+          </div>
         </div>
+        {/* Match details ends */}
       </div>
-      <textarea
-        className="flex-grow w-full h-full mt-5 border border-gray-500 px-4 py-2 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200"
-        placeholder="Time Place and Responsible details"
-        rows={1}
-        disabled="true"
-      ></textarea>
+      <p className="border-b border-gray-400 w-full "></p>
+      {/* Team dettails div ends */}
 
-      <div className="w-72 my-5">
-        <p className="text-[14px] bg-gray-200 h-10 rounded-md flex items-center justify-center">
-          Player 1
-        </p>
-      </div>
-      <div className="w-full">
-        <ButtonGroup color="orange">
-          {buttonStates.map((isActive, index) => (
-            <Button
-              className={isActive ? "bg-white text-black border" : ""}
-              key={index}
-              variant={isActive ? "contained" : "outlined"}
-              onClick={() => handleButtonClick(index)}
-            >
-              {index + 1}
-            </Button>
-          ))}
-        </ButtonGroup>
-      </div>
-
-      <div className="my-5 flex flex-row items-center justify-center mr-[17rem]">
-        <Button color="orange">VS</Button>
-      </div>
-
-      <div className="w-72 my-5">
-        <p className="text-[14px] bg-gray-200 h-10 rounded-md flex items-center justify-center">
-          Player 1
-        </p>
-      </div>
-      <div className="w-full">
-        <ButtonGroup color="orange">
-          {buttonStates2.map((isActive, index) => (
-            <Button
-              className={isActive ? "bg-white text-black border" : ""}
-              key={index}
-              variant={isActive ? "contained" : "outlined"}
-              onClick={() => handleButtonClick2(index)}
-            >
-              {index + 1}
-            </Button>
-          ))}
-        </ButtonGroup>
-      </div>
+      {/* Scoring div starts */}
+      <Fragment>
+        <ScoreBoard game_id={fixtureData?.data?.game_id} fixtureData={fixtureData?.data}/>
+      </Fragment>
+        
+      {/* Scoring div ends */}
     </Fragment>
   );
 }
