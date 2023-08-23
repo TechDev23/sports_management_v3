@@ -60,12 +60,14 @@ const navListMenuItems = [
     icon: FlagIcon,
     title: "About us",
     description: "Learn about our story and our mission statement.",
+    navLink: "/about"
   },
   {
     color: "orange",
     icon: ChatBubbleOvalLeftIcon,
     title: "Press",
     description: "News and writings, press releases, and resources",
+
   },
   {
     color: "green",
@@ -124,7 +126,7 @@ function NavListMenu() {
  
   const renderItems = navListMenuItems.map(
     ({ icon, title, description, color }, key) => (
-      <a href="#" key={key}>
+      <Link to={""} key={key}>
         <MenuItem className="flex items-center gap-3 rounded-lg">
           <div className={`rounded-lg p-5 ${colors[color]}`}>
             {React.createElement(icon, {
@@ -145,7 +147,7 @@ function NavListMenu() {
             </Typography>
           </div>
         </MenuItem>
-      </a>
+      </Link>
     )
   );
  
@@ -196,6 +198,19 @@ function NavListMenu() {
 function NavList() {
   return (
     <List className="mt-4 mb-6 p-0 space-x-2 lg:mt-0 lg:mb-0 lg:flex-row lg:p-1">
+    <Link to={"/"}>
+      <Typography
+      as="a"
+      variant="small"
+      color="blue-gray"
+      className="font-normal"
+      >
+      <ListItem className=" flex flex-row justify-center items-center gap-x-2 py-2 pr-4">
+      <BiHome className="h-[18px] w-[18px]" />
+      Home
+      </ListItem>
+      </Typography>
+    </Link>
       <Typography
         as="a"
         href="#"
@@ -203,47 +218,39 @@ function NavList() {
         color="blue-gray"
         className="font-normal"
       >
-        <ListItem className=" flex flex-row justify-center items-center gap-x-2 py-2 pr-4">
-          <BiHome className="h-[18px] w-[18px]" />
-          Home
-        </ListItem>
+        <Link to={"/about"}>
+          <ListItem className="flex items-center gap-2 py-2 pr-4">
+            <FiInfo className="h-[18px] w-[18px]" />
+            About us
+          </ListItem>
+        </Link>
       </Typography>
-      <Typography
-        as="a"
-        href="#"
-        variant="small"
-        color="blue-gray"
-        className="font-normal"
-      >
-        <ListItem className="flex items-center gap-2 py-2 pr-4">
-          <FiInfo className="h-[18px] w-[18px]" />
-          About us
-        </ListItem>
+      <Link to={"/features"}>
+        <Typography
+          as="a"
+          variant="small"
+          color="blue-gray"
+          className="font-normal"
+        >
+          <ListItem className="flex items-center gap-2 py-2 pr-4">
+            <CubeTransparentIcon className="h-[18px] w-[18px]" />
+            Features
+          </ListItem>
+        </Typography>
+      </Link>
+      <Link to={"/blogs"}>
+        <Typography
+          as="a"
+          variant="small"
+          color="blue-gray"
+          className="font-normal"
+        >
+          <ListItem className="flex items-center gap-2 py-2 pr-4">
+            <BiBook className="h-[18px] w-[18px]" />
+            Blog
+          </ListItem>
       </Typography>
-      <Typography
-        as="a"
-        href="#"
-        variant="small"
-        color="blue-gray"
-        className="font-normal"
-      >
-        <ListItem className="flex items-center gap-2 py-2 pr-4">
-          <CubeTransparentIcon className="h-[18px] w-[18px]" />
-          Features
-        </ListItem>
-      </Typography>
-      <Typography
-        as="a"
-        href="#"
-        variant="small"
-        color="blue-gray"
-        className="font-normal"
-      >
-        <ListItem className="flex items-center gap-2 py-2 pr-4">
-          <BiBook className="h-[18px] w-[18px]" />
-          Blog
-        </ListItem>
-      </Typography>
+      </Link>
       
         {/**
       <NavListMenu />
@@ -286,7 +293,7 @@ const profileMenuItems = [
   {
     label: "Help",
     icon: LifebuoyIcon,
-    link: "/about"
+    link: "/user/help"
   },
   {
     label: "Sign Out",
@@ -422,8 +429,8 @@ const [loggedIn , setLoggedIn] = useState(true);
 
         {
           loggedIn ? (
-            // <ProfileMenu/>
-            <Button color="red" variant="outlined" className="hover:bg-[#ff0000] hover:text-white" onClick={logOutUser}>Log out</Button>
+            <ProfileMenu/>
+            // <Button color="red" variant="outlined" className="hover:bg-[#ff0000] hover:text-white" onClick={logOutUser}>Log out</Button>
           ) : (
             <div className="hidden gap-2 lg:flex">
               <Button variant="text" size="sm" color="blue-gray" onClick={()=> navigate("/user/login")}>
