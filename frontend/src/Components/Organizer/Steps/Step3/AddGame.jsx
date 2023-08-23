@@ -25,9 +25,7 @@ import { toast } from "react-toastify";
 
 // icons
 
-
 const DateSelector = () => {
-
   const [hours, setHours] = useState();
   const [minutes, setMinutes] = useState();
   const [startDate, setStartDate] = useState(
@@ -59,9 +57,8 @@ const DateSelector = () => {
   );
 };
 
-
 const AddGame = ({ key, gameIndex }) => {
-  console.log(gameIndex)
+  console.log(gameIndex);
   const { id: tourId } = useAppSelector(
     (state) => state.tournament.tour_details
   );
@@ -71,41 +68,40 @@ const AddGame = ({ key, gameIndex }) => {
     { isSuccess, isLoading: isAddingGame, isError: errorWhileAddingGame },
   ] = useAddGameToTnmtMutation();
 
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  const [qualification, setQualification] = useState("Single Elimination");
+  const [game, setGame] = useState(null);
+  const [whoCanParticipate, setWhoCanParticipate] = useState(2);
+
   const initialValues = {
-    name: "game1",
-    tournament_id: tourId,
-    game_id: 1, // hardcoded from database 1 -> cricket
-    info: "very long long description",
-    prize_pool: 60000,
-    participation_fees: 200,
-    team_size: 1,
-    max_teams: 8,
-    total_rounds: 3,
+    name: null, // string
+    tournament_id: tourId, //string
+    game_id: null, // hardcoded from database 1 -> cricket
+    info: null, // string
+    prize_pool: null,
+    participation_fees: null,
+    team_size: null,
+    max_teams: null,
+    total_rounds: null,
     min_boys: null,
     min_girls: null,
-    open_to: 2,
-    min_age: 18,
-    max_age: 23,
+    open_to: whoCanParticipate,
+    min_age: null,
+    max_age: null,
 
     // field to be added
 
-    type: 1, // select field
+    type: qualification, // select field
     num_groups: 0,
     teams_per_group: 0,
     avg_duration: 45,
 
-    start_date: "2023-08-16T15:57:35.587Z",
-    end_date: "2023-08-16T15:57:35.587Z",
-    // start_date: null,
-    // end_date: null
+    start_date: startDate, // string
+    end_date: endDate, //string
   };
 
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
   const [values, setValues] = useState(initialValues);
-  const [qualification, setQualification] = useState("Single Elimination");
-  const [game, setGame] = useState(null);
-  const [whoCanParticipate, setWhoCanParticipate] = useState(2);
 
   const {
     data: fetchedGames,
@@ -116,15 +112,26 @@ const AddGame = ({ key, gameIndex }) => {
     error: errGameFetch,
   } = useGetGamesQuery({ skip: true });
   if (errorWhileGamesFetch) {
-
     toast.error("Error while fetching games from our side");
   }
 
-  const handleInputChange = (e) => {
+  const handleInputChangeString = (e) => {
     const { name, value } = e.target;
+
+    // const parsedValue = (name !== "name" || name !== "tournament_id" || name !== "info" || name !== "start_date" || name !== "end_date" ) ? parseInt(value, 10) : value;
+
     setValues({
       ...values,
       [name]: value,
+    });
+  };
+
+  const handleInputChangeNumber = (e) => {
+    const { name, value } = e.target;
+
+    setValues({
+      ...values,
+      [name]: Number(value),
     });
   };
 
@@ -157,7 +164,6 @@ const AddGame = ({ key, gameIndex }) => {
 
   const handleParticipantRadio = (value) => {
     setWhoCanParticipate(value);
-    console.log(value);
     setValues({
       ...values,
       open_to: value,
@@ -166,28 +172,33 @@ const AddGame = ({ key, gameIndex }) => {
     if (value === 0) {
       setValues({
         ...values,
-        min_girls: value,
-        min_boys: null,
-        open_to: value,
+        min_girls: values.team_size,
+        min_boys: 0,
+        open_to: 0,
       });
     } else if (value === 1) {
       setValues({
         ...values,
-        min_boys: value,
-        min_girls: null,
-        open_to: value,
+        min_boys: values.team_size,
+        min_girls: 0,
+        open_to: 1,
       });
     } else if (value === 2) {
       setValues({
         ...values,
-        min_boys: 1,
-        min_girls: 0,
+        min_boys: values.min_boys,
+        min_girls: values.min_girls,
         open_to: value,
       });
     }
   };
 
   const addGameToDB = async () => {
+    setValues({
+      ...values,
+      start_date: new Date(startDate).toISOString(),
+      end_date: new Date(endDate).toISOString(),
+    });
     const ressponse = await addGameToTnmt(values);
     if (errorWhileAddingGame) {
       toast.error(errGameFetch);
@@ -197,7 +208,7 @@ const AddGame = ({ key, gameIndex }) => {
     }
   };
 
-  const GenderRadioButtons = ({gameIndex}) => (
+  const GenderRadioButtons = ({ gameIndex }) => (
     <List key={gameIndex} className=" w-full flex-row">
       <ListItem className="p-0">
         <label
@@ -208,7 +219,7 @@ const AddGame = ({ key, gameIndex }) => {
             <Radio
               color="amber"
               name="horizontal-list"
-              id={gameIndex+1}
+              id={gameIndex * 3 + 1}
               ripple={false}
               checked={whoCanParticipate === 0}
               onChange={() => handleParticipantRadio(0)}
@@ -232,7 +243,7 @@ const AddGame = ({ key, gameIndex }) => {
             <Radio
               color="amber"
               name="horizontal-list"
-              id={gameIndex+2}
+              id={gameIndex * 3 + 2}
               ripple={false}
               className="hover:before:opacity-0"
               containerProps={{
@@ -256,7 +267,7 @@ const AddGame = ({ key, gameIndex }) => {
             <Radio
               color="amber"
               name="horizontal-list"
-              id={gameIndex+3}
+              id={gameIndex * 3 + 3}
               ripple={false}
               className="hover:before:opacity-0"
               containerProps={{
@@ -289,14 +300,14 @@ const AddGame = ({ key, gameIndex }) => {
 
           {/* GAme details div starts */}
           <div className="w-full lg:p-4 border border-black-100 rounded-lg flex flex-col gap-6">
-              <p className="font-semibold font-poppins text-blue-gray-700">
-                Enter game details{" "}
-              </p>
+            <p className="font-semibold font-poppins text-blue-gray-700">
+              Enter game details{" "}
+            </p>
             <div className="flex flex-col lg:flex-row gap-4">
               <div className="w-full lg:w-1/2 gap-x-2">
                 <Input
                   value={values.name}
-                  onChange={handleInputChange}
+                  onChange={handleInputChangeString}
                   label="Enter the name of Game"
                   className="min-w-1/3"
                   color="orange"
@@ -325,19 +336,11 @@ const AddGame = ({ key, gameIndex }) => {
               <Input
                 value={values.avg_duration}
                 type="number"
-                onChange={handleInputChange}
+                onChange={handleInputChangeNumber}
                 label="Average duration (in minutes)"
                 color="orange"
                 name="avg_duration"
               />
-              {/* <Select
-                options={qualificationOptions}
-                onChange={handleQualification}
-                autoFocus={true}
-                value={qualification}
-                className="w-full text-sm"
-                placeholder={qualification}
-              /> */}
               <MSelect
                 onChange={handleQualification}
                 color="orange"
@@ -356,7 +359,7 @@ const AddGame = ({ key, gameIndex }) => {
                 <Input
                   value={values.num_groups}
                   type="number"
-                  onChange={handleInputChange}
+                  onChange={handleInputChangeNumber}
                   label="Number of Groups"
                   color="orange"
                   name="num_groups"
@@ -364,7 +367,7 @@ const AddGame = ({ key, gameIndex }) => {
                 <Input
                   value={values.teams_per_group}
                   type="number"
-                  onChange={handleInputChange}
+                  onChange={handleInputChangeNumber}
                   label="Teams per group"
                   color="orange"
                   name="teams_per_group"
@@ -375,33 +378,33 @@ const AddGame = ({ key, gameIndex }) => {
             <div className="w-full flex flex-col lg:flex-row gap-5">
               <Input
                 value={values.team_size}
-                onChange={handleInputChange}
+                onChange={handleInputChangeNumber}
                 label="Team Size"
                 color="orange"
                 name="team_size"
+                type="number"
               />
               <Input
                 value={values.max_teams}
-                onChange={(e) => {
-                  const newMaxTeams = e.target.value;
-                  handleInputChange;
-                }}
+                onChange={handleInputChangeNumber}
                 label="Maximum Team"
                 color="orange"
                 name="max_teams"
+                type="number"
               />
               <Input
                 value={values.total_rounds}
-                onChange={handleInputChange}
-                label="Total Matches to be played"
+                onChange={handleInputChangeNumber}
+                label="Total Rounds to be played"
                 color="orange"
                 name="total_rounds"
+                type="number"
               />
             </div>
 
             <Textarea
               value={values.info}
-              onChange={handleInputChange}
+              onChange={handleInputChangeString}
               className="w-full "
               label="Tournament Description"
               color="orange"
@@ -417,43 +420,56 @@ const AddGame = ({ key, gameIndex }) => {
                 Who can participate?
               </p>
             </div>
-            <div className="w-full flex flex-col lg:flex-row gap-5">
-              {/* <Input
-              value={values.min_boys}
-              onChange={handleInputChange}
-              label="Minimum Boys"
-              color="orange"
-              name="min_boys"
-            />
-            <Input
-              value={values.min_girls}
-              onChange={handleInputChange}
-              label="Minimum girls"
-              color="orange"
-              name="min_girls"
-            />
-            <Input
-              label="open to"
-              color="orange"
-              name="open_to"
-              value={values.open_to}
-              onChange={handleInputChange}
-            /> */}
-            <GenderRadioButtons gameIndex={gameIndex}/>
+            <div className="w-1/3 flex flex-col lg:flex-row gap-5">
+              {/* <GenderRadioButtons key={gameIndex} gameIndex={gameIndex}/> */}
+              <MSelect
+                onChange={handleParticipantRadio}
+                color="orange"
+                label="Who can participate"
+              >
+                <Option key={0} value={0}>
+                  Only girls
+                </Option>
+                <Option key={1} value={1}>
+                  Only boys
+                </Option>
+                <Option key={2} value={2}>
+                  Both
+                </Option>
+              </MSelect>
+              {values.open_to === 2 && (
+                <div className={`w-2/3 flex flex-col lg:flex-row gap-5`}>
+                  <Input
+                    value={values.min_boys}
+                    type="number"
+                    onChange={handleInputChangeNumber}
+                    label="Minimum boys"
+                    color="orange"
+                    name="min_boys"
+                  />
+                  <Input
+                    value={values.min_girls}
+                    type="number"
+                    onChange={handleInputChangeNumber}
+                    label="Minimum girls"
+                    color="orange"
+                    name="min_girls"
+                  />
+                </div>
+              )}
             </div>
-
-            <div className="w-full flex flex-col lg:flex-row gap-5">
+            <div className={`w-full flex flex-col lg:flex-row gap-5`}>
               <Input
                 value={values.min_age}
                 type="number"
-                onChange={handleInputChange}
+                onChange={handleInputChangeNumber}
                 label="Minimum age"
                 color="orange"
                 name="min_age"
               />
               <Input
                 value={values.max_age}
-                onChange={handleInputChange}
+                onChange={handleInputChangeNumber}
                 label="Maximum age"
                 color="orange"
                 name="max_age"
@@ -464,42 +480,45 @@ const AddGame = ({ key, gameIndex }) => {
 
           {/* Prize and schedule div starts */}
           <div className="w-full lg:p-4  border border-black-100 flex md:justify-between flex-col lg:flex-row gap-4">
-
             <div className="w-full flex flex-col gap-4 ">
-                <p className="font-semibold font-poppins text-blue-gray-700">
-                  Fess and Prizes{" "}
-                </p>
+              <p className="font-semibold font-poppins text-blue-gray-700">
+                Fess and Prizes{" "}
+              </p>
               <div className="flex flex-col lg:flex-row gap-5">
-              
-              <Input
-                value={values.prize_pool}
-                onChange={handleInputChange}
-                label="Prize pool Rs"
-                color="orange"
-                name="prize_pool"
-              />
-              <Input
-                value={values.participation_fees}
-                onChange={handleInputChange}
-                label="Participation fees"
-                color="orange"
-                name="participation_fees"
-              />
+                <Input
+                  value={values.prize_pool}
+                  onChange={handleInputChangeNumber}
+                  label="Prize pool Rs"
+                  color="orange"
+                  name="prize_pool"
+                  type="number"
+                />
+                <Input
+                  value={values.participation_fees}
+                  onChange={handleInputChangeNumber}
+                  label="Participation fees"
+                  color="orange"
+                  name="participation_fees"
+                  type="number"
+                />
               </div>
             </div>
 
             {/* Schedule div starts */}
             <div className="w-full flex flex-col gap-4">
-                <p className="font-semibold font-poppins text-blue-gray-700">
-                  Schedule{" "}
-                </p>
+              <p className="font-semibold font-poppins text-blue-gray-700">
+                Schedule{" "}
+              </p>
 
               <div className="flex flex-col sm:flex-row items-center justify-between gap-2">
-
                 <DatePicker
                   selected={startDate}
                   showTimeSelect
-                  onChange={(date) => setStartDate(date)}
+                  onChange={(date) => {
+                    setStartDate(date)
+                    values.start_date = new Date(date).toISOString()
+
+                  }}
                   className="w-64 sm:w-56 md:w-60 lg:w-48 xl:w-60 border border-gray-500 p-4 py-2 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200 text-sm md:text-normal"
                   placeholderText="Select start Date"
                   selectsStart
@@ -512,48 +531,24 @@ const AddGame = ({ key, gameIndex }) => {
                 <DatePicker
                   selected={endDate}
                   showTimeSelect
-                  onChange={(date) => setEndDate(date)}
+                  onChange={(date) => {
+                    setEndDate(date);
+                    values.end_date = new Date(date).toISOString()
+                  }}
                   className="w-64 sm:w-56 md:w-60 lg:w-48 xl:w-60 border border-gray-500 p-4 py-2 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200  text-sm md:text-normal"
-                  placeholderText="Select End Date"  
+                  placeholderText="Select End Date"
                   selectsStart
                   name="end_date"
                   dateFormat="yyyy-MM-dd hh:mm:aa"
-                  
                   startDate={startDate}
                   endDate={endDate}
                   minDate={startDate}
                 />
-
-                
               </div>
             </div>
             {/* Schedule div ends */}
           </div>
           {/* Prize and schedule div ends */}
-
-          {/* <div className="w-full flex flex-col lg:flex-row justify-between  gap-4">
-            <div className="text-sm w-full  flex items-center justify-center">
-              <DatePicker
-                selected={startDate}
-                showTimeSelect
-                onChange={(date) => setStartDate(date)}
-                className="border border-gray-500 px-4 py-2  rounded-lg focus:outline-none w-64 focus:border-orange-500 focus:ring-2 focus:ring-orange-200  text-xs md:text-normal"
-                placeholderText="Select End Date"
-                name="start_date"
-              />
-            </div>
-            <p className=" my-auto mx-4 text-normal font-poppins text-gray-700 text-center">to</p>
-            <div className="text-sm w-full  flex items-center justify-center">
-              <DatePicker
-                selected={endDate}
-                showTimeSelect
-                onChange={(date) => setEndDate(date)}
-                className="border border-gray-500 px-4 py-2 rounded-lg focus:outline-none w-64 focus:border-orange-500 focus:ring-2 focus:ring-orange-200  text-xs md:text-normal"
-                placeholderText="Select End Date"
-                name="end_date"
-              />
-            </div>
-          </div> */}
 
           <div className="w-full flex justify-center items-center">
             <Button

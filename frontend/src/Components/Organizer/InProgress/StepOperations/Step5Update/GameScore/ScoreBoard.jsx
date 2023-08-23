@@ -37,6 +37,13 @@ function MessageDialog({ openWhoScore, setOpenWhoScore }) {
           >
             close
           </Button>
+          <Button
+            variant="outlined"
+            color="green"
+            // onClick={}
+          >
+            set score
+          </Button>
         </DialogFooter>
       </Dialog>
     </>
@@ -68,9 +75,10 @@ function generateScoreButtons(game_id) {
 }
 
 export default function Scoreboard({ game_id, fixtureData }) {
+  console.log("Fixture data", fixtureData);
   const [addScoreVtb, { isLoading: setVtbScoreLoading }] =
-  useAddScoreVtbMutation();
-  console.log(game_id)
+    useAddScoreVtbMutation();
+  console.log(game_id);
 
   const [buttonStatesTeam1, setButtonStatesTeam1] = useState(null);
   const [buttonStatesTeam2, setButtonStatesTeam2] = useState(null);
@@ -89,7 +97,7 @@ export default function Scoreboard({ game_id, fixtureData }) {
   const [openWhoScore, setOpenWhoScore] = useState(false);
   const [whoScored, setWhoScored] = useState(null);
 
-  const handleButtonClick = async (index, team) => {
+  const handleButtonClick = (index, team) => {
     const selectedButton =
       team === "team1" ? selectedButtonTeam1 : selectedButtonTeam2;
     const setButtonStates =
@@ -97,11 +105,12 @@ export default function Scoreboard({ game_id, fixtureData }) {
     const setSelectedButton =
       team === "team1" ? setSelectedButtonTeam1 : setSelectedButtonTeam2;
 
+    // Create a variable to store the old score
+    const oldScore = selectedButton;
     // Check if the clicked button's value is greater than the current score
     if (index + 1 === selectedButton + 1 || index + 1 === selectedButton - 1) {
       setOpenWhoScore(!openWhoScore);
 
-      
       // Set the new score and update the button states
       const newButtonStates = (
         team === "team1" ? buttonStatesTeam1 : buttonStatesTeam2
@@ -110,14 +119,34 @@ export default function Scoreboard({ game_id, fixtureData }) {
         isActive: i <= index,
       }));
       setButtonStates(newButtonStates);
-
-      const scorePost = await addScoreVtb().unwrap();
       setSelectedButton(index + 1);
+
+      // call api only if score is set
+      // Check if the score has changed
+      if (oldScore !== index + 1) {
+        // Call the API only if the score is updated
+        updateScoreToDb(team, index + 1);
+      }
     } else {
       toast.warn("You can only increment score by one");
     }
   };
 
+  const updateScoreToDb = async (team, newScore) => {
+    const toSend = [
+      {
+        team_id:
+          team === "team1" ? fixtureData?.team_1_id : fixtureData?.team_2_id,
+        scored_by: "string",
+        points: newScore,
+        fixture_id: fixtureData?.id,
+      },
+    ];
+    console.log("to send", toSend);
+    const scorePost = await addScoreVtb(toSend).unwrap();
+    // if score posted successfully then close model
+    setOpenWhoScore(!openWhoScore);
+  };
   return (
     <div className="mt-6">
       <MessageDialog
@@ -130,18 +159,21 @@ export default function Scoreboard({ game_id, fixtureData }) {
           <span className="bg-gray-300 px-2 ml-4"> {selectedButtonTeam1}</span>
         </h2>
         <ButtonGroup id="2" color="orange">
-          {buttonStatesTeam1 && buttonStatesTeam1.map((button, index) => (
-            <Button
-              className={
-                button.isActive ? "bg-white text-black border" : "bg-orange-400"
-              }
-              key={index}
-              variant={button.isActive ? "contained" : "outlined"}
-              onClick={() => handleButtonClick(index, "team1")}
-            >
-              {button.value}
-            </Button>
-          ))}
+          {buttonStatesTeam1 &&
+            buttonStatesTeam1.map((button, index) => (
+              <Button
+                className={
+                  button.isActive
+                    ? "bg-white text-black border"
+                    : "bg-orange-400"
+                }
+                key={index}
+                variant={button.isActive ? "contained" : "outlined"}
+                onClick={() => handleButtonClick(index, "team1")}
+              >
+                {button.value}
+              </Button>
+            ))}
         </ButtonGroup>
       </div>
       <div className="bg-orange-400 items-center ml-24 rounded-sm w-fit text-center px-2 py-3 my-6 text-3xl italic text-white">
@@ -153,17 +185,20 @@ export default function Scoreboard({ game_id, fixtureData }) {
           <span className="bg-gray-300 px-2 ml-4">{selectedButtonTeam2}</span>
         </p>
         <ButtonGroup id="2" color="orange">
-          {buttonStatesTeam2 && buttonStatesTeam2.map((button, index) => (
-            <Button
-              className={
-                button.isActive ? "bg-white text-black border" : "bg-orange-400"
-              }
-              key={index}
-              onClick={() => handleButtonClick(index, "team2")}
-            >
-              {button.value}
-            </Button>
-          ))}
+          {buttonStatesTeam2 &&
+            buttonStatesTeam2.map((button, index) => (
+              <Button
+                className={
+                  button.isActive
+                    ? "bg-white text-black border"
+                    : "bg-orange-400"
+                }
+                key={index}
+                onClick={() => handleButtonClick(index, "team2")}
+              >
+                {button.value}
+              </Button>
+            ))}
         </ButtonGroup>
       </div>
     </div>
