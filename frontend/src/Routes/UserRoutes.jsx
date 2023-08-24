@@ -12,6 +12,7 @@ import { PlayerRoutes } from "./PlayersRoutes"
 import { OrganizerRoutes } from "./OrganizersRoutes";
 import VProgress from "../Pages/User/VerificationProcess/VProgress";
 import ComplexNavbar from "../Pages/User/Profile/Profile";
+import Help from "../Pages/User/Profile/Help";
 
 // import RequireAuth from "../Pages/Organizer/index";
 
@@ -51,6 +52,10 @@ export const UserRoutes = {
                 {
                     path: 'profile',
                     element: <ComplexNavbar/>
+                },
+                {
+                    path: 'help',
+                    element: <Help/>
                 }
                 
             ],

@@ -59,6 +59,7 @@ const LeagueFixtures = () => {
         <div className='text-xl '>
             Group Matches
         </div>
+
         <div className='w-full h-full grid grid-cols-1 lg:grid-cols-2 gap-5 border-2 border-blue-400 p-2'>
             <div className='border-2  rounded-lg gap-4'>
                 <p className='w-full p-4 shadow-sm font-bold text-lg '>Group A</p>
@@ -357,6 +358,7 @@ const LeagueFixtures = () => {
                 </div>
             </div>
         </div>
+        
     </div>
   )
 }
