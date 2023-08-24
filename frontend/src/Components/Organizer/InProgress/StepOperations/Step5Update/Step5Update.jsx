@@ -17,10 +17,11 @@ import {
   TabPanel,
 } from "@material-tailwind/react";
 import CurrentStepper from "../../../../Common/CurrentStepper";
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Link, Outlet, useNavigate, useParams } from "react-router-dom";
 
 
 export default function Step5Update() {
+  const params = useParams()
   const data = [
     {
       label: "DETAILS",
@@ -72,7 +73,8 @@ export default function Step5Update() {
           >
             {data.map(({ label, icon, value }) => (
               
-              <Tab onClick={() => navigate(`/o/current/step5/${value}`)}  key={value} value={value} className="text-white text-sm  px-0.5">
+              // <Tab onClick={() => navigate(`/o/current/step5/${value}`)}  key={value} value={value} className="text-white text-sm  px-0.5">
+              <Tab onClick={() => navigate(`/o/current-tournament/${params.tourId}/tour_game/${params.tour_game_id}/step5/${value}`)}  key={value} value={value} className="text-white text-sm  px-0.5">
               <Link>
               <p className="block md:hidden">
                 {icon}

@@ -12,11 +12,11 @@ import Select from "react-select";
 import check from "../../../assets/icons/check.png"
 import copy from "../../../assets/icons/copy.png"
 import CurrentStepper from '../../Common/CurrentStepper';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 
 const Step2Update = () => {
-
+  const params = useParams()
   const [textToCopy, setTextToCopy] = useState("Text to be copied");
   const [copySuccess, setCopySuccess] = useState(false);
 
@@ -206,10 +206,10 @@ const Step2Update = () => {
       </div>
 
       <div className="w-full flex flex-row  items-center justify-between lg:justify-between gap-4 ">
-        <Button color='orange' onClick={()=> navigate("/o/current/step1")} >
+        <Button color='orange' onClick={()=> navigate(`/o/current-tournament/${params.tourId}/step1`)} >
           Prev
         </Button>
-        <Button color='orange' onClick={()=> navigate("/o/current/step3")} >
+        <Button color='orange' onClick={()=> navigate(`/o/current-tournament/${params.tourId}/step3`)} >
           Next
         </Button>
       </div>

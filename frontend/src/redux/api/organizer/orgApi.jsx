@@ -75,7 +75,7 @@ export const orgApi = createApi({
     teamsApproval: build.mutation({
       query(data) {
         return {
-          url: `organizer/tournament/${data.tournament_id}/games/${data.game_id}/teams/verification?team_id=${data.team_id}&approve=${data.is_approve}&token=${data.token}`,
+          url: `organizer/tournament/${data.tournament_id}/games/${data.tournament_game_id}/teams/verification?team_id=${data.team_id}&approve=${data.approve}&token=${token}`,
           method: "post",
         };
       },
@@ -109,5 +109,6 @@ export const orgApi = createApi({
 export const { useCreateTournamentMutation, 
   useAddGameToTnmtMutation,
   useGetRgstrdTeamsQuery,
-  useGetFixturesQuery
+  useGetFixturesQuery, 
+  useTeamsApprovalMutation
 } = orgApi;

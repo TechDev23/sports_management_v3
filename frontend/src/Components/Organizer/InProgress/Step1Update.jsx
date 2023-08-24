@@ -9,7 +9,7 @@ import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { setTournamentDetails } from '../../../redux/features/tournamentSlice';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import CurrentStepper from '../../Common/CurrentStepper';
 import { BiEdit, BiEditAlt, BiPencil } from 'react-icons/bi';
 import { FiEdit } from 'react-icons/fi';
@@ -220,7 +220,7 @@ function Success() {
 
 
 const Step1Update = () => {
-
+  const params = useParams()
   const [organizationName, setOrganizationName] = useState("");
   const [organizationDescription, setOrganizationDescription] = useState("");
   const [tournamentName, setTournamentName] = useState("");
@@ -469,7 +469,7 @@ const Step1Update = () => {
       </div>
 
       <div className="w-full flex flex-row  items-center justify-center lg:justify-end gap-4 ">
-        <Button color='orange' onClick={()=> navigate("/o/current/step2")} >
+        <Button color='orange' onClick={()=> navigate(`/o/current-tournament/${params.tourId}/step2`)} >
           Next
         </Button>
       </div>

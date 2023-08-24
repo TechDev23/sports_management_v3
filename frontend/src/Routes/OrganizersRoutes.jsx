@@ -92,7 +92,7 @@ export const OrganizerRoutes = {
       ],
     },
     {
-      path: "current/",
+      path: "current-tournament/:tourId/",
       element: <InProgress />,
       children: [
         {
@@ -112,7 +112,7 @@ export const OrganizerRoutes = {
           element: <Step4Update />,
         },
         {
-          path: "step5/",
+          path: "tour_game/:tour_game_id/step5/",
           element: <Step5Update />,
           children: [
             {
