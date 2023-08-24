@@ -57,7 +57,7 @@ const Upcoming = () => {
         </p>
         <div className="mt-8">
         <Link
-          to={"/p/dashboard"}
+          to={"/p/games"}
           className="font-bold bg-orange-100 rounded-lg px-6 py-4 text-orange-500 hover:text-orange-500 mt-8"
         >
          Back to all Games
@@ -76,7 +76,7 @@ const Upcoming = () => {
               <Typography variant="h5" className="mb-2 capitalize">
                 {game?.name}
               </Typography>
-              <img src="/footcric.jpg" alt="Game" className="w-full h-44 rounded-lg" />
+              {/* <img src="/footcric.jpg" alt="Game" className="w-full h-44 rounded-lg" /> */}
                 <Typography className="mt-4">
                 The place is close to Barceloneta Beach and bus stop just 2
                 min by walk and near to "Naviglio" where you can enjoy the main

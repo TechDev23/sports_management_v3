@@ -179,7 +179,7 @@ export default function Games() {
 
 
 <div class="container mx-auto items-center flex px-5 py-24 md:flex-row flex-col bg-gray-100 rounded-lg mt-4 mb-8 border-2 rounded-lg hover:border-orange-500">
-    <div class="lg:w-96 lg:w-full md:w-1/2 w-5/6 mb-10 md:mb-0 lg:ml-8">
+    <div class="lg:w-80 lg:w-full md:w-1/2 w-5/6 mb-10 md:mb-0 lg:ml-8">
       <img class="object-cover object-center rounded" alt="hero" src="/football.png"/>
     </div>
     <div class="lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left items-center text-center">
@@ -223,7 +223,7 @@ export default function Games() {
                 >
                   {game?.name}
                 </Typography>
-                <img src="/footcric.jpg" alt="Game" className="w-full h-44 rounded-lg" />
+                {/* <img src="/footcric.jpg" alt="Game" className="w-full h-44 rounded-lg" /> */}
                 <Typography className="mt-4">
                 The place is close to Barceloneta Beach and bus stop just 2
                 min by walk and near to "Naviglio" where you can enjoy the main
@@ -264,7 +264,7 @@ export default function Games() {
               >
                 {game?.name}
               </Typography>
-              <img src="/footcric.jpg" alt="Game" className="w-full h-44 rounded-lg" />
+              {/* <img src="/footcric.jpg" alt="Game" className="w-full h-44 rounded-lg" /> */}
                 <Typography className="mt-4">
                 The place is close to Barceloneta Beach and bus stop just 2
                 min by walk and near to "Naviglio" where you can enjoy the main

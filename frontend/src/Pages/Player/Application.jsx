@@ -1,24 +1,72 @@
 import { React,useState } from 'react'
 
 const Application = () => {
+    const [showJoinForm, setShowJoinForm] = useState(false);
+    const [showCreateForm, setShowCreateForm] = useState(false);
     const [name, setName] = useState('');
     const [adminId, setAdminId] = useState('');
     const [tournamentId, setTournamentId] = useState('');
     const [tournamentGameId, setTournamentGameId] = useState('');
+    const [boys,setBoys] = useState('');
+    const [girls,setGirls] = useState('');
+    const [uniqueId, setUniqueId] = useState('');
+    const [showPlayers, setShowPlayers] = useState(false);
 
+    const [players, setPlayers] = useState([
+      { name: "Pranay Bhagat", tournamentId: "T123"},
+      { name: "Dhiraj Jadhav", tournamentId: "T123"},
+      { name: "Vishal Bhoye", tournamentId: "T123"},
+    ]);
+    
     const handleJoinClick = () => {
+       setShowJoinForm(true);
+       setShowCreateForm(false);
        
       };
 
+     const handleJoinButtonClick = () => {
+      setShowPlayers(true);
+      setShowJoinForm(false);
+      const playerData = { name, tournamentId };
+  setPlayers([...players, playerData]);
+  // Clear the form fields after submission
+  setName('');
+  setTournamentId('');
+     }
+
+      const handleCreateClick = () => {
+        setShowCreateForm(true);
+        setShowJoinForm(false);
+       
+        
+      };
+
+      const handleJoinSubmit = () => {
+        
+      };
+
     return(
-        <section class="text-gray-600 body-font relative bg-gray-300">
+        <section class="text-gray-600 body-font relative bg-gray-300 rounded-lg">
         <div class="container px-5 py-24 mx-auto">
           <div class="flex flex-col text-center w-full mb-12">
             <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Join Your Dream Team Now</h1>
             <p class="lg:w-2/3 mx-auto leading-relaxed text-base">Play the sport you love with your own team.</p>
+            <div className="mt-4">
+            <button className="mr-16 text-orange-500 underline" onClick={handleCreateClick}>
+              Create Team
+            </button>
+            <button className=" text-orange-500 underline" onClick={handleJoinClick}>
+              Join Team
+            </button>
           </div>
+          </div>
+          
+          
+          
           <div class="lg:w-1/2 md:w-2/3 mx-auto">
             <div class="flex flex-wrap -m-2">
+            {showJoinForm && ( 
+              <div className="flex flex-wrap -m-2">
               <div class="p-2 w-1/2">
                 <div class="relative">
                   <label for="name" class="leading-7 font-bold text-sm text-gray-600">Name</label>
@@ -67,12 +115,155 @@ const Application = () => {
                      class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-orange-500 focus:bg-white focus:ring-2 focus:ring-orange-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"/>
                 </div>
               </div>
+              <div class="p-2 w-1/2">
+                <div class="relative">
+                  <label for="message" class="leading-7 font-bold text-sm text-gray-600">Number of boys</label>
+                  <input 
+                     type="email" 
+                     id="email" 
+                     name="email" 
+                     value={boys}
+                     onChange={(e) => setBoys(e.target.value)}
+                     class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-orange-500 focus:bg-white focus:ring-2 focus:ring-orange-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"/>
+                </div>
+              </div>
+              <div class="p-2 w-1/2">
+                <div class="relative">
+                  <label for="message" class="leading-7 font-bold text-sm text-gray-600">Number of girls</label>
+                  <input 
+                     type="email" 
+                     id="email" 
+                     name="email" 
+                     value={girls}
+                     onChange={(e) => setGirls(e.target.value)}
+                     class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-orange-500 focus:bg-white focus:ring-2 focus:ring-orange-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"/>
+                </div>
+              </div>
+              
+              
+              <div class="p-2 w-full">
+                <div class="relative">
+                  <label for="message" class="leading-7 font-bold text-sm text-gray-600">User unique_ID</label>
+                  <input 
+                     type="email" 
+                     id="email" 
+                     name="email" 
+                     value={uniqueId}
+                     onChange={(e) => setUniqueId(e.target.value)}
+                     class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-orange-500 focus:bg-white focus:ring-2 focus:ring-orange-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"/>
+                </div>
+              </div>
+              
+              
               <div class="p-2 w-full">
                 <button 
                    class="flex mx-auto text-white bg-orange-500 border-0 py-2 px-8 focus:outline-none hover:bg-orange-600 rounded-lg text-lg"
-                   onClick={handleJoinClick}
+                   onClick={handleJoinButtonClick}
                    >Join</button>
               </div>
+              </div>
+              )}
+
+
+
+
+{showCreateForm && ( 
+              <div className="flex flex-wrap -m-2">
+              <div class="p-2 w-1/2">
+                <div class="relative">
+                  <label for="name" class="leading-7 font-bold text-sm text-gray-600">Name</label>
+                  <input 
+                    type="text" 
+                    id="name" 
+                    name="name" 
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-orange-500 focus:bg-white focus:ring-2 focus:ring-orange-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"/>
+                </div>
+              </div>
+              <div class="p-2 w-1/2">
+                <div class="relative">
+                  <label for="email" class="leading-7 font-bold text-sm text-gray-600">Admin_ID</label>
+                  <input 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    value={adminId}
+                    onChange={(e) => setAdminId(e.target.value)}
+                    class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-orange-500 focus:bg-white focus:ring-2 focus:ring-orange-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"/>
+                </div>
+              </div>
+              <div class="p-2 w-1/2">
+                <div class="relative">
+                  <label for="message" class="leading-7 font-bold text-sm text-gray-600">Tournament_ID</label>
+                  <input 
+                     type="email" 
+                     id="email" 
+                     name="email" 
+                     value={tournamentId}
+                     onChange={(e) => setTournamentId(e.target.value)}
+                     class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-orange-500 focus:bg-white focus:ring-2 focus:ring-orange-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"/>
+                </div>
+              </div>
+              <div class="p-2 w-1/2">
+                <div class="relative">
+                  <label for="message" class="leading-7 font-bold text-sm text-gray-600">Tournament Game_ID</label>
+                  <input 
+                     type="email" 
+                     id="email" 
+                     name="email" 
+                     value={tournamentGameId}
+                     onChange={(e) => setTournamentGameId(e.target.value)}
+                     class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-orange-500 focus:bg-white focus:ring-2 focus:ring-orange-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"/>
+                </div>
+              </div>
+              <div class="p-2 w-1/2">
+                <div class="relative">
+                  <label for="message" class="leading-7 font-bold text-sm text-gray-600">Number of boys</label>
+                  <input 
+                     type="email" 
+                     id="email" 
+                     name="email" 
+                     value={boys}
+                     onChange={(e) => setBoys(e.target.value)}
+                     class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-orange-500 focus:bg-white focus:ring-2 focus:ring-orange-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"/>
+                </div>
+              </div>
+              <div class="p-2 w-1/2">
+                <div class="relative">
+                  <label for="message" class="leading-7 font-bold text-sm text-gray-600">Number of girls</label>
+                  <input 
+                     type="email" 
+                     id="email" 
+                     name="email" 
+                     value={girls}
+                     onChange={(e) => setGirls(e.target.value)}
+                     class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-orange-500 focus:bg-white focus:ring-2 focus:ring-orange-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"/>
+                </div>
+              </div>
+              <div class="p-2 w-full">
+                <button 
+                   class="flex mx-auto text-white bg-orange-500 border-0 py-2 px-8 focus:outline-none hover:bg-orange-600 rounded-lg text-lg"
+                   onClick={handleCreateClick}
+                   >Create</button>
+              </div>
+              </div>
+              )}
+              
+              {showPlayers && (
+              <div class="p-2 w-full">
+                <div class="relative">
+                  <h2 className="leading-7 font-bold text-xl text-gray-600">Players in Team</h2>
+                  <ul className="mt-2">
+                    {players.map((player, index) => (
+                      <li key={index} className="text-gray-600">
+                        {index + 1}. Name: {player.name}, Tournament ID: {player.tournamentId}
+                       </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+              )}
               <div class="p-2 w-full pt-8 mt-8 border-t border-gray-200 text-center">
                 <a class="text-orange-500">KCPD.Group@gmail.com</a>
                 <p class="leading-normal my-5">49 Smith St.
@@ -104,6 +295,7 @@ const Application = () => {
               </div>
             </div>
           </div>
+          
         </div>
       </section>
     );
