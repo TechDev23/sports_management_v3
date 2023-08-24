@@ -13,6 +13,8 @@ import {
 
 import {
   Card,
+  Select as MSelect,
+  Option,
   List,
   ListItem,
   ListItemPrefix,
@@ -23,8 +25,33 @@ import { useAppSelector } from "../../../redux/store";
 import { useUpdateUserDetailsMutation } from "../../../redux/api/userApi";
 import { Link } from "react-router-dom";
 
+import { getYear, getMonth } from "date-fns";
+
 export default function ComplexNavbar() {
   const user = useAppSelector((state) => state.userState.user);
+
+  const [birthDate, setBirthDate] = useState(new Date());
+
+  const range = (start, end, step) => {
+    const length = Math.floor((end - start) / step) + 1;
+    return Array.from({ length }, (_, index) => start + index * step);
+  };
+
+  const years = range(1950, getYear(new Date()) + 1, 1);
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
 
   const userInformation = {
     mobile_number: user?.phone_no,
@@ -51,9 +78,13 @@ export default function ComplexNavbar() {
   );
 
   const [isEmergencyEditing, setIsEmergencyEditing] = useState(false);
+  const [isGenderEditing, setIsGenderEditing] = useState("");
+  const [editedGender, setEditedGender] = useState();
   const [editedEmergency, setEditedEmergency] = useState(
     userInformation.emergency_contact
   );
+
+  const [gender, setGender] = useState('');
 
   const [isDOBEditing, setIsDOBEditing] = useState(false);
   const [editedDOB, setEditedDOB] = useState(new Date(userInformation.dob));
@@ -119,14 +150,29 @@ export default function ComplexNavbar() {
     setIsEmergencyEditing(true);
   };
 
+  const handleEditGender = () => {
+    setIsGenderEditing(true);
+  };
+
+  const handlleSaveGendder = () => {
+    setIsGenderEditing(false);
+    // userInformation.emergency_contact = editedEmergency;
+  };
+
+  const handleCancelGender = () => {
+    setIsGenderEditing(false);
+    setEditedGender("");
+  };
+
+
   const handleSaveDOB = () => {
     setIsDOBEditing(false);
-    userInformation.dob = editedDOB.toISOString().split("T")[0];
+    // userInformation.dob = editedDOB.toISOString().split("T")[0];
   };
 
   const handleCancelDOB = () => {
     setIsDOBEditing(false);
-    setEditedDOB(new Date(userInformation.dob));
+    // setEditedDOB(new Date(userInformation.dob));
   };
 
   const handleEditDOB = () => {
@@ -153,7 +199,7 @@ export default function ComplexNavbar() {
       <div className="flex flex-col lg:flex-row w-full h-full">
 
 
-        <div className="h-screen  w-1/5 p-4 border-2 ">
+        <div className="h-screen lg:1/4  xl:w-1/5 p-4 border-2 ">
           <div className="mb-2 p-4">
             <Typography variant="h5" color="blue-gray" className="text-3xl">
               Account Settings
@@ -204,7 +250,7 @@ export default function ComplexNavbar() {
 
 
         {user && (
-          <div className="h-full flex flex-col w-full border  p-8 gap-4">
+          <div className="h-full flex flex-col  w-full lg:w-3/4 xl:w-4/5 border  p-8 gap-4">
             <div className="flex flex-row gap-4 ">
               <Avatar
                 variant="circular"
@@ -388,7 +434,6 @@ export default function ComplexNavbar() {
                         </div>
                       )}
                     </div>
-                    <hr className="my-2 hr-light"  />
                   </div>
                   <div className="mb-8">
                     <Typography
@@ -446,8 +491,75 @@ export default function ComplexNavbar() {
                         </div>
                       )}
                     </div>
-                    <hr className="my-2 hr-light" />
                   </div>
+
+                  <div className="mb-8">
+                    <Typography
+                      variant="h6"
+                      color="blue-gray"
+                      className="sm:text-left"
+                    >
+                      Gender
+                    </Typography>
+                    <div className="flex sm:flex-row items-center gap-2">
+                      {isGenderEditing ? (
+                          <div className="flex  items-center sm:items-start gap-4">
+                          <MSelect
+                          onChange={() => {}}
+                          color="orange"
+                          label="Select Gender"
+                        >
+                          <Option key={0} value={0}>
+                            Girl
+                          </Option>
+                          <Option key={1} value={1}>
+                            Boy
+                          </Option>
+                          <Option key={2} value={2}>
+                            Prefer not to say
+                          </Option>
+                        </MSelect>
+                            <div className="flex sm:flex-row gap-2">
+                                <Button
+                                  size="sm"
+                                  color="blue"
+                                  onClick={handlleSaveGendder}
+                                  className="text-white"
+                                >
+                                  Save
+                                </Button>
+                              <div className="flex sm:flex-row gap-2">
+                                  <Button
+                                    size="sm"
+                                    variant="outlined"
+                                    onClick={handleCancelGender}
+                                    className="text-gray-900"
+                                  >
+                                    Cancel
+                                  </Button>
+                              </div>
+                            </div>
+                          </div>
+                      ) : (
+                        <div className="flex justify-start gap-4">
+                          <Typography variant="body" color="gray">
+                            {userInformation.emergency_contact}
+                          </Typography>
+                          <div className="flex-grow"></div>
+
+                          <button
+                            onClick={handleEditGender}
+                            className="text-blue-500 hover:text-blue-700"
+                          >
+                            Edit
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  
+
                   <div className="mb-8">
                     <Typography
                       variant="h6"
@@ -459,15 +571,57 @@ export default function ComplexNavbar() {
                     <div className="flex sm:flex-row items-center gap-2">
                       {isDOBEditing ? (
                           <div className="flex  items-center sm:items-start gap-4">
-                            <DatePicker
-                              selected={editedDOB}
-                              onChange={(date) => setEditedDOB(date)}
-                              showYearDropdown
-                              scrollableYearDropdown
-                              yearDropdownItemNumber={70}
-                              yearDropdownMin={1950}
-                              className="border rounded px-2 py-1"
-                            />
+                          <DatePicker
+                          selected={"selected dob"}
+                          renderCustomHeader={({
+                            date,
+                            changeYear,
+                            changeMonth,
+                            decreaseMonth,
+                            increaseMonth,
+                            prevMonthButtonDisabled,
+                            nextMonthButtonDisabled,
+                          }) => (
+                            <div
+                              style={{
+                                margin: 10,
+                                display: "flex",
+                                justifyContent: "center",
+                              }}
+                            >
+                              <button onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
+                                {"<"}
+                              </button>
+                              <select
+                                value={getYear(date)}
+                                onChange={({ target: { value } }) => changeYear(value)}
+                              >
+                                {years.map((option) => (
+                                  <option key={option} value={option}>
+                                    {option}
+                                  </option>
+                                ))}
+                              </select>
+                    
+                              <select
+                                value={months[getMonth(date)]}
+                                onChange={({ target: { value } }) =>
+                                  changeMonth(months.indexOf(value))
+                                }
+                              >
+                                {months.map((option) => (
+                                  <option key={option} value={option}>
+                                    {option}
+                                  </option>
+                                ))}
+                              </select>
+                    
+                              <button onClick={increaseMonth} disabled={nextMonthButtonDisabled}>
+                                {">"}
+                              </button>
+                            </div>
+                          )}
+                        />
                             <div className="flex sm:flex-row gap-2">
                                 <Button
                                   onClick={handleSaveDOB}
@@ -488,7 +642,8 @@ export default function ComplexNavbar() {
                       ) : (
                         <div className="flex justify-start gap-4">
                           <Typography variant="body" color="gray">
-                            {editedDOB.toDateString()}
+                            {/** editedDOB.toDateString() */}
+                            {"23-08-2023"}
                           </Typography>
                           <div className="flex-grow"></div>
 
@@ -501,7 +656,8 @@ export default function ComplexNavbar() {
                         </div>
                       )}
                     </div>
-                    <hr className="my-2 hr-light" />
+
+
                   </div>
                   <div className="mb-8">
                     <Typography
