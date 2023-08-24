@@ -1,6 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import Cookies from "universal-cookie";
 
 const BASE_URL = "http://127.0.0.1:8000";
+
+const cookie = new Cookies();
+const token = cookie.get("jwt_auth_token");
 
 export const generalApi = createApi({
   reducerPath: "generalApi",
@@ -17,10 +21,20 @@ export const generalApi = createApi({
       },
     }),
 
+    getUserByEmail: builder.query({
+      query(email_id) {
+        return {
+          url: `validate_user?email_id=${email_id}&token=${token}`,
+        };
+      },
+    }),
+
 
   }),
 });
 
 export const {
-    useGetGamesQuery
+    useGetGamesQuery, 
+    useGetUserByEmailQuery,
+    useLazyGetUserByEmailQuery,
 } = generalApi;

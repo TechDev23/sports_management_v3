@@ -57,9 +57,9 @@ export const orgApi = createApi({
     addGrndUmpire: build.mutation({
       query(data) {
         return {
-          url: `organizer/tournament/${data.tournament_id}/games/${data.tournament_game_id}?token=${data.token}`,
+          url: `organizer/tournament/${data.tournament_id}/games/${data.tournament_game_id}?token=${token}`,
           method: "post",
-          body: data.req_body,
+          body: data,
         };
       },
     }),
@@ -110,5 +110,6 @@ export const { useCreateTournamentMutation,
   useAddGameToTnmtMutation,
   useGetRgstrdTeamsQuery,
   useGetFixturesQuery, 
-  useTeamsApprovalMutation
+  useTeamsApprovalMutation,
+  useAddGrndUmpireMutation,
 } = orgApi;
