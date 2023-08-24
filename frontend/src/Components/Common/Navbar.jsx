@@ -410,6 +410,11 @@ const [loggedIn , setLoggedIn] = useState(true);
     dispatch(logout())
     navigate('/user/login')
   }
+
+  
+  let params = useLocation();
+  const path = params.pathname;
+
   return(
     // !pathname == "/user/login" && !pathname == "/user/register" &&
 
@@ -429,8 +434,9 @@ const [loggedIn , setLoggedIn] = useState(true);
 
         {
           loggedIn ? (
-            <ProfileMenu/>
-            // <Button color="red" variant="outlined" className="hover:bg-[#ff0000] hover:text-white" onClick={logOutUser}>Log out</Button>
+            path === "/" || path === "/features" || path === "/about" || path === "/about" || path === "/blogs" ? 
+            <ProfileMenu/> :
+            <Button color="red" variant="outlined" className="hover:bg-[#ff0000] hover:text-white" onClick={logOutUser}>Log out</Button>
           ) : (
             <div className="hidden gap-2 lg:flex">
               <Button variant="text" size="sm" color="blue-gray" onClick={()=> navigate("/user/login")}>
