@@ -1,304 +1,231 @@
-/* eslint-disable no-unused-vars */
-import { useState } from "react";
+import React, {useState} from 'react'
+
+
 import {
-  Input,
-  Button,
-  Textarea,
-  Spinner,
-  Select as MSelect,
-  Option,
-  Card,
-  List,
-  ListItem,
-  ListItemPrefix,
-  Radio,
-  Typography,
-} from "@material-tailwind/react";
-import { useDispatch } from "react-redux";
-import Select from "react-select";
-import { useAddGameToTnmtMutation } from "../../../../redux/api/organizer/orgApi";
-import { useAppSelector } from "../../../../redux/store";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+    Button,
+    Card,
+    CardBody,
+    CardFooter,
+    Dialog,
+    DialogBody,
+    DialogFooter,
+    DialogHeader,
+    Input,
+    Textarea,
+    Typography,
+    List,
+    ListItem,
+    ListItemPrefix,
+    Radio,
+    Select as MSelect,
+    Option
+  } from "@material-tailwind/react";
+  
+
+import EditIcon from "@mui/icons-material/Edit";
+import { FaFemale, FaMale } from 'react-icons/fa';
+
+// new additions
+
+import { ImCross } from "react-icons/im";
+import { useDispatch } from 'react-redux';
+
+import { useAddGameToTnmtMutation } from '../../redux/api/organizer/orgApi';
+import { useAppSelector } from '../../redux/store';
 import DatePicker from "react-datepicker";
-import { useGetGamesQuery } from "../../../../redux/api/General/generalApi";
+
+import { useGetGamesQuery } from '../../redux/api/General/generalApi';
 import { toast } from "react-toastify";
 
-// icons
+import { useNavigate, useParams } from 'react-router-dom';
+import { useGetTournamentGamesQuery } from '../../redux/api/organizer/tournamentApi';
+import moment from 'moment';
 
-const DateSelector = () => {
-  const [hours, setHours] = useState();
-  const [minutes, setMinutes] = useState();
-  const [startDate, setStartDate] = useState(
-    setHours(setMinutes(new Date(), 30), 16)
-  );
-  const [endDate, setEndDate] = useState(new Date("2014/02/10"));
-  return (
-    <div>
-      <DatePicker
-        selected={startDate}
-        onChange={(date) => setStartDate(date)}
-        selectsStart
-        startDate={startDate}
-        endDate={endDate}
-        showTimeSelect
-        dateFormat="MMMM d, yyyy h:mm aa"
-      />
-      <DatePicker
-        selected={endDate}
-        onChange={(date) => setEndDate(date)}
-        selectsEnd
-        startDate={startDate}
-        endDate={endDate}
-        showTimeSelect
-        dateFormat="MMMM d, yyyy h:mm aa"
-        minDate={startDate}
-      />
-    </div>
-  );
-};
+// new addition ends here
 
-const AddGame = ({ key, gameIndex }) => {
+
+function UpdateDialog() {
+    const [open, setOpen] = useState(false);
   
-  console.log(gameIndex);
-  const { id: tourId } = useAppSelector(
-    (state) => state.tournament.tour_details
-  );
-  const dispatch = useDispatch();
-  const [
-    addGameToTnmt,
-    { isSuccess, isLoading: isAddingGame, isError: errorWhileAddingGame },
-  ] = useAddGameToTnmtMutation();
-
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
-  const [qualification, setQualification] = useState("Single Elimination");
-  const [game, setGame] = useState(null);
-  const [whoCanParticipate, setWhoCanParticipate] = useState(2);
-
-  const initialValues = {
-    name: null, // string
-    tournament_id: tourId, //string
-    game_id: null, // hardcoded from database 1 -> cricket
-    info: null, // string
-    prize_pool: null,
-    participation_fees: null,
-    team_size: null,
-    max_teams: null,
-    total_rounds: null,
-    min_boys: null,
-    min_girls: null,
-    open_to: whoCanParticipate,
-    min_age: null,
-    max_age: null,
-
-    // field to be added
-
-    type: qualification, // select field
-    num_groups: 0,
-    teams_per_group: 0,
-    avg_duration: 45,
-
-    start_date: startDate, // string
-    end_date: endDate, //string
-  };
-
-  const [values, setValues] = useState(initialValues);
-
-  const {
-    data: fetchedGames,
-    isLoading,
-    isFetching,
-    isSuccess: successGames,
-    isError: errorWhileGamesFetch,
-    error: errGameFetch,
-  } = useGetGamesQuery({ skip: true });
-  if (errorWhileGamesFetch) {
-    toast.error("Error while fetching games from our side");
-  }
-
-  const handleInputChangeString = (e) => {
-    const { name, value } = e.target;
-
-    // const parsedValue = (name !== "name" || name !== "tournament_id" || name !== "info" || name !== "start_date" || name !== "end_date" ) ? parseInt(value, 10) : value;
-
-    setValues({
-      ...values,
-      [name]: value,
-    });
-  };
-
-  const handleInputChangeNumber = (e) => {
-    const { name, value } = e.target;
-
-    setValues({
-      ...values,
-      [name]: Number(value),
-    });
-  };
-
-  const qualificationOptions = [
-    {
-      value: 1,
-      label: "Single Elimination",
-    },
-    {
-      value: 2,
-      label: "League",
-    },
-  ];
-
-  const handleQualification = (selectedOption) => {
-    console.log(selectedOption);
-    setQualification(selectedOption.label);
-    setValues({
-      ...values,
-      type: selectedOption,
-    });
-  };
-
-  const handleGameChange = (selectedId) => {
-    setValues({
-      ...values,
-      game_id: selectedId,
-    });
-  };
-
-  const handleParticipantRadio = (value) => {
-    setWhoCanParticipate(value);
-    setValues({
-      ...values,
-      open_to: value,
-    });
-
-    if (value === 0) {
+    const handleOpen = () => setOpen(!open);
+  
+    const { id: tourId } = useAppSelector(
+      (state) => state.tournament.tour_details
+    );
+    const dispatch = useDispatch();
+    const [
+      addGameToTnmt,
+      { isSuccess, isLoading: isAddingGame, isError: errorWhileAddingGame },
+    ] = useAddGameToTnmtMutation();
+  
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
+    const [qualification, setQualification] = useState("Single Elimination");
+    const [game, setGame] = useState(null);
+    const [whoCanParticipate, setWhoCanParticipate] = useState(2);
+  
+    const initialValues = {
+      name: null, // string
+      tournament_id: tourId, //string
+      game_id: null, // hardcoded from database 1 -> cricket
+      info: null, // string
+      prize_pool: null,
+      participation_fees: null,
+      team_size: null,
+      max_teams: null,
+      total_rounds: null,
+      min_boys: null,
+      min_girls: null,
+      open_to: whoCanParticipate,
+      min_age: null,
+      max_age: null,
+  
+      // field to be added
+  
+      type: qualification, // select field
+      num_groups: 0,
+      teams_per_group: 0,
+      avg_duration: 45,
+  
+      start_date: startDate, // string
+      end_date: endDate, //string
+    };
+  
+    const [values, setValues] = useState(initialValues);
+  
+    const {
+      data: fetchedGames,
+      isLoading,
+      isFetching,
+      isSuccess: successGames,
+      isError: errorWhileGamesFetch,
+      error: errGameFetch,
+    } = useGetGamesQuery({ skip: true });
+    if (errorWhileGamesFetch) {
+      // toast.error("Error while fetching games from our side");
+    }
+  
+    const handleInputChangeString = (e) => {
+      const { name, value } = e.target;
+  
+      // const parsedValue = (name !== "name" || name !== "tournament_id" || name !== "info" || name !== "start_date" || name !== "end_date" ) ? parseInt(value, 10) : value;
+  
       setValues({
         ...values,
-        min_girls: values.team_size,
-        min_boys: 0,
-        open_to: 0,
+        [name]: value,
       });
-    } else if (value === 1) {
+    };
+  
+    const handleInputChangeNumber = (e) => {
+      const { name, value } = e.target;
+  
       setValues({
         ...values,
-        min_boys: values.team_size,
-        min_girls: 0,
-        open_to: 1,
+        [name]: Number(value),
       });
-    } else if (value === 2) {
+    };
+  
+    const qualificationOptions = [
+      {
+        value: 1,
+        label: "Single Elimination",
+      },
+      {
+        value: 2,
+        label: "League",
+      },
+    ];
+  
+    const handleQualification = (selectedOption) => {
+      console.log(selectedOption);
+      setQualification(selectedOption.label);
       setValues({
         ...values,
-        min_boys: values.min_boys,
-        min_girls: values.min_girls,
+        type: selectedOption,
+      });
+    };
+  
+    const handleGameChange = (selectedId) => {
+      setValues({
+        ...values,
+        game_id: selectedId,
+      });
+    };
+  
+    const handleParticipantRadio = (value) => {
+      setWhoCanParticipate(value);
+      setValues({
+        ...values,
         open_to: value,
       });
-    }
-  };
-
-  const addGameToDB = async () => {
-    setValues({
-      ...values,
-      start_date: new Date(startDate).toISOString(),
-      end_date: new Date(endDate).toISOString(),
-    });
-    const ressponse = await addGameToTnmt(values);
-    if (errorWhileAddingGame) {
-      toast.error(errGameFetch);
-    }
-    if (ressponse?.error) {
-      toast.error(ressponse?.error?.data.detail);
-    }
-  };
-
-  const GenderRadioButtons = ({ gameIndex }) => (
-    <List key={gameIndex} className=" w-full flex-row">
-      <ListItem className="p-0">
-        <label
-          htmlFor="horizontal-list-react"
-          className="flex w-full cursor-pointer items-center px-3 py-2"
+  
+      if (value === 0) {
+        setValues({
+          ...values,
+          min_girls: values.team_size,
+          min_boys: 0,
+          open_to: 0,
+        });
+      } else if (value === 1) {
+        setValues({
+          ...values,
+          min_boys: values.team_size,
+          min_girls: 0,
+          open_to: 1,
+        });
+      } else if (value === 2) {
+        setValues({
+          ...values,
+          min_boys: values.min_boys,
+          min_girls: values.min_girls,
+          open_to: value,
+        });
+      }
+    };
+  
+    const addGameToDB = async () => {
+      setValues({
+        ...values,
+        start_date: new Date(startDate).toISOString(),
+        end_date: new Date(endDate).toISOString(),
+      });
+      const ressponse = await addGameToTnmt(values);
+      if (errorWhileAddingGame) {
+        toast.error(errGameFetch);
+      }
+      if (ressponse?.error) {
+        toast.error(ressponse?.error?.data.detail);
+      }
+    };
+    return (
+      <div>
+        <Button
+          color="amber"
+          variant="outlined"
+          onClick={handleOpen}
+          className="hover:text-white hover:bg-orange-500 flex gap-2 items-center border-none"
         >
-          <ListItemPrefix className="mr-3">
-            <Radio
-              color="amber"
-              name="horizontal-list"
-              id={gameIndex * 3 + 1}
-              ripple={false}
-              checked={whoCanParticipate === 0}
-              onChange={() => handleParticipantRadio(0)}
-              className="hover:before:opacity-0 "
-              containerProps={{
-                className: "p-0",
-              }}
-            />
-          </ListItemPrefix>
-          <Typography color="blue-gray" className="font-medium">
-            Only Girls
-          </Typography>
-        </label>
-      </ListItem>
-      <ListItem className="p-0">
-        <label
-          htmlFor="horizontal-list-vue"
-          className="flex w-full cursor-pointer items-center px-3 py-2"
-        >
-          <ListItemPrefix className="mr-3">
-            <Radio
-              color="amber"
-              name="horizontal-list"
-              id={gameIndex * 3 + 2}
-              ripple={false}
-              className="hover:before:opacity-0"
-              containerProps={{
-                className: "p-0",
-              }}
-              checked={whoCanParticipate === 1}
-              onChange={() => handleParticipantRadio(1)}
-            />
-          </ListItemPrefix>
-          <Typography color="blue-gray" className="font-medium">
-            Only Boys
-          </Typography>
-        </label>
-      </ListItem>
-      <ListItem className="p-0">
-        <label
-          htmlFor="horizontal-list-svelte"
-          className="flex w-full cursor-pointer items-center px-3 py-2"
-        >
-          <ListItemPrefix className="mr-3">
-            <Radio
-              color="amber"
-              name="horizontal-list"
-              id={gameIndex * 3 + 3}
-              ripple={false}
-              className="hover:before:opacity-0"
-              containerProps={{
-                className: "p-0",
-              }}
-              checked={whoCanParticipate === 2}
-              onChange={() => handleParticipantRadio(2)}
-            />
-          </ListItemPrefix>
-          <Typography color="blue-gray" className="font-medium">
-            Both
-          </Typography>
-        </label>
-      </ListItem>
-    </List>
-  );
-  console.log(values);
-  return (
-    <div key={key} className="w-full gap-8 py-5 border-t-2 ">
-      {isSuccess ? (
-        <div className="flex items-center justify-start mx-auto text-xl font-poppins gap-3">
-          <CheckCircleIcon className="text-green-500" />{" "}
-          <p>Game added Successfully</p>
-        </div>
-      ) : (
-        <div className="space-y-4 shadow-sm md:p-4 w-full ">
+          <EditIcon />
+          <p>Edit</p>
+        </Button>
+        <Dialog
+        size="xl"
+        open={open}
+        handler={handleOpen}
+        className="lg:scroll-smooth shadow-none"
+      >
+        <DialogHeader className="flex justify-between">
           <p className=" text-xl text-center font-poppins font-bold">
             Add new Game
           </p>
-
+          <p
+            onClick={handleOpen}
+            className="w-8 h-8 rounded-lg bg-red-400 p-2 text-white hover:bg-red-600 cursor-pointer"
+          >
+            <ImCross className="w-4 h-4" />
+          </p>
+        </DialogHeader>
+        <DialogBody divider className="h-[40rem] overflow-scroll">
           {/* GAme details div starts */}
           <div className="w-full lg:p-4 border border-black-100 rounded-lg flex flex-col gap-6">
             <p className="font-semibold font-poppins text-blue-gray-700">
@@ -560,10 +487,63 @@ const AddGame = ({ key, gameIndex }) => {
               {isAddingGame ? <Spinner color="amber" /> : "Add game"}
             </Button>
           </div>
-        </div>
-      )}
-    </div>
-  );
-};
+        </DialogBody>
+      </Dialog>
+      </div>
+    );
+  }
 
-export default AddGame;
+const GameCard = () => {
+  return (
+        <Card className=" border font-poppins">
+            <CardBody className='flex flex-col gap-4'>
+                <div className='flex flex-col lg:flex-row justify-between gap-2'>
+                    <div className='flex flex-col '>
+                    <Typography variant="h5" className="font-poppins capitalize flex gap-4 justify-start items-center">
+                    {/* {game?.name} */}
+                    <p>game name</p>
+                    <p className='text-sm font-normal text-orange-500 bg-orange-50 p-1 px-2 rounded-lg'>Cricket</p>
+                    </Typography>
+                    <Typography variant="h6" className="font-poppins">
+                    <p>Single Elimination</p>
+                    </Typography>
+                    </div>
+                
+                <p className='border-2 border-yellow-500 w-fit h-fit rounded-lg p-1 px-2 bg-gray-100 border-dashed'>
+                    Prize Pool
+                </p>
+                </div>
+
+                <div className='flex flex-col gap-3'>
+                    <div className='font-poppins text-sm text-justify  py-2'>
+                    The place is close to Barceloneta Beach and bus stop just 2
+                    min by walk and near to &quot;Naviglio&quot; where you can
+                    enjoy the main night life in Barcelona.
+                    The place is close to Barceloneta Beach and bus stop just 2
+                    min by walk and near to &quot;Naviglio&quot; where you can
+                    enjoy the main night life in Barcelona.
+                    </div>
+                    <div className='flex justify-between'>
+                        <p className='bg-gray-100 p-1 px-2 rounded-lg'>Only boys</p>
+                        <div className='flex gap-2'>
+                            <p className='bg-pink-50 text-pink-500 flex flex-row items-center p-1 px-2 rounded-lg'><FaFemale/><p>4</p></p>
+                            <p className='bg-blue-50 text-blue-500 flex flex-row items-center p-1 px-2 rounded-lg'><FaMale/><p>5</p></p>
+                        </div>
+
+                    </div>
+                    <Typography className="flex flex-col sm:flex-row justify-between gap-4 font-poppins" >
+                        <div className='flex gap-4 text-xs lg:text-sm items-center'>
+                        
+                            <p className='p-1 px-2 h-fit bg-green-50  text-green-500 rounded-lg'>Start Date</p>
+                            <p className='p-1 px-2 h-fit bg-red-50  text-red-500 rounded-lg'>End Date</p>
+                        </div>
+                        
+                        <UpdateDialog />
+                    </Typography>
+                </div>
+            </CardBody>
+        </Card>
+  )
+}
+
+export default GameCard

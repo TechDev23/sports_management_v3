@@ -17,6 +17,8 @@ import {
 import Select from "react-select";
 import EditIcon from "@mui/icons-material/Edit";
 
+import GameCard  from "../../GameCard";
+
 // entire ui can be divided into
 
 // game detail
@@ -167,8 +169,8 @@ export default function AllAddedGames() {
   console.log(allGames?.data);
 
   return (
-    <div className="w-full">
-      <div className="w-full flex justify-between mb-4">
+    <div className="w-full flex flex-col gap-4">
+      <div className="w-full flex flex-col sm:flex-row gap-2 justify-between">
         <p className="text-xl font-bold font-poppins">
           Total Added Games: {allGames?.data.length}
         </p>
@@ -176,31 +178,15 @@ export default function AllAddedGames() {
           to={"/o/new-tournament/step3"}
           className="font-poppins text-gray-600 hover:text-orange-500"
         >
-          Add more games to tournament
+          Add more games
         </Link>
       </div>
 
-      <div className="grid grid-auto-fit-[25rem] gap-6">
-        {allGames?.data.map((game) => (
-          <>
-            <Card className="w-fit">
-              <CardBody>
-                <Typography variant="h5" className="mb-2 capitalize">
-                  {/* {game?.name} */}
-                  game name
-                </Typography>
-                <Typography>
-                  The place is close to Barceloneta Beach and bus stop just 2
-                  min by walk and near to &quot;Naviglio&quot; where you can
-                  enjoy the main night life in Barcelona.
-                </Typography>
-              </CardBody>
-              <CardFooter className="pt-0">
-                <UpdateDialog />
-              </CardFooter>
-            </Card>
-          </>
-        ))}
+      <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-5 ">
+            <GameCard/>
+            <GameCard/>
+            <GameCard/>
+            <GameCard/>
       </div>
     </div>
   );

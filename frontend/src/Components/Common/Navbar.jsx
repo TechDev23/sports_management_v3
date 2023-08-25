@@ -295,11 +295,6 @@ const profileMenuItems = [
     icon: LifebuoyIcon,
     link: "/user/help"
   },
-  {
-    label: "Sign Out",
-    icon: PowerIcon,
-    link: ""
-  },
 ];
  
 function ProfileMenu() {
@@ -311,6 +306,14 @@ function ProfileMenu() {
   const dispatch = useDispatch();
  
   const closeMenu = () => setIsMenuOpen(false);
+
+  const [loggedIn , setLoggedIn] = useState(true);
+
+  const logOutUser = ()=>{
+    setLoggedIn(false)
+    dispatch(logout())
+    navigate('/user/login')
+  }
 
 
   const handleMenuItemClick = (link) => {
@@ -353,22 +356,18 @@ function ProfileMenu() {
             <MenuItem
               key={label}
               onClick={closeMenu}
-              className={`flex items-center gap-2 rounded ${
-                isLastItem
-                  ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
-                  : ""
-              }`}
+              className={`flex items-center gap-2 rounded `}
 
             >
               {React.createElement(icon, {
-                className: `h-4 w-4 ${isLastItem ? "text-red-500" : ""}`,
+                className: `h-4 w-4`,
                 strokeWidth: 2,
               })}
               <Typography
                 as="span"
                 variant="small"
                 className="font-normal"
-                color={isLastItem ? "red" : "inherit"}
+                color={"inherit"}
               >
                 {label}
               </Typography>
@@ -376,11 +375,17 @@ function ProfileMenu() {
             
             </Link>
 
-
-
-
           );
         })}
+        <MenuItem
+              key={"signout"}
+              onClick={logOutUser}
+              className={`flex items-center hover:text-red-500 text-red-500 gap-2 rounded "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10`}
+
+            >
+            
+              <PowerIcon className="w-4 h-4"/>{"Sign out"}
+            </MenuItem>
       </MenuList>
     </Menu>
   );
@@ -434,9 +439,7 @@ const [loggedIn , setLoggedIn] = useState(true);
 
         {
           loggedIn ? (
-            path === "/" || path === "/features" || path === "/about" || path === "/about" || path === "/blogs" ? 
-            <ProfileMenu/> :
-            <Button color="red" variant="outlined" className="hover:bg-[#ff0000] hover:text-white" onClick={logOutUser}>Log out</Button>
+            <ProfileMenu/>
           ) : (
             <div className="hidden gap-2 lg:flex">
               <Button variant="text" size="sm" color="blue-gray" onClick={()=> navigate("/user/login")}>
@@ -483,6 +486,7 @@ const [loggedIn , setLoggedIn] = useState(true);
 export default function Example() {
   
   return (
+
     <NavWithoutUser/>
   );
 }
