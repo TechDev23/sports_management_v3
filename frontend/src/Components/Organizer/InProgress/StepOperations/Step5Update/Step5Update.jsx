@@ -72,8 +72,6 @@ export default function Step5Update() {
             }}
           >
             {data.map(({ label, icon, value }) => (
-              
-              // <Tab onClick={() => navigate(`/o/current/step5/${value}`)}  key={value} value={value} className="text-white text-sm  px-0.5">
               <Tab onClick={() => navigate(`/o/current-tournament/${params.tourId}/tour_game/${params.tour_game_id}/step5/${value}`)}  key={value} value={value} className="text-white text-sm  px-0.5">
               <Link>
               <p className="block md:hidden">

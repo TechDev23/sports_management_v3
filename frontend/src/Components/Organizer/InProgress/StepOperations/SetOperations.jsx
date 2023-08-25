@@ -20,21 +20,6 @@ const UmpireInput = ({ onAddUmpire, game_id }) => {
     setGameId(game_id);
     setError("");
   };
-  // const [trigger, result, lastPromiseInfo] = useLazyGetUserByEmailQuery();
-
-  // const {
-  //   data: fetchedUser,
-  //   error: fetchedUserError,
-  //   isError,
-  //   isLoading: fetchingUserByMail,
-  //   isFetching,
-  // } = result;
-  // console.log(fetchedUser);
-
-  // if (fetchedUser?.status === "error" && fetchedUser?.status_code === 400)
-  //   toast.error(fetchedUser.message);
-  // if (fetchedUser?.status === "success" && fetchedUser?.status_code === 200)
-  //   toast.success("User with email found");
 
   const [
     getUserWithMail,
@@ -48,20 +33,16 @@ const UmpireInput = ({ onAddUmpire, game_id }) => {
   ] = useLazyGetUserByEmailQuery();
 
   const handleAddUmpire = async () => {
-    // if (!userId.includes('@')) {
-    //   setError('Please enter a valid email as User ID');
-    //   return;
-    // }
-    // check for user email id exists in organization
-    // onAddUmpire({ user_id: userId, game_id });
     const res = await getUserWithMail(userEmail);
-    
-    console.log(res?.data)
+
+    console.log(res?.data?.data?.id)
     if (res?.data?.status === "error" && res?.data?.status_code === 400)
       toast.error(res?.data.message);
     if (res?.data?.status === "success" && res?.data?.status_code === 200)
       toast.success("User with email found");
 
+    // check for user email id exists in organization
+    onAddUmpire({ user_id: res?.data?.data.id, game_id });
     setUserId("");
     setGameId("");
     setError("");
@@ -191,6 +172,11 @@ export default function SetOperations() {
     console.log("Sending data to backend:", data);
     const response = await addGrndUmpire(data).unwrap();
     console.log("after adding umpire and ground", response);
+    if(response?.status === "success" && response?.status_code === 202){
+      toast.success(response?.message)
+    }else{
+      toast.success("error while adding ground umpire")
+    }
   };
 
   return (

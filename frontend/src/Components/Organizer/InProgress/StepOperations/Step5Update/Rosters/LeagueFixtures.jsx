@@ -55,12 +55,12 @@ const LeagueFixtures = () => {
     };
 
   return (
-    <div className='w-full h-full border-2 flex flex-col border-red-400 gap-4'>
-        <div className='text-xl '>
+    <div className='w-full h-full border-2 flex flex-col gap-4'>
+        <div className='text-xl text-center'>
             Group Matches
         </div>
 
-        <div className='w-full h-full grid grid-cols-1 lg:grid-cols-2 gap-5 border-2 border-blue-400 p-2'>
+        <div className='w-full h-full grid grid-cols-1 lg:grid-cols-2 gap-5 p-2'>
             <div className='border-2  rounded-lg gap-4'>
                 <p className='w-full p-4 shadow-sm font-bold text-lg '>Group A</p>
                 <div className='p-2 flex flex-col gap-4 overflow-y-scroll   h-72'>
@@ -72,7 +72,7 @@ const LeagueFixtures = () => {
                     </p>
                     <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-4">
                     
-                    <div className='w-full xl:w-2/3 border-b-2 border-orange-500 flex flex-col sm:flex-row items-center justify-between gap-4'>
+                    <div className='w-full xl:w-2/3 flex flex-col sm:flex-row items-center justify-between gap-4'>
                         <div className="w-full">
                             <p className="text-md capitalize italic rounded-md flex items-center justify-start">
                                 🎖️{team1}

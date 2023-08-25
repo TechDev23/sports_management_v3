@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 18, 2023 at 09:26 AM
+-- Generation Time: Aug 25, 2023 at 10:56 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 7.4.33
 
@@ -108,7 +108,100 @@ INSERT INTO `fixtures` (`id`, `match_number`, `tournament_id`, `tournament_game_
 (73, 4, 'HRTirSchGzYehTGx', 'HSohQ8E22JU5oeXQ', 1, 1, '27', '22', NULL, NULL, 10, 'MALNmebA4L', '2023-08-14 12:52:00', '2023-08-14 13:22:00'),
 (74, 5, 'HRTirSchGzYehTGx', 'HSohQ8E22JU5oeXQ', 1, 2, NULL, NULL, NULL, NULL, 7, 'eUzXa5dePv', '2023-08-14 13:37:00', '2023-08-14 14:07:00'),
 (75, 6, 'HRTirSchGzYehTGx', 'HSohQ8E22JU5oeXQ', 1, 2, NULL, NULL, NULL, NULL, 8, '7XhVNNtush', '2023-08-14 13:37:00', '2023-08-14 14:07:00'),
-(76, 7, 'HRTirSchGzYehTGx', 'HSohQ8E22JU5oeXQ', 1, 3, NULL, NULL, NULL, NULL, 7, 'eUzXa5dePv', '2023-08-14 14:22:00', '2023-08-14 14:52:00');
+(76, 7, 'HRTirSchGzYehTGx', 'HSohQ8E22JU5oeXQ', 1, 3, NULL, NULL, NULL, NULL, 7, 'eUzXa5dePv', '2023-08-14 14:22:00', '2023-08-14 14:52:00'),
+(77, 1, 'HRTirSchGzYehTGx', 'HSohQ8E22JU5oeXQ', 4, 1, 'W8HN8UNmVRVpUDLs', '38mZ76JTyCjhQA2H', 'W8HN8UNmVRVpUDLs', NULL, 11, 'juD3RNnvEA', '2023-08-19 12:42:00', '2023-08-19 14:12:00'),
+(78, 1, 'HRTirSchGzYehTGx', '8fGrGAp7tBb6vecd', 4, 1, 'W8HN8UNmVRVpUDLs', '38mZ76JTyCjhQA2H', NULL, NULL, 11, 'juD3RNnvEA', '2023-08-19 12:42:00', '2023-08-19 14:12:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `football_cards`
+--
+
+CREATE TABLE `football_cards` (
+  `id` int(11) NOT NULL,
+  `fixture_id` int(11) DEFAULT NULL,
+  `team_id` varchar(30) NOT NULL,
+  `player_id` varchar(30) NOT NULL,
+  `reason` varchar(50) DEFAULT NULL,
+  `card_type` varchar(50) NOT NULL,
+  `minute` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `football_cards`
+--
+
+INSERT INTO `football_cards` (`id`, `fixture_id`, `team_id`, `player_id`, `reason`, `card_type`, `minute`) VALUES
+(1, 77, 'W8HN8UNmVRVpUDLs', 'G6ntVT2vEd', '', 'Yellow', 15);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `football_goals`
+--
+
+CREATE TABLE `football_goals` (
+  `id` int(11) NOT NULL,
+  `team_id` varchar(30) NOT NULL,
+  `scored_by` varchar(30) NOT NULL,
+  `assist_by` varchar(30) DEFAULT NULL,
+  `goal_type` enum('NORMAL_GOAL','FREE_KICK','OWN_GOAL','HEADER','PENALTY') NOT NULL,
+  `fixture_id` int(11) DEFAULT NULL,
+  `minute` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `football_goals`
+--
+
+INSERT INTO `football_goals` (`id`, `team_id`, `scored_by`, `assist_by`, `goal_type`, `fixture_id`, `minute`) VALUES
+(3, 'W8HN8UNmVRVpUDLs', 'G6ntVT2vEd', NULL, 'NORMAL_GOAL', 77, 10);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `football_shootout`
+--
+
+CREATE TABLE `football_shootout` (
+  `id` int(11) NOT NULL,
+  `fixture_id` int(11) DEFAULT NULL,
+  `team_id` varchar(30) NOT NULL,
+  `player_id` varchar(30) NOT NULL,
+  `number` int(11) DEFAULT NULL,
+  `result` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `football_shootout`
+--
+
+INSERT INTO `football_shootout` (`id`, `fixture_id`, `team_id`, `player_id`, `number`, `result`) VALUES
+(2, 77, 'W8HN8UNmVRVpUDLs', 'G6ntVT2vEd', 1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `football_time`
+--
+
+CREATE TABLE `football_time` (
+  `id` int(11) NOT NULL,
+  `fixture_id` int(11) DEFAULT NULL,
+  `duration` int(11) DEFAULT NULL,
+  `time_type` varchar(30) NOT NULL,
+  `total_goals_scored` int(11) DEFAULT NULL,
+  `total_yellow_cards` int(11) DEFAULT NULL,
+  `total_red_cards` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `football_time`
+--
+
+INSERT INTO `football_time` (`id`, `fixture_id`, `duration`, `time_type`, `total_goals_scored`, `total_yellow_cards`, `total_red_cards`) VALUES
+(1, 77, 45, 'first half', 1, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -126,7 +219,10 @@ CREATE TABLE `games` (
 --
 
 INSERT INTO `games` (`id`, `name`) VALUES
-(1, 'volleyball');
+(1, 'volleyball'),
+(2, 'Table tennis'),
+(3, 'badminton'),
+(4, 'Football');
 
 -- --------------------------------------------------------
 
@@ -155,7 +251,8 @@ INSERT INTO `grounds` (`id`, `name`, `game_id`, `location`) VALUES
 (7, 'High street 1', 'HSohQ8E22JU5oeXQ', 'baner'),
 (8, 'High street 2', 'HSohQ8E22JU5oeXQ', 'baner'),
 (9, 'High street 3', 'HSohQ8E22JU5oeXQ', 'baner'),
-(10, 'High street 4', 'HSohQ8E22JU5oeXQ', 'baner');
+(10, 'High street 4', 'HSohQ8E22JU5oeXQ', 'baner'),
+(11, 'new ground', '8fGrGAp7tBb6vecd', 'nice');
 
 -- --------------------------------------------------------
 
@@ -227,12 +324,15 @@ INSERT INTO `teams` (`id`, `name`, `admin_id`, `tournament_id`, `tournament_game
 ('25', 'single 6', 'MALNmebA4L', 'HRTirSchGzYehTGx', 'HSohQ8E22JU5oeXQ', 1, 1, 0, NULL, NULL, NULL, NULL),
 ('26', 'single 7', 'mpqC8HvSzV', 'HRTirSchGzYehTGx', 'HSohQ8E22JU5oeXQ', 1, 1, 0, NULL, NULL, NULL, NULL),
 ('27', 'single 8', 'ewguJpCrb5', 'HRTirSchGzYehTGx', 'HSohQ8E22JU5oeXQ', 1, 1, 0, NULL, NULL, NULL, NULL),
+('38mZ76JTyCjhQA2H', 'TEAM 2 FT', 'Jw4KfPeQr3', 'HRTirSchGzYehTGx', '8fGrGAp7tBb6vecd', 1, 1, 0, NULL, 0, -1, '2023-08-19 12:50:23'),
 ('4', 'team3', 'DvTeRNWTJG', 'HRTirSchGzYehTGx', 'oPpKTxfoe9hNYwyk', 1, 1, 0, 3, 4, 0.7, NULL),
 ('5', 'team4', 'eUzXa5dePv', 'HRTirSchGzYehTGx', 'oPpKTxfoe9hNYwyk', 1, 1, 0, 3, 2, 1, NULL),
 ('6', 'team5', 'gKdYh6rCS7', 'HRTirSchGzYehTGx', 'oPpKTxfoe9hNYwyk', 1, 1, 0, 4, 0, 0, NULL),
 ('7', 'team6', 'juD3RNnvEA', 'HRTirSchGzYehTGx', 'oPpKTxfoe9hNYwyk', 1, 1, 0, 1, 4, 1, NULL),
 ('8', 'team7', 'Jw4KfPeQr3', 'HRTirSchGzYehTGx', 'oPpKTxfoe9hNYwyk', 1, 1, 0, 4, 4, 2, NULL),
-('9', 'team8', 'kkYkANjocU', 'HRTirSchGzYehTGx', 'oPpKTxfoe9hNYwyk', 1, 1, 0, 1, 0, -1.5, NULL);
+('9', 'team8', 'kkYkANjocU', 'HRTirSchGzYehTGx', 'oPpKTxfoe9hNYwyk', 1, 1, 0, 1, 0, -1.5, NULL),
+('iiEYGBfZfFS935Jn', 'BITZZ', '4KjvA7P3x5', 'HRTirSchGzYehTGx', '8fGrGAp7tBb6vecd', 0, 2, 0, NULL, NULL, NULL, '2023-08-24 12:47:54'),
+('W8HN8UNmVRVpUDLs', 'TEAM 1 FT', 'G6ntVT2vEd', 'HRTirSchGzYehTGx', '8fGrGAp7tBb6vecd', 1, 1, 0, NULL, 2, 1, '2023-08-19 12:49:03');
 
 -- --------------------------------------------------------
 
@@ -252,7 +352,12 @@ CREATE TABLE `team_players` (
 --
 
 INSERT INTO `team_players` (`id`, `team_id`, `player_id`, `createdAt`) VALUES
-(1, '1', '6zHTiyqVAe', '2023-05-17 15:49:33');
+(1, '1', '6zHTiyqVAe', '2023-05-17 15:49:33'),
+(2, '14', '53wN7HhfNR', NULL),
+(3, 'W8HN8UNmVRVpUDLs', 'G6ntVT2vEd', '2023-08-19 12:49:03'),
+(4, '38mZ76JTyCjhQA2H', 'Jw4KfPeQr3', '2023-08-19 12:50:24'),
+(5, 'iiEYGBfZfFS935Jn', '4KjvA7P3x5', '2023-08-24 12:47:54'),
+(6, 'iiEYGBfZfFS935Jn', '6zHTiyqVAe', '2023-08-24 12:49:57');
 
 -- --------------------------------------------------------
 
@@ -278,6 +383,13 @@ CREATE TABLE `tournament` (
 --
 
 INSERT INTO `tournament` (`id`, `name`, `about`, `organizer_id`, `organizer_name`, `organizer_info`, `start_date`, `end_date`, `is_payment_done`, `is_active`) VALUES
+('5d69aUkqMW73aYir', 'tournament 1', 'new tournaemnt', 'juD3RNnvEA', 'somesh', 'new organization', '2023-08-23 12:46:57', '2023-08-27 12:46:57', 1, 1),
+('HRTirSchGzYehTG2', 'tournament 2', 'string', 'juD3RNnvEA', 'pict', 'great', '2023-08-14 10:34:05', '2023-08-14 10:34:05', 1, 1),
+('HRTirSchGzYehTG3', 'tournament 3', 'string', 'juD3RNnvEA', 'pict', 'great', '2023-08-14 10:34:05', '2023-08-14 10:34:05', 1, 0),
+('HRTirSchGzYehTG5', 'tournament 5', 'string', 'juD3RNnvEA', 'pict', 'great', '2023-08-14 10:34:05', '2023-08-14 10:34:05', 1, 0),
+('HRTirSchGzYehTG6', 'tournament 6', 'string', 'juD3RNnvEA', 'pict', 'great', '2023-08-14 10:34:05', '2023-08-14 10:34:05', 1, 0),
+('HRTirSchGzYehTG7', 'tournament 7', 'string', 'juD3RNnvEA', 'pict', 'great', '2023-08-14 10:34:05', '2023-08-14 10:34:05', 0, 0),
+('HRTirSchGzYehTG8', 'tournament 8', 'string', 'juD3RNnvEA', 'pict', 'great', '2023-08-14 10:34:05', '2023-08-14 10:34:05', 1, 1),
 ('HRTirSchGzYehTGx', 'new tournament for league matches testing', 'string', 'juD3RNnvEA', '', '', '2023-08-14 10:34:05', '2023-08-14 10:34:05', 1, 1);
 
 -- --------------------------------------------------------
@@ -316,7 +428,8 @@ CREATE TABLE `tournament_games` (
 --
 
 INSERT INTO `tournament_games` (`id`, `name`, `info`, `tournament_id`, `game_id`, `participation_fees`, `prize_pool`, `max_teams`, `team_size`, `min_girls`, `min_boys`, `open_to`, `total_rounds`, `type`, `num_groups`, `teams_per_group`, `is_active`, `min_age`, `max_age`, `avg_duration`, `start_date`, `end_date`) VALUES
-('HSohQ8E22JU5oeXQ', 'single elimination', 'string', 'HRTirSchGzYehTGx', 1, 0, 0, 8, 1, 0, 1, 1, 3, 1, 0, 0, 1, 17, 27, 30, '2023-08-14 12:52:09', '2023-08-14 22:52:09'),
+('8fGrGAp7tBb6vecd', 'Football tournament', 'new football', 'HRTirSchGzYehTGx', 4, 100, 200, 2, 2, 0, 1, 1, 1, 1, 0, 0, 1, 17, 25, 90, '2023-08-19 12:42:33', '2023-08-19 15:42:33'),
+('HSohQ8E22JU5oeXQ', 'single elimination', 'string', 'HRTirSchGzYehTG8', 1, 0, 0, 8, 1, 0, 1, 1, 3, 1, 0, 0, 1, 17, 27, 30, '2023-08-14 12:52:09', '2023-08-14 22:52:09'),
 ('oPpKTxfoe9hNYwyk', 'for 16 group league matches', 'string', 'HRTirSchGzYehTGx', 1, 0, 0, 16, 1, 0, 1, 1, 4, 2, 4, 4, 1, 15, 27, 30, '2023-08-14 10:35:56', '2023-08-14 20:35:56');
 
 -- --------------------------------------------------------
@@ -345,7 +458,8 @@ INSERT INTO `umpires` (`id`, `user_id`, `game_id`) VALUES
 (7, 'eUzXa5dePv', 'HSohQ8E22JU5oeXQ'),
 (8, '7XhVNNtush', 'HSohQ8E22JU5oeXQ'),
 (9, 'kkYkANjocU', 'HSohQ8E22JU5oeXQ'),
-(10, 'MALNmebA4L', 'HSohQ8E22JU5oeXQ');
+(10, 'MALNmebA4L', 'HSohQ8E22JU5oeXQ'),
+(11, 'juD3RNnvEA', '8fGrGAp7tBb6vecd');
 
 -- --------------------------------------------------------
 
@@ -372,7 +486,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `first_name`, `last_name`, `email_id`, `phone_no`, `password`, `verified`, `gender`, `dob`, `profile_url`, `createdAt`) VALUES
-('4KjvA7P3x5', 'string', 'string', 'user 3', 'user 3', '$2b$12$i0ssBWuoLrTGX72n0Z18le8UWCO6mbhDsV5uF.mxMeLWr1BhEQ.Pm', 0, NULL, NULL, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJJ7NRetidOXGwJVnAJXbKD-aTCpm2iDzT6g&usqp=CAU', '2023-08-14 13:42:17'),
+('4KjvA7P3x5', 'string', 'string', 'user 3', 'user 3', '$2b$12$i0ssBWuoLrTGX72n0Z18le8UWCO6mbhDsV5uF.mxMeLWr1BhEQ.Pm', 1, 1, '2003-03-01', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJJ7NRetidOXGwJVnAJXbKD-aTCpm2iDzT6g&usqp=CAU', '2023-08-14 13:42:17'),
 ('53wN7HhfNR', 'string', 'string', 'user 19', 'user 19', '$2b$12$x1EUD4PAeZ2mY/Hb6y2Tlegh.hL1gM4.cnd0bNzNrZDFnU3nahyFG', 0, NULL, NULL, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJJ7NRetidOXGwJVnAJXbKD-aTCpm2iDzT6g&usqp=CAU', '2023-08-14 13:51:42'),
 ('6zHTiyqVAe', 'string', 'string', 'user6', 'user6', '$2b$12$994avslM5g9wGX1SNGtuGu4weHvGEAO49REA4HT2H9.U5Bds6RoOS', 1, 1, '2000-04-01', 'dummy', '2023-08-11 14:31:26'),
 ('7XhVNNtush', 'string', 'string', 'dummy', 'sfds', '$2b$12$krErQwTCongLaVTQcct9JeGeFmD01/FAhZ7BS10V469z5Uo6HQIP.', 1, 1, '2000-04-01', 'dummy', '2023-08-09 14:04:56'),
@@ -381,7 +495,7 @@ INSERT INTO `users` (`id`, `first_name`, `last_name`, `email_id`, `phone_no`, `p
 ('eUzXa5dePv', 'string', 'string', 'user7', 'user7', '$2b$12$xd.9opJRtrLWs8FQf/JssuAAWvmzPlT2rpoIGWGQozk1Ie3JA2KdG', 1, 1, '2000-04-01', 'dummy', '2023-08-11 14:31:31'),
 ('ewguJpCrb5', 'string', 'string', 'user 2', 'user 2', '$2b$12$JqxMRMo9BusXEj1ohC4Zdevvh0/yIyChz1U5DdXDlXe2VW94GwC6S', 0, NULL, NULL, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJJ7NRetidOXGwJVnAJXbKD-aTCpm2iDzT6g&usqp=CAU', '2023-08-14 13:42:10'),
 ('fh3zyRYt6V', 'string', 'string', 'user 17', 'user 17', '$2b$12$yulFKXk0J1N3CZPvBDCm3.Wg0SnQvjzCiS6.NqcqUuSfSh/JLsyse', 0, NULL, NULL, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJJ7NRetidOXGwJVnAJXbKD-aTCpm2iDzT6g&usqp=CAU', '2023-08-14 13:50:49'),
-('G6ntVT2vEd', 'string', 'string', 'user 1', 'user 1', '$2b$12$SIswd3XmOTbuXfoPA.ONt.GZZj9QNrnlL1yuZnFJ9qZSjA8591CmW', 0, NULL, NULL, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJJ7NRetidOXGwJVnAJXbKD-aTCpm2iDzT6g&usqp=CAU', '2023-08-14 13:42:04'),
+('G6ntVT2vEd', 'string', 'string', 'user 1', 'user 1', '$2b$12$SIswd3XmOTbuXfoPA.ONt.GZZj9QNrnlL1yuZnFJ9qZSjA8591CmW', 1, 1, '2006-08-02', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJJ7NRetidOXGwJVnAJXbKD-aTCpm2iDzT6g&usqp=CAU', '2023-08-14 13:42:04'),
 ('gKdYh6rCS7', 'string', 'string', 'string', 'string', '$2b$12$soQsCIHcxtTWx2i9Y9x85OWLN1F5F7KFcQ3fOndNvbyZpJ4nLl92G', 1, 1, '2000-04-01', 'dummy', '2023-08-09 14:04:01'),
 ('juD3RNnvEA', 'karan', 'm', 'karan', '8080', '$2b$12$b1htDJNOMMeTyllu526YGuEbSTUepkeO.rNr9bDJpfWs8pBtPae8C', 1, 1, '2000-04-01', 'dummy', '2023-08-09 13:53:32'),
 ('Jw4KfPeQr3', 'string', 'string', 'user2', 'user2', '$2b$12$M/KpKCHNRskopvUFzBkSyuCGHvX2dRiJ1zaDxIbo3z13GPlRXplbW', 1, 1, '2000-04-01', 'dummy', '2023-08-11 14:31:00'),
@@ -393,6 +507,28 @@ INSERT INTO `users` (`id`, `first_name`, `last_name`, `email_id`, `phone_no`, `p
 ('TcHKgnQ3H8', 'string', 'string', 'user 18', 'user 18', '$2b$12$054aT8PPS5EJvtTwii9z6ehnodMUeJzrZPTqNKZR6PoHqM4CeFSYO', 0, NULL, NULL, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJJ7NRetidOXGwJVnAJXbKD-aTCpm2iDzT6g&usqp=CAU', '2023-08-14 13:51:24'),
 ('ZbqDPV5jZg', 'string', 'string', 'user 5', 'user 5', '$2b$12$Zk2kDIP9oOW6dWXctWLnZe2cLN53w5VkAaaAZvq.RyWROHS5gY1qi', 0, NULL, NULL, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJJ7NRetidOXGwJVnAJXbKD-aTCpm2iDzT6g&usqp=CAU', '2023-08-14 13:42:31'),
 ('ZeWtsLDECr', 'string', 'string', 'user8', 'user8', '$2b$12$O9GKzKpJSXxZ1TGnMy9ad.xuEKI3qCY.e/Qn4IMbuTELnkSAWEvvy', 1, 1, '2000-04-01', 'dummy', '2023-08-11 14:31:37');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `u_past_participation`
+--
+
+CREATE TABLE `u_past_participation` (
+  `id` int(11) NOT NULL,
+  `user_id` varchar(30) NOT NULL,
+  `tournament_game_id` varchar(30) NOT NULL,
+  `team_id` varchar(30) NOT NULL,
+  `createdAt` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `u_past_participation`
+--
+
+INSERT INTO `u_past_participation` (`id`, `user_id`, `tournament_game_id`, `team_id`, `createdAt`) VALUES
+(1, '4KjvA7P3x5', '8fGrGAp7tBb6vecd', 'iiEYGBfZfFS935Jn', '2023-08-24 12:47:54'),
+(2, '6zHTiyqVAe', '8fGrGAp7tBb6vecd', 'iiEYGBfZfFS935Jn', '2023-08-24 12:49:57');
 
 -- --------------------------------------------------------
 
@@ -447,6 +583,41 @@ ALTER TABLE `fixtures`
   ADD KEY `ground_id` (`ground_id`),
   ADD KEY `umpire_id` (`umpire_id`),
   ADD KEY `ix_FIXTURES_id` (`id`);
+
+--
+-- Indexes for table `football_cards`
+--
+ALTER TABLE `football_cards`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fixture_id` (`fixture_id`),
+  ADD KEY `team_id` (`team_id`),
+  ADD KEY `player_id` (`player_id`);
+
+--
+-- Indexes for table `football_goals`
+--
+ALTER TABLE `football_goals`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `team_id` (`team_id`),
+  ADD KEY `scored_by` (`scored_by`),
+  ADD KEY `assist_by` (`assist_by`),
+  ADD KEY `fixture_id` (`fixture_id`);
+
+--
+-- Indexes for table `football_shootout`
+--
+ALTER TABLE `football_shootout`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fixture_id` (`fixture_id`),
+  ADD KEY `team_id` (`team_id`),
+  ADD KEY `player_id` (`player_id`);
+
+--
+-- Indexes for table `football_time`
+--
+ALTER TABLE `football_time`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fixture_id` (`fixture_id`);
 
 --
 -- Indexes for table `games`
@@ -533,6 +704,15 @@ ALTER TABLE `users`
   ADD KEY `ix_USERS_id` (`id`);
 
 --
+-- Indexes for table `u_past_participation`
+--
+ALTER TABLE `u_past_participation`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `tournament_game_id` (`tournament_game_id`),
+  ADD KEY `team_id` (`team_id`);
+
+--
 -- Indexes for table `vtb`
 --
 ALTER TABLE `vtb`
@@ -555,19 +735,43 @@ ALTER TABLE `documents`
 -- AUTO_INCREMENT for table `fixtures`
 --
 ALTER TABLE `fixtures`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
+
+--
+-- AUTO_INCREMENT for table `football_cards`
+--
+ALTER TABLE `football_cards`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `football_goals`
+--
+ALTER TABLE `football_goals`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `football_shootout`
+--
+ALTER TABLE `football_shootout`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `football_time`
+--
+ALTER TABLE `football_time`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `games`
 --
 ALTER TABLE `games`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `grounds`
 --
 ALTER TABLE `grounds`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `organizers`
@@ -585,13 +789,19 @@ ALTER TABLE `players`
 -- AUTO_INCREMENT for table `team_players`
 --
 ALTER TABLE `team_players`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `umpires`
 --
 ALTER TABLE `umpires`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `u_past_participation`
+--
+ALTER TABLE `u_past_participation`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `vtb`
@@ -621,6 +831,37 @@ ALTER TABLE `fixtures`
   ADD CONSTRAINT `fixtures_ibfk_6` FOREIGN KEY (`winner_id`) REFERENCES `teams` (`id`),
   ADD CONSTRAINT `fixtures_ibfk_7` FOREIGN KEY (`ground_id`) REFERENCES `grounds` (`id`),
   ADD CONSTRAINT `fixtures_ibfk_8` FOREIGN KEY (`umpire_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `football_cards`
+--
+ALTER TABLE `football_cards`
+  ADD CONSTRAINT `football_cards_ibfk_1` FOREIGN KEY (`fixture_id`) REFERENCES `fixtures` (`id`),
+  ADD CONSTRAINT `football_cards_ibfk_2` FOREIGN KEY (`team_id`) REFERENCES `teams` (`id`),
+  ADD CONSTRAINT `football_cards_ibfk_3` FOREIGN KEY (`player_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `football_goals`
+--
+ALTER TABLE `football_goals`
+  ADD CONSTRAINT `football_goals_ibfk_1` FOREIGN KEY (`team_id`) REFERENCES `teams` (`id`),
+  ADD CONSTRAINT `football_goals_ibfk_2` FOREIGN KEY (`scored_by`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `football_goals_ibfk_3` FOREIGN KEY (`assist_by`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `football_goals_ibfk_4` FOREIGN KEY (`fixture_id`) REFERENCES `fixtures` (`id`);
+
+--
+-- Constraints for table `football_shootout`
+--
+ALTER TABLE `football_shootout`
+  ADD CONSTRAINT `football_shootout_ibfk_1` FOREIGN KEY (`fixture_id`) REFERENCES `fixtures` (`id`),
+  ADD CONSTRAINT `football_shootout_ibfk_2` FOREIGN KEY (`team_id`) REFERENCES `teams` (`id`),
+  ADD CONSTRAINT `football_shootout_ibfk_3` FOREIGN KEY (`player_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `football_time`
+--
+ALTER TABLE `football_time`
+  ADD CONSTRAINT `football_time_ibfk_1` FOREIGN KEY (`fixture_id`) REFERENCES `fixtures` (`id`);
 
 --
 -- Constraints for table `grounds`
@@ -674,6 +915,14 @@ ALTER TABLE `tournament_games`
 ALTER TABLE `umpires`
   ADD CONSTRAINT `umpires_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   ADD CONSTRAINT `umpires_ibfk_2` FOREIGN KEY (`game_id`) REFERENCES `tournament_games` (`id`);
+
+--
+-- Constraints for table `u_past_participation`
+--
+ALTER TABLE `u_past_participation`
+  ADD CONSTRAINT `u_past_participation_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `u_past_participation_ibfk_2` FOREIGN KEY (`tournament_game_id`) REFERENCES `tournament_games` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `u_past_participation_ibfk_3` FOREIGN KEY (`team_id`) REFERENCES `teams` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `vtb`
