@@ -40,7 +40,7 @@ import { useGetTournamentGamesQuery } from "../../../redux/api/organizer/tournam
 import moment from 'moment'
 
 const Step3Update = () => {
-  const params = useParams()
+  const params = useParams();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
 

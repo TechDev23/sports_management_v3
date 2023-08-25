@@ -58,6 +58,7 @@ const DateSelector = () => {
 };
 
 const AddGame = ({ key, gameIndex }) => {
+  
   console.log(gameIndex);
   const { id: tourId } = useAppSelector(
     (state) => state.tournament.tour_details
