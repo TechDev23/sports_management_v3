@@ -10,25 +10,33 @@ const token = cookie.get("jwt_auth_token");
 
 export const tournamentApi = createApi({
   reducerPath: "tournamentApi",
-  baseQuery: fetchBaseQuery({ baseUrl: `${BASE_URL}/` }),
+  baseQuery: fetchBaseQuery({ baseUrl: `${BASE_URL}/tournaments/` }),
   tagTypes: ["Posts"],
   endpoints: (build) => ({
 
     getAllTrnmts: build.query({
       query: ()=>({
-        url: `tournaments/?page=0&limit=5&token=${token}`
+        url: `?page=0&limit=5&token=${token}`
       })
     }),
 
     getTournamentGames: build.query({
       query(tournament_id) {
         return {
-          url: `tournaments/${tournament_id}/games?token=${token}`,
+          url: `${tournament_id}/games?token=${token}`,
         };
       },
     }),
 
+    getTournmanetGameDetails: build.query({
+      query(data){
+        return {
+          url: `${data.tournament_id}/games/${data.tour_game_id}/details?token=${token}`
+        }
+      }
+    })
+
   }),
 });
 
-export const { useGetTournamentGamesQuery, useGetAllTrnmtsQuery } = tournamentApi;
+export const { useGetTournamentGamesQuery, useGetAllTrnmtsQuery, useGetTournmanetGameDetailsQuery } = tournamentApi;

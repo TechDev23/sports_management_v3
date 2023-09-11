@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 25, 2023 at 11:47 AM
+-- Generation Time: Aug 25, 2023 at 10:56 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 7.4.33
 
@@ -242,8 +242,8 @@ CREATE TABLE `grounds` (
 --
 
 INSERT INTO `grounds` (`id`, `name`, `game_id`, `location`) VALUES
-(1, 'ground 1', 'oPpKTxfoe9hNYwyk', 'string'),
-(2, 'ground 2', 'oPpKTxfoe9hNYwyk', 'string'),
+(1, 'ground 1', 'NvTGdvHARZAFnH3A', 'string'),
+(2, 'ground 2', 'NvTGdvHARZAFnH3A', 'string'),
 (3, 'High street 1', 'oPpKTxfoe9hNYwyk', 'baner'),
 (4, 'High street 2', 'oPpKTxfoe9hNYwyk', 'baner'),
 (5, 'High street 3', 'oPpKTxfoe9hNYwyk', 'baner'),
@@ -449,8 +449,8 @@ CREATE TABLE `umpires` (
 --
 
 INSERT INTO `umpires` (`id`, `user_id`, `game_id`) VALUES
-(1, 'gKdYh6rCS7', 'oPpKTxfoe9hNYwyk'),
-(2, '7XhVNNtush', 'oPpKTxfoe9hNYwyk'),
+(1, 'gKdYh6rCS7', 'NvTGdvHARZAFnH3A'),
+(2, '7XhVNNtush', 'NvTGdvHARZAFnH3A'),
 (3, 'eUzXa5dePv', 'oPpKTxfoe9hNYwyk'),
 (4, '7XhVNNtush', 'oPpKTxfoe9hNYwyk'),
 (5, 'kkYkANjocU', 'oPpKTxfoe9hNYwyk'),

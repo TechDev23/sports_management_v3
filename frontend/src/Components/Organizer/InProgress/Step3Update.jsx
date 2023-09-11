@@ -36,7 +36,7 @@ import { useGetGamesQuery } from "../../../redux/api/General/generalApi";
 import { toast } from "react-toastify";
 
 import { useNavigate, useParams } from "react-router-dom";
-import { useGetTournamentGamesQuery } from "../../../redux/api/organizer/tournamentApi";
+import { useGetTournamentGamesQuery } from "../../../redux/api/tournament/tournamentApi";
 import moment from 'moment'
 
 const Step3Update = () => {
@@ -55,11 +55,7 @@ const Step3Update = () => {
     { isSuccess, isLoading: isAddingGame, isError: errorWhileAddingGame },
   ] = useAddGameToTnmtMutation();
 
-  // entire ui can be divided into
-  // game detail
-  // participants details (ex: min age, min boys ,etc)
-  // prize
-  // schedule
+  
   const initialValues = {
     name: "game1",
     tournament_id: tourId,
@@ -188,37 +184,21 @@ const Step3Update = () => {
 
   console.log(values);
 
-  // add game constants end here
-
-  const games = [
-    {
-      title: "Game Name",
-      desc: "This is the big description of the game. I think the first game will be between chennai super kings and royal challengers bangalore",
-      startDate: "19-08-2023",
-      endDate: "30-08-2023",
-    },
-    {
-      title: "Game Name",
-      desc: "This is the big description of the game. I think the first game will be between chennai super kings and royal challengers bangalore",
-      startDate: "19-08-2023",
-      endDate: "30-08-2023",
-    },
-    {
-      title: "Game Name",
-      desc: "This is the big description of the game. I think the first game will be between chennai super kings and royal challengers bangalore",
-      startDate: "19-08-2023",
-      endDate: "30-08-2023",
-    },
-    {
-      title: "Game Name",
-      desc: "This is the big description of the game. I think the first game will be between chennai super kings and royal challengers bangalore",
-      startDate: "19-08-2023",
-      endDate: "30-08-2023",
-    },
-  ];
-
   const navigate = useNavigate();
   const { data: tourGames } = useGetTournamentGamesQuery(params.tourId)
+  console.log("Tournament games all", tourGames)
+  if(tourGames && tourGames?.data.length === 0){
+    return (
+      <div className="w-full h-full gap-4">
+      <div className="w-full">
+        <CurrentStepper step={2} />
+      </div>
+      <div className="w-full h-full flex justify-center items-center">
+        <p className="text-4xl font-bold font-poppins text-blue-gray-600">No games yet</p>
+      </div>
+      </div>
+    )
+  }
   return (
     <div className="w-full h-full gap-4">
       <div className="w-full">
@@ -226,7 +206,7 @@ const Step3Update = () => {
       </div>
       <div className="gap-4  mt-4 flex flex-col">
         <p className="text-2xl lg:text-2xl font-bold text-blue-gray-700">
-          Add games
+          All games
         </p>
         <div className="w-full h-full grid grid-auto-fit-lg gap-5">
           {tourGames && tourGames?.data.map((game, index) => (
