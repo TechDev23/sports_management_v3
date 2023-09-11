@@ -6,7 +6,7 @@ const BASE_URL = "http://127.0.0.1:8000";
 
 const cookie = new Cookies();
 const token = cookie.get("jwt_auth_token");
-console.log(token)
+// console.log(token)
 // const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTI3Njg5OTQsInN1YiI6Imp1RDNSTm52RUEifQ.2ahL8jbd2HccsNxIdbUzEznllahT46kZesvfl8wbbcA"
 
 export const orgApi = createApi({
@@ -14,6 +14,22 @@ export const orgApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: `${BASE_URL}/` }),
   tagTypes: ["org"],
   endpoints: (build) => ({
+
+    getStats: build.query({
+      query(){
+       return {
+          url: `organizer/stats?token=${token}`
+        }
+      }
+    }),
+    
+    getOrgTrnmt: build.query({
+      query(){
+        return {
+          url: ``,
+        }
+      }
+    }),
     createTournament: build.mutation({
       query(body) {
         return {

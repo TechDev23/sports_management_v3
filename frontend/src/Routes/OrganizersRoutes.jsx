@@ -125,7 +125,8 @@ export const OrganizerRoutes = {
               children: [
                 {
                   path: "",
-                  element: <LeagueFixtures/> ,
+                  // element: <LeagueFixtures/> ,
+                  element: <FixtureList/> ,
                 },
                 {
                   path: "fixture/:fixtureId",

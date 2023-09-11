@@ -73,7 +73,7 @@ export default function ComplexNavbar() {
     dob: user?.dob,
   };
   const [updateUserDetails, { isLoading, isSuccess }] =
-  useUpdateUserDetailsMutation();
+    useUpdateUserDetailsMutation();
 
   const [isNameEditing, setIsNameEditing] = useState(false);
   const [editedName, setEditedName] = useState(userInformation.name);
@@ -93,14 +93,14 @@ export default function ComplexNavbar() {
     userInformation.emergency_contact
   );
 
-  const [gender, setGender] = useState('');
+  const [gender, setGender] = useState("");
 
   const [isDOBEditing, setIsDOBEditing] = useState(false);
   const [editedDOB, setEditedDOB] = useState(new Date(userInformation.dob));
 
-  const handleSaveName = async() => {
-    const handleName = await updateUserDetails({"name":editedName}).unwrap()
-    console.log(handleName)
+  const handleSaveName = async () => {
+    const handleName = await updateUserDetails({ name: editedName }).unwrap();
+    console.log(handleName);
     setIsNameEditing(false);
     userInformation.name = editedName;
   };
@@ -130,9 +130,9 @@ export default function ComplexNavbar() {
 
   const handleSaveMobile = () => {
     setIsMobileEditing(false);
-    console.log(editedMobile)
-    const data = { phone_no : editedMobile}
-    saveDetails(data)
+    console.log(editedMobile);
+    const data = { phone_no: editedMobile };
+    saveDetails(data);
     userInformation.mobile_number = editedMobile;
   };
 
@@ -173,7 +173,6 @@ export default function ComplexNavbar() {
     setEditedGender("");
   };
 
-
   const handleSaveDOB = () => {
     setIsDOBEditing(false);
     // userInformation.dob = editedDOB.toISOString().split("T")[0];
@@ -188,7 +187,6 @@ export default function ComplexNavbar() {
     setIsDOBEditing(true);
   };
 
-  
   const saveDetails = async (dataToUpdate) => {
     try {
       console.log("save details called ");
@@ -205,9 +203,7 @@ export default function ComplexNavbar() {
 
   return (
     <div className="w-full h-full">
-      <div className="flex flex-col md:flex-row w-full h-full">
-
-
+      <div className="flex flex-col lg:flex-row w-full h-full">
         <div className="h-screen lg:1/4  xl:w-1/5 p-4 border-2 ">
           <div className="mb-2 p-4">
             <Typography variant="h5" color="blue-gray" className="text-3xl">
@@ -257,7 +253,6 @@ export default function ComplexNavbar() {
           </List>
         </div>
 
-
         {user && (
           <div className="h-full flex flex-col  w-full lg:w-3/4 xl:w-4/5 border  p-8 gap-4">
             <div className="flex flex-row gap-4 ">
@@ -276,181 +271,241 @@ export default function ComplexNavbar() {
               </div>
             </div>
 
+            <div className="">
               <div className="">
                 <div className="">
-                  <div className="">
-                    <Typography
-                      variant="h6"
-                      color="blue-gray"
-                      className="sm:text-left"
-                    >
-                      Full Name
-                    </Typography>
-                    <div className="flex sm:flex-row items-center gap-2">
-                      {isNameEditing ? (
-                          <div className="flex flex-col md:flex-row items-center sm:items-start gap-4">
-                            <input
-                              type="text"
-                              value={editedName}
-                              onChange={(e) => setEditedName(e.target.value)}
-                              className="border rounded px-2 py-1"
-                            />
-                            <div className="flex sm:flex-row items-center  gap-2">
-                                <Button
-                                  color="blue"
-                                  size="sm"
-                                  onClick={handleSaveName}
-                                  className="text-white"
-                                >
-                                  Save
-                                </Button>
-                              <div className="flex sm:flex-row ">
-                                  <Button
-                                    variant="outlined"
-                                    size="sm"
-                                    onClick={handleCancelName}
-                                    className="text-gray-900"
-                                  >
-                                    Cancel
-                                  </Button>
-                              </div>
-                            </div>
-                          </div>
-                      ) : (
-                        <div className="flex flex-row gap-4">
-                          <Typography variant="body" color="gray">
-                            {userInformation?.name}
-                          </Typography>
-
-
-                          <button
-                            onClick={handleEditName}
-                            className="text-blue-500 "
+                  <Typography
+                    variant="h6"
+                    color="blue-gray"
+                    className="sm:text-left"
+                  >
+                    Full Name
+                  </Typography>
+                  <div className="flex sm:flex-row items-center gap-2">
+                    {isNameEditing ? (
+                      <div className="flex flex-col md:flex-row items-center sm:items-start gap-4">
+                        <input
+                          type="text"
+                          value={editedName}
+                          onChange={(e) => setEditedName(e.target.value)}
+                          className="border rounded px-2 py-1"
+                        />
+                        <div className="flex sm:flex-row items-center  gap-2">
+                          <Button
+                            color="blue"
+                            size="sm"
+                            onClick={handleSaveName}
+                            className="text-white"
                           >
-                            Edit
-                          </button>
-                        </div>
-                      )}
-                    </div>
-                    <hr className="my-2 hr-light"  />
-                  </div>
-                  <div className="mb-8">
-                    <Typography
-                      variant="h6"
-                      color="blue-gray"
-                      className="sm:text-left"
-                    >
-                      Email
-                    </Typography>
-                    <div className="flex sm:flex-row items-center gap-2">
-                      {isEmailEditing ? (
-                        <div>
-                          <div className="flex flex-col md:flex-row items-center sm:items-start gap-4">
-                            <input
-                              type="text"
-                              value={editedEmail}
-                              onChange={(e) => setEditedEmail(e.target.value)}
-                              className="border rounded px-2 py-1"
-                            />
-                            <div className="flex sm:flex-row gap-2">
-                              <Button
-                                size="sm"
-                                color="blue"
-                                onClick={handleSaveEmail}
-                                className="text-white"
-                              >
-                                Save
-                              </Button>
-                                <Button
-                                  size="sm"
-                                  variant="outlined"
-                                  onClick={handleCancelEmail}
-                                  className="text-gray-900"
-                                >
-                                  Cancel
-                              </Button>
-                            </div>
+                            Save
+                          </Button>
+                          <div className="flex sm:flex-row ">
+                            <Button
+                              variant="outlined"
+                              size="sm"
+                              onClick={handleCancelName}
+                              className="text-gray-900"
+                            >
+                              Cancel
+                            </Button>
                           </div>
                         </div>
-                      ) : (
-                        <div className="flex flex-row gap-4">
-                          <Typography variant="body" color="gray">
-                            {userInformation.email_id}
-                          </Typography>
+                      </div>
+                    ) : (
+                      <div className="flex flex-row gap-4">
+                        <Typography variant="body" color="gray">
+                          {userInformation?.name}
+                        </Typography>
 
-                          <button
-                            onClick={handleEditEmail}
-                            className="text-blue-500 hover:text-blue-700"
+                        <button
+                          onClick={handleEditName}
+                          className="text-blue-500 "
+                        >
+                          Edit
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                  <hr className="my-2 hr-light" />
+                </div>
+                <div className="mb-8">
+                  <Typography
+                    variant="h6"
+                    color="blue-gray"
+                    className="sm:text-left"
+                  >
+                    Email
+                  </Typography>
+                  <div className="flex sm:flex-row items-center gap-2">
+                    {isEmailEditing ? (
+                      <div>
+                        <div className="flex flex-col md:flex-row items-center sm:items-start gap-4">
+                          <input
+                            type="text"
+                            value={editedEmail}
+                            onChange={(e) => setEditedEmail(e.target.value)}
+                            className="border rounded px-2 py-1"
+                          />
+                          <div className="flex sm:flex-row gap-2">
+                            <Button
+                              size="sm"
+                              color="blue"
+                              onClick={handleSaveEmail}
+                              className="text-white"
+                            >
+                              Save
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="outlined"
+                              onClick={handleCancelEmail}
+                              className="text-gray-900"
+                            >
+                              Cancel
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="flex flex-row gap-4">
+                        <Typography variant="body" color="gray">
+                          {userInformation.email_id}
+                        </Typography>
+
+                        <button
+                          onClick={handleEditEmail}
+                          className="text-blue-500 hover:text-blue-700"
+                        >
+                          Edit
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                  <hr className="my-2 hr-light" />
+                </div>
+                <div className="mb-8">
+                  <Typography
+                    variant="h6"
+                    color="blue-gray"
+                    className="sm:text-left"
+                  >
+                    Mobile
+                  </Typography>
+                  <div className="flex sm:flex-row items-center gap-2">
+                    {isMobileEditing ? (
+                      <div className="flex flex-row items-center sm:items-start gap-4">
+                        <input
+                          type="number"
+                          value={editedMobile}
+                          onChange={(e) => setEditedMobile(e.target.value)}
+                          className="border rounded px-2 py-1"
+                        />
+                        <div className="flex sm:flex-row gap-2">
+                          <Button
+                            size="sm"
+                            color="blue"
+                            onClick={handleSaveMobile}
+                            className="text-white"
                           >
-                            Edit
-                          </button>
-                        </div>
-                      )}
-                    </div>
-                    <hr className="my-2 hr-light" />
-                  </div>
-                  <div className="mb-8">
-                    <Typography
-                      variant="h6"
-                      color="blue-gray"
-                      className="sm:text-left"
-                    >
-                      Mobile
-                    </Typography>
-                    <div className="flex sm:flex-row items-center gap-2">
-                      {isMobileEditing ? (
-                          <div className="flex flex-row items-center sm:items-start gap-4">
-                            <input
-                              type="number"
-                              value={editedMobile}
-                              onChange={(e) => setEditedMobile(e.target.value)}
-                              className="border rounded px-2 py-1"
-                            />
-                            <div className="flex sm:flex-row gap-2">
-                                <Button
-                                  size="sm"
-                                  color="blue"
-                                  onClick={handleSaveMobile}
-                                  className="text-white"
-                                >
-                                  Save
-                                </Button>
-                              <div className="flex sm:flex-row gap-2">
-                                  <Button
-                                    size="sm"
-                                    variant="outlined"
-                                    onClick={handleCancelMobile}
-                                    className="text-gray-900"
-                                  >
-                                    Cancel
-                                  </Button>
-                              </div>
-                            </div>
+                            Save
+                          </Button>
+                          <div className="flex sm:flex-row gap-2">
+                            <Button
+                              size="sm"
+                              variant="outlined"
+                              onClick={handleCancelMobile}
+                              className="text-gray-900"
+                            >
+                              Cancel
+                            </Button>
                           </div>
-                      ) : (
-                        <div>
-                          <Typography variant="body" color="gray">
-                            {userInformation.mobile_number}
-                          </Typography>
-                          <div className="flex-grow"></div>
-
                         </div>
-                      )}
-                    </div>
-                  </div>
+                      </div>
+                    ) : (
+                      <div>
+                        <Typography variant="body" color="gray">
+                          {userInformation.mobile_number}
+                        </Typography>
+                        <div className="flex-grow"></div>
 
-                  <div className="mb-8">
-                    <Typography
-                      variant="h6"
-                      color="blue-gray"
-                      className="sm:text-left"
-                    >
-                      Gender
-                    </Typography>
-                    <div className="flex sm:flex-row items-center gap-2">
-                      {isGenderEditing ? (
-                          <div className="flex  items-center sm:items-start gap-4">
-                          <MSelect
+                        <button
+                          onClick={handleEditMobile}
+                          className="text-blue-500 hover:text-blue-700"
+                        >
+                          Edit
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </div>
+                <div className="mb-8">
+                  <Typography
+                    variant="h6"
+                    color="blue-gray"
+                    className="sm:text-left"
+                  >
+                    Emergency contact
+                  </Typography>
+                  <div className="flex sm:flex-row items-center gap-2">
+                    {isEmergencyEditing ? (
+                      <div className="flex  items-center sm:items-start gap-4">
+                        <input
+                          type="number"
+                          value={editedEmergency}
+                          onChange={(e) => setEditedEmergency(e.target.value)}
+                          className="border rounded px-2 py-1"
+                        />
+                        <div className="flex sm:flex-row gap-2">
+                          <Button
+                            size="sm"
+                            color="blue"
+                            onClick={handleSaveEmergency}
+                            className="text-white"
+                          >
+                            Save
+                          </Button>
+                          <div className="flex sm:flex-row gap-2">
+                            <Button
+                              size="sm"
+                              variant="outlined"
+                              onClick={handleCancelEmergency}
+                              className="text-gray-900"
+                            >
+                              Cancel
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="flex justify-start gap-4">
+                        <Typography variant="body" color="gray">
+                          {userInformation.emergency_contact}
+                        </Typography>
+                        <div className="flex-grow"></div>
+
+                        <button
+                          onClick={handleEditEmergency}
+                          className="text-blue-500 hover:text-blue-700"
+                        >
+                          Edit
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                <div className="mb-8">
+                  <Typography
+                    variant="h6"
+                    color="blue-gray"
+                    className="sm:text-left"
+                  >
+                    Gender
+                  </Typography>
+                  <div className="flex sm:flex-row items-center gap-2">
+                    {isGenderEditing ? (
+                      <div className="flex  items-center sm:items-start gap-4">
+                        <MSelect
                           onChange={() => {}}
                           color="orange"
                           label="Select Gender"
@@ -465,136 +520,134 @@ export default function ComplexNavbar() {
                             Prefer not to say
                           </Option>
                         </MSelect>
-                            <div className="flex sm:flex-row gap-2">
-                                <Button
-                                  size="sm"
-                                  color="blue"
-                                  onClick={handlleSaveGendder}
-                                  className="text-white"
-                                >
-                                  Save
-                                </Button>
-                              <div className="flex sm:flex-row gap-2">
-                                  <Button
-                                    size="sm"
-                                    variant="outlined"
-                                    onClick={handleCancelGender}
-                                    className="text-gray-900"
-                                  >
-                                    Cancel
-                                  </Button>
-                              </div>
-                            </div>
-                          </div>
-                      ) : (
-                        <div className="flex justify-start gap-4">
-                          <Typography variant="body" color="gray">
-                            {userInformation.emergency_contact}
-                          </Typography>
-                          <div className="flex-grow"></div>
-
-                          <button
-                            onClick={handleEditGender}
-                            className="text-blue-500 hover:text-blue-700"
+                        <div className="flex sm:flex-row gap-2">
+                          <Button
+                            size="sm"
+                            color="blue"
+                            onClick={handlleSaveGendder}
+                            className="text-white"
                           >
-                            Edit
-                          </button>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-
-                  
-
-                  <div className="mb-8">
-                    <Typography
-                      variant="h6"
-                      color="blue-gray"
-                      className="sm:text-left"
-                    >
-                      Date of Birth
-                    </Typography>
-                    <div className="flex sm:flex-row items-center gap-2">
-                      {isDOBEditing ? (
-                          <div className="flex  items-center sm:items-start gap-4">
-                          <input 
-                    type="date"
-                    selected={dob}
-                    onChange={(date)=> setDob(date)}
-                    id="birthday"
-                    name="birthday" 
-                    className=" px-4 py-2 z-50 rounded-lg border focus:outline-none  focus:border-orange-500 focus:ring-2 focus:ring-orange-200 text-xs md:text-normal"
-                />
-                            <div className="flex sm:flex-row gap-2">
-                                <Button
-                                  onClick={handleSaveDOB}
-                                  className="text-white"
-                                >
-                                  Save
-                                </Button>
-                                  <Button
-                                    variant="outlined"
-                                    onClick={handleCancelDOB}
-                                    className="text-gray-900"
-                                  >
-                                    Cancel
-                                  </Button>
-                            </div>
+                            Save
+                          </Button>
+                          <div className="flex sm:flex-row gap-2">
+                            <Button
+                              size="sm"
+                              variant="outlined"
+                              onClick={handleCancelGender}
+                              className="text-gray-900"
+                            >
+                              Cancel
+                            </Button>
                           </div>
-                      ) : (
-                        <div className="flex justify-start gap-4">
-                          <Typography variant="body" color="gray">
-                            {/** editedDOB.toDateString() */}
-                            {"23-08-2023"}
-                          </Typography>
-                          <div className="flex-grow"></div>
-
-                          <button
-                            onClick={handleEditDOB}
-                            className="text-blue-500 hover:text-blue-700"
-                          >
-                            Edit
-                          </button>
                         </div>
-                      )}
-                    </div>
+                      </div>
+                    ) : (
+                      <div className="flex justify-start gap-4">
+                        <Typography variant="body" color="gray">
+                          {userInformation.emergency_contact}
+                        </Typography>
+                        <div className="flex-grow"></div>
 
-
-                  </div>
-                  <div className="mb-8">
-                    <Typography
-                      variant="h6"
-                      color="blue-gray"
-                      className="sm:text-left"
-                    >
-                      Created at
-                    </Typography>
-                    <Typography
-                      variant="body"
-                      color="gray"
-                      className="sm:text-left"
-                    >
-                      {userInformation.createdAt}
-                    </Typography>
-                  </div>
-
-                  {/* Submit button  */}
-                  <div className="flex justify-start items-center gap-6">
-                    <Button
-                      color="amber"
-                      className="text-white"
-                      onClick={saveDetails}
-                    >
-                      Update details
-                    </Button>
-                    <Link to={"/user/upload"}>
-                      <p className="hover:text-orange-500"> Upload docs</p>
-                    </Link>
+                        <button
+                          onClick={handleEditGender}
+                          className="text-blue-500 hover:text-blue-700"
+                        >
+                          Edit
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
+
+                <div className="mb-8">
+                  <Typography
+                    variant="h6"
+                    color="blue-gray"
+                    className="sm:text-left"
+                  >
+                    Date of Birth
+                  </Typography>
+                  <div className="flex sm:flex-row items-center gap-2">
+                    {isDOBEditing ? (
+                      <div className="flex  items-center sm:items-start gap-4">
+                        <DatePicker
+                          selected={birthDate}
+                          onChange={(date) => {
+                            setBirthDate(date);
+                          }}
+                          className="w-64 sm:w-56 md:w-60 lg:w-48 xl:w-60 border border-gray-500 p-4 py-2 rounded-lg focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200  text-sm md:text-normal"
+                          placeholderText="Enter birth date"
+                          selectsStart
+                          name="Birth Date"
+                          dateFormat="yyyy-MM-dd"
+                        />
+                        <div className="flex sm:flex-row gap-2">
+                          <Button
+                            onClick={handleSaveDOB}
+                            className="text-white"
+                          >
+                            Save
+                          </Button>
+                          <div className="flex sm:flex-row gap-2">
+                            <Button
+                              onClick={handleCancelDOB}
+                              className="text-gray-900"
+                            >
+                              Cancel
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="flex justify-start gap-4">
+                        <Typography variant="body" color="gray">
+                          {/** editedDOB.toDateString() */}
+                          {"23-08-2023"}
+                        </Typography>
+                        <div className="flex-grow"></div>
+
+                        <button
+                          onClick={handleEditDOB}
+                          className="text-blue-500 hover:text-blue-700"
+                        >
+                          Edit
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </div>
+                <div className="mb-8">
+                  <Typography
+                    variant="h6"
+                    color="blue-gray"
+                    className="sm:text-left"
+                  >
+                    Created at
+                  </Typography>
+                  <Typography
+                    variant="body"
+                    color="gray"
+                    className="sm:text-left"
+                  >
+                    {userInformation.createdAt}
+                  </Typography>
+                </div>
+
+                {/* Submit button  */}
+                <div className="flex justify-start items-center gap-6">
+                  <Button
+                    color="amber"
+                    className="text-white"
+                    onClick={saveDetails}
+                  >
+                    Update details
+                  </Button>
+                  <Link to={"/user/upload"}>
+                    <p className="hover:text-orange-500"> Upload docs</p>
+                  </Link>
+                </div>
               </div>
-
-
+            </div>
           </div>
         )}
       </div>
