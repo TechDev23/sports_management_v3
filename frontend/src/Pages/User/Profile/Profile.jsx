@@ -53,6 +53,15 @@ export default function ComplexNavbar() {
     "December",
   ];
 
+
+
+  // date of birth
+
+  const [dob, setDob] = useState(new Date());
+
+
+  // date of birth
+
   const userInformation = {
     mobile_number: user?.phone_no,
     name: user?.first_name + " " + user?.last_name,
@@ -196,7 +205,7 @@ export default function ComplexNavbar() {
 
   return (
     <div className="w-full h-full">
-      <div className="flex flex-col lg:flex-row w-full h-full">
+      <div className="flex flex-col md:flex-row w-full h-full">
 
 
         <div className="h-screen lg:1/4  xl:w-1/5 p-4 border-2 ">
@@ -260,9 +269,9 @@ export default function ComplexNavbar() {
                 className=" border"
               />
               <div className="flex flex-col justify-center items-center  ">
-                <div className="text-blue-400 font-normal  flex">
-                  <p className="">G-Sport ID: </p>
-                  <p className="">{user?.id}</p>
+                <div className=" font-normal  flex">
+                  <p className="">{"G-Sport ID : "}</p>
+                  <p className="text-blue-400">{user?.id}</p>
                 </div>
               </div>
             </div>
@@ -425,69 +434,6 @@ export default function ComplexNavbar() {
                           </Typography>
                           <div className="flex-grow"></div>
 
-                          <button
-                            onClick={handleEditMobile}
-                            className="text-blue-500 hover:text-blue-700"
-                          >
-                            Edit
-                          </button>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  <div className="mb-8">
-                    <Typography
-                      variant="h6"
-                      color="blue-gray"
-                      className="sm:text-left"
-                    >
-                      Emergency contact
-                    </Typography>
-                    <div className="flex sm:flex-row items-center gap-2">
-                      {isEmergencyEditing ? (
-                          <div className="flex  items-center sm:items-start gap-4">
-                            <input
-                              type="number"
-                              value={editedEmergency}
-                              onChange={(e) =>
-                                setEditedEmergency(e.target.value)
-                              }
-                              className="border rounded px-2 py-1"
-                            />
-                            <div className="flex sm:flex-row gap-2">
-                                <Button
-                                  size="sm"
-                                  color="blue"
-                                  onClick={handleSaveEmergency}
-                                  className="text-white"
-                                >
-                                  Save
-                                </Button>
-                              <div className="flex sm:flex-row gap-2">
-                                  <Button
-                                    size="sm"
-                                    variant="outlined"
-                                    onClick={handleCancelEmergency}
-                                    className="text-gray-900"
-                                  >
-                                    Cancel
-                                  </Button>
-                              </div>
-                            </div>
-                          </div>
-                      ) : (
-                        <div className="flex justify-start gap-4">
-                          <Typography variant="body" color="gray">
-                            {userInformation.emergency_contact}
-                          </Typography>
-                          <div className="flex-grow"></div>
-
-                          <button
-                            onClick={handleEditEmergency}
-                            className="text-blue-500 hover:text-blue-700"
-                          >
-                            Edit
-                          </button>
                         </div>
                       )}
                     </div>
@@ -571,57 +517,14 @@ export default function ComplexNavbar() {
                     <div className="flex sm:flex-row items-center gap-2">
                       {isDOBEditing ? (
                           <div className="flex  items-center sm:items-start gap-4">
-                          <DatePicker
-                          selected={"selected dob"}
-                          renderCustomHeader={({
-                            date,
-                            changeYear,
-                            changeMonth,
-                            decreaseMonth,
-                            increaseMonth,
-                            prevMonthButtonDisabled,
-                            nextMonthButtonDisabled,
-                          }) => (
-                            <div
-                              style={{
-                                margin: 10,
-                                display: "flex",
-                                justifyContent: "center",
-                              }}
-                            >
-                              <button onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
-                                {"<"}
-                              </button>
-                              <select
-                                value={getYear(date)}
-                                onChange={({ target: { value } }) => changeYear(value)}
-                              >
-                                {years.map((option) => (
-                                  <option key={option} value={option}>
-                                    {option}
-                                  </option>
-                                ))}
-                              </select>
-                    
-                              <select
-                                value={months[getMonth(date)]}
-                                onChange={({ target: { value } }) =>
-                                  changeMonth(months.indexOf(value))
-                                }
-                              >
-                                {months.map((option) => (
-                                  <option key={option} value={option}>
-                                    {option}
-                                  </option>
-                                ))}
-                              </select>
-                    
-                              <button onClick={increaseMonth} disabled={nextMonthButtonDisabled}>
-                                {">"}
-                              </button>
-                            </div>
-                          )}
-                        />
+                          <input 
+                    type="date"
+                    selected={dob}
+                    onChange={(date)=> setDob(date)}
+                    id="birthday"
+                    name="birthday" 
+                    className=" px-4 py-2 z-50 rounded-lg border focus:outline-none  focus:border-orange-500 focus:ring-2 focus:ring-orange-200 text-xs md:text-normal"
+                />
                             <div className="flex sm:flex-row gap-2">
                                 <Button
                                   onClick={handleSaveDOB}
@@ -629,14 +532,13 @@ export default function ComplexNavbar() {
                                 >
                                   Save
                                 </Button>
-                              <div className="flex sm:flex-row gap-2">
                                   <Button
+                                    variant="outlined"
                                     onClick={handleCancelDOB}
                                     className="text-gray-900"
                                   >
                                     Cancel
                                   </Button>
-                              </div>
                             </div>
                           </div>
                       ) : (

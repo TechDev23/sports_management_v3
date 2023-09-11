@@ -87,6 +87,7 @@ function SidebarItems (){
             </div>
         ))}
       </Card>
+
   )
 }
 

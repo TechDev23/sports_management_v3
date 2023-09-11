@@ -102,7 +102,7 @@ function UpdateDialog() {
       error: errGameFetch,
     } = useGetGamesQuery({ skip: true });
     if (errorWhileGamesFetch) {
-      // toast.error("Error while fetching games from our side");
+      toast.error("Error while fetching games from our side");
     }
   
     const handleInputChangeString = (e) => {
