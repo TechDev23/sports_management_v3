@@ -22,10 +22,10 @@ function MessageDialog({ openWhoScore, setOpenWhoScore }) {
         <DialogBody divider>
           <div className="grid gap-6">
             <Select color="amber" label="Select Version">
-              <Option>Material Tailwind HTML</Option>
-              <Option>Material Tailwind HTML</Option>
-              <Option>Material Tailwind HTML</Option>
-              <Option>Material Tailwind HTML</Option>
+              <Option>Om Nikam</Option>
+              <Option>Priyanshu Mahukhaye</Option>
+              <Option>Somesh Somani</Option>
+              <Option>Someone else</Option>
             </Select>
           </div>
         </DialogBody>

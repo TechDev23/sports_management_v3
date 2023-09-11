@@ -23,6 +23,7 @@ import { MdAdminPanelSettings } from "react-icons/md";
 import { BsShieldCheck } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import { useGetAllTrnmtsQuery } from "../../redux/api/tournament/tournamentApi";
+import moment from "moment";
 const TABS = [
   {
     label: "New",
@@ -38,7 +39,7 @@ const TABS = [
   },
 ];
  
-const TABLE_HEAD = ["Organization", "Priority", "Due Date", "Progress", "Role", "Team"];
+const TABLE_HEAD = ["Organization","Start Date", "Due Date", "Team"];
  
 const TABLE_ROWS = [
   {
@@ -184,15 +185,15 @@ export function Table() {
                     <div className="flex items-center gap-3">
                       {/* <Avatar src={img} alt={org} size="sm" /> */}
                       <div className="flex flex-col">
-                        <Typography variant="small" color="blue-gray" className="font-normal">
-                          {trnmt?.name}
+                        <Typography variant="large" color="blue-gray" className="font-bold">
+                          {trnmt?.TOURNAMENT.name}
                         </Typography>
                         <Typography
                           variant="small"
                           color="blue-gray"
                           className="font-normal opacity-70"
                         >
-                          {trnmt?.is_active}
+                          {trnmt?.TOURNAMENT?.organizer_name}
                         </Typography>
                       </div>
                     </div>
@@ -200,14 +201,10 @@ export function Table() {
 
                   
                   <td className={classes}>
-                    <div className="w-max">
-                      {/* <Chip
-                        variant="ghost"
-                        size="sm"
-                        value={priority}
-                        color={priority === "low" ? "green" : priority === "medium" ? "yellow" : "red"}
-                      /> */}
-                    </div>
+                    <Typography variant="small" color="blue-gray" className="font-normal flex items-center space-x-3">
+                        <BiCalendarAlt/>
+                        <p>{moment(trnmt?.TOURNAMENT?.start_date).format('DD-MM-YYYY')}</p>
+                    </Typography>
                   </td>
 
 
@@ -215,35 +212,16 @@ export function Table() {
                   <td className={classes}>
                     <Typography variant="small" color="blue-gray" className="font-normal flex items-center space-x-3">
                         <BiCalendarAlt/>
-                        <p>{trnmt?.name}</p>
+                        <p>{moment(trnmt?.TOURNAMENT?.end_date).format('DD-MM-YYYY')}</p>
                     </Typography>
                   </td>
 
-                  
-                  {/* <td className={classes}>
-                    <Typography variant="small" color="blue-gray" className="font-normal flex">
-                        <Tooltip content={`${progress}%`}>
-                            <Progress size="sm"  value={progress} color="amber" />
-                        </Tooltip>
-                    </Typography>
-                  </td> */}
-
-
-                  <td className={classes}>
-                    <div className="flex flex-row justify-start items-center space-x-2  p-0">
-                        {/* { role === "Admin" ? <MdAdminPanelSettings className="w-6 h-6 text-orange-700"/> : <BsShieldCheck  className="w-5 h-5 text-blue-gray-700"/>} */}
-                      <Typography variant="small" color="blue-gray" className={`font-normal flex justify-start items-start `}>
-                      {trnmt?.name}
-                      </Typography>
-                    </div>
-                  </td>
                 
                   <td className={classes}>
                     <Typography variant="small" color="blue-gray" className="font-normal">
                       <Team/>
                     </Typography>
                   </td>
-
 
                 </tr>
               );
