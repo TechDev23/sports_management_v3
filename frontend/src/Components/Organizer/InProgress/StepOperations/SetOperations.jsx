@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Select, Option, Spinner } from "@material-tailwind/react";
 import { Button } from "@material-tailwind/react";
-import { useAddGrndUmpireMutation, useDeleteUmpireMutation } from "../../../../redux/api/organizer/orgApi";
+import { useAddGrndUmpireMutation, useDeleteGroundMutation, useDeleteUmpireMutation } from "../../../../redux/api/organizer/orgApi";
 import { useParams } from "react-router-dom";
 import {
   useGetUserByEmailQuery,
@@ -149,20 +149,28 @@ export default function SetOperations() {
 
   // deleting umpire
   const [deleteUmpire, {isLoading: deletingUmpire, isSuccess: deleteUmpSucc}] = useDeleteUmpireMutation()
-  const handleRemoveUmpire = (umpire_id) => {
+  const handleRemoveUmpire = async (umpire_id) => {
     const toSend = {
       tournament_id: params.tourId,
       game_id: params.tour_game_id,
       umpire_id, 
     }
-    const res = deleteUmpire(toSend)
-    console.log(res);
-    setUmpires(updatedUmpires);
+    const res = await deleteUmpire(toSend).unwrap()
+    refetchAllUmpGrd()
+    console.log("delete umpire", res);
   };
 
-  const handleRemoveGround = (index) => {
-    const updatedGrounds = grounds.filter((_, i) => i !== index);
-    setGrounds(updatedGrounds);
+  const [deleteGround] = useDeleteGroundMutation()
+  const handleRemoveGround = async (ground_id) => {
+    const toSend = {
+      tournament_id: params.tourId,
+      game_id: params.tour_game_id,
+      ground_id, 
+    }
+    console.log("clicked")
+    const res = await deleteGround(toSend).unwrap()
+    refetchAllUmpGrd()
+    console.log("delete ground", res);
   };
 
   const [
@@ -178,20 +186,21 @@ export default function SetOperations() {
     };
 
     // Send data to backend using an API call
-    console.log("Sending data to backend:", data);
+    // console.log("Sending data to backend:", data);
     const response = await addGrndUmpire(data).unwrap();
-    console.log("after adding umpire and ground", response);
+    // console.log("after adding umpire and ground", response);
     if(response?.status === "success" && response?.status_code === 202){
       toast.success(response?.message)
+      refetchAllUmpGrd()
     }else{
       toast.success("error while adding ground umpire")
     }
   };
 
   // fetch all umpires and grounds
-  const {data: allFetchedGroundUmpire, isLoading: isLoadingAllGrndUmp, isFetching: isFetchingAllGrndUmp} = useGetTournmanetGameDetailsQuery({tournament_id: params.tourId, tour_game_id: params.tour_game_id})
-  console.log("umpires: ", allFetchedGroundUmpire?.data?.umpires)
-  console.log("grounds: ", allFetchedGroundUmpire?.data?.ground)
+  const {data: allFetchedGroundUmpire, isLoading: isLoadingAllGrndUmp, isFetching: isFetchingAllGrndUmp, refetch: refetchAllUmpGrd} = useGetTournmanetGameDetailsQuery({tournament_id: params.tourId, tour_game_id: params.tour_game_id})
+  // console.log("umpires: ", allFetchedGroundUmpire?.data?.umpires)
+  // console.log("grounds: ", allFetchedGroundUmpire?.data?.grounds)
   return (
     <div className="mt-4 w-full h-full  font-poppins">
       <div className="w-full flex flex-col lg:flex-row gap-4 justify-between">
@@ -212,7 +221,7 @@ export default function SetOperations() {
                 Added Umpires
               </h2>
               {allFetchedGroundUmpire && allFetchedGroundUmpire?.data?.umpires.map((umpire, index) => {
-                console.log("single umpir", umpire)
+                // console.log("single umpir", umpire)
               return (
                 <p
                   key={index}
@@ -232,27 +241,26 @@ export default function SetOperations() {
         </div>
 
         <div className=" w-full  p-2">
-          {grounds.length > 0 && (
-            <div className="flex flex-col gap-4">
-              <h2 className="text-xl font-semibold py-2 border-b-2">
+        <h2 className="text-xl font-semibold py-2 border-b-2 ">
                 Added Grounds
               </h2>
-              {grounds.map((ground, index) => (
-                <p
-                  key={index}
-                  className="border shadow-sm p-2 rounded-lg flex justify-between items-center"
-                >
-                  {ground.name} - {ground.game_id} - {ground.location}
-                  <button
-                    className="bg-red-50 text-red-500 p-2 rounded-lg"
-                    onClick={() => handleRemoveGround(index)}
-                  >
-                    Remove
-                  </button>
-                </p>
-              ))}
-            </div>
-          )}
+        {allFetchedGroundUmpire && allFetchedGroundUmpire?.data?.grounds.map((grd, index) => {
+          console.log("single ground", grd)
+        return (
+          <p
+            key={index}
+            className="border shadow-sm p-2 rounded-lg flex justify-between items-center"
+          >
+          {grd?.name} - {grd?.location}
+            <button
+              className="bg-red-50 text-red-500 p-2 rounded-lg"
+              onClick={() => handleRemoveGround(grd.id)}
+            >
+              Remove
+            </button>
+          </p>
+        )}
+        )}
         </div>
       </div>
 

@@ -117,7 +117,7 @@ export function Table() {
 
   
   const { data:allTournaments } = useGetAllTrnmtsQuery();
-  console.log(allTournaments?.data);
+  console.log("all tournaments", allTournaments?.data);
   // {
   //   "id": "hUvFddYbS3iTN2uL",
   //   "name": "w",
@@ -177,9 +177,9 @@ export function Table() {
             {allTournaments?.data.map((trnmt, index) => {
               const isLast = index === TABLE_ROWS.length - 1;
               const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
- 
+              console.log("tournament", trnmt)
               return (
-                <tr key={trnmt?.id} className="hover:bg-gray-100 transition-all cursor-pointer"  onClick={() => zgate(`/o/current-tournament/${trnmt?.id}/step1`)}>
+                <tr key={trnmt?.id} className="hover:bg-gray-100 transition-all cursor-pointer"  onClick={() => navigate(`/o/current-tournament/${trnmt?.TOURNAMENT.id}/step1`)}>
                   <td className={classes}>
                     <div className="flex items-center gap-3">
                       {/* <Avatar src={img} alt={org} size="sm" /> */}

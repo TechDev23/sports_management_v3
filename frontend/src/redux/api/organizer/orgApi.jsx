@@ -89,6 +89,15 @@ export const orgApi = createApi({
       },
     }),
 
+    deleteGround: build.mutation({
+      query(data) {
+        return {
+          url: `organizer/tournament/${data.tournament_id}/games/${data.tournament_game_id}/ground/?ground_id=${data.ground_id }&token=${token}`,
+          method: "delete",
+        };
+      },
+    }),
+
     getRgstrdTeams: build.query({
       query(data) {
         return {
@@ -139,4 +148,5 @@ export const { useCreateTournamentMutation,
   useTeamsApprovalMutation,
   useAddGrndUmpireMutation,
   useDeleteUmpireMutation,
+  useDeleteGroundMutation,
 } = orgApi;
