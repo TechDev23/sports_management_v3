@@ -22,8 +22,7 @@ import { BiCalendarAlt } from "react-icons/bi";
 import { MdAdminPanelSettings } from "react-icons/md";
 import { BsShieldCheck } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
-import { useGetAllTrnmtsQuery } from "../../redux/api/organizer/tournamentApi";
- 
+import { useGetAllTrnmtsQuery } from "../../redux/api/tournament/tournamentApi";
 const TABS = [
   {
     label: "New",
@@ -180,7 +179,7 @@ export function Table() {
               const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
  
               return (
-                <tr key={trnmt?.id} className="hover:bg-gray-100 transition-all cursor-pointer"  onClick={() => navigate(`/o/current-tournament/${trnmt?.id}/step1`)}>
+                <tr key={trnmt?.id} className="hover:bg-gray-100 transition-all cursor-pointer"  onClick={() => zgate(`/o/current-tournament/${trnmt?.id}/step1`)}>
                   <td className={classes}>
                     <div className="flex items-center gap-3">
                       {/* <Avatar src={img} alt={org} size="sm" /> */}

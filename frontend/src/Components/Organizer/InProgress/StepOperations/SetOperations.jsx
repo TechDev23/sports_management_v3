@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { Select, Option, Spinner } from "@material-tailwind/react";
 import { Button } from "@material-tailwind/react";
-import { useAddGrndUmpireMutation } from "../../../../redux/api/organizer/orgApi";
+import { useAddGrndUmpireMutation, useDeleteUmpireMutation } from "../../../../redux/api/organizer/orgApi";
 import { useParams } from "react-router-dom";
 import {
   useGetUserByEmailQuery,
   useLazyGetUserByEmailQuery,
 } from "../../../../redux/api/General/generalApi";
 import { toast } from "react-toastify";
+import { useGetTournmanetGameDetailsQuery } from "../../../../redux/api/tournament/tournamentApi";
 
 const UmpireInput = ({ onAddUmpire, game_id }) => {
   const [userId, setUserId] = useState("");
@@ -146,8 +147,16 @@ export default function SetOperations() {
     setGrounds([...grounds, ground]);
   };
 
-  const handleRemoveUmpire = (index) => {
-    const updatedUmpires = umpires.filter((_, i) => i !== index);
+  // deleting umpire
+  const [deleteUmpire, {isLoading: deletingUmpire, isSuccess: deleteUmpSucc}] = useDeleteUmpireMutation()
+  const handleRemoveUmpire = (umpire_id) => {
+    const toSend = {
+      tournament_id: params.tourId,
+      game_id: params.tour_game_id,
+      umpire_id, 
+    }
+    const res = deleteUmpire(toSend)
+    console.log(res);
     setUmpires(updatedUmpires);
   };
 
@@ -179,6 +188,10 @@ export default function SetOperations() {
     }
   };
 
+  // fetch all umpires and grounds
+  const {data: allFetchedGroundUmpire, isLoading: isLoadingAllGrndUmp, isFetching: isFetchingAllGrndUmp} = useGetTournmanetGameDetailsQuery({tournament_id: params.tourId, tour_game_id: params.tour_game_id})
+  console.log("umpires: ", allFetchedGroundUmpire?.data?.umpires)
+  console.log("grounds: ", allFetchedGroundUmpire?.data?.ground)
   return (
     <div className="mt-4 w-full h-full  font-poppins">
       <div className="w-full flex flex-col lg:flex-row gap-4 justify-between">
@@ -194,27 +207,28 @@ export default function SetOperations() {
 
       <div className="flex flex-col lg:flex-row gap-4">
         <div className=" w-full border-r p-2">
-          {umpires.length > 0 && (
             <div className="flex flex-col gap-4">
               <h2 className="text-xl font-semibold py-2 border-b-2 ">
                 Added Umpires
               </h2>
-              {umpires.map((umpire, index) => (
+              {allFetchedGroundUmpire && allFetchedGroundUmpire?.data?.umpires.map((umpire, index) => {
+                console.log("single umpir", umpire)
+              return (
                 <p
                   key={index}
                   className="border shadow-sm p-2 rounded-lg flex justify-between items-center"
                 >
-                  {umpire.user_id} - {umpire.game_id}
+                  {umpire?.user.first_name} - {umpire?.user.last_name}
                   <button
                     className="bg-red-50 text-red-500 p-2 rounded-lg"
-                    onClick={() => handleRemoveUmpire(index)}
+                    onClick={() => handleRemoveUmpire(umpire.id)}
                   >
                     Remove
                   </button>
                 </p>
-              ))}
+              )}
+              )}
             </div>
-          )}
         </div>
 
         <div className=" w-full  p-2">

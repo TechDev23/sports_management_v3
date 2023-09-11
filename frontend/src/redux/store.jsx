@@ -23,7 +23,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { authApi } from './api/authApi';
 import { userApi } from './api/userApi';
 import { orgApi } from './api/organizer/orgApi';
-import { tournamentApi } from './api/organizer/tournamentApi';
+import { tournamentApi } from './api/tournament/tournamentApi';
 import { fixturesApi } from './api/organizer/fixturesApi';
 import { playerApi } from './api/player/playerApi';
 import userReducer from './features/userSlice';

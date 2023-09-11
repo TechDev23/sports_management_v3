@@ -38,7 +38,7 @@ import { useGetGamesQuery } from '../../redux/api/General/generalApi';
 import { toast } from "react-toastify";
 
 import { useNavigate, useParams } from 'react-router-dom';
-import { useGetTournamentGamesQuery } from '../../redux/api/organizer/tournamentApi';
+import { useGetTournamentGamesQuery } from '../../redux/api/tournament/tournamentApi';
 import moment from 'moment';
 
 // new addition ends here

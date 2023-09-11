@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useGetTournamentGamesQuery } from "../../../../redux/api/organizer/tournamentApi";
+import { useGetTournamentGamesQuery } from "../../../../redux/api/tournament/tournamentApi";
 import { useAppSelector } from "../../../../redux/store";
 import { useState } from "react";
 import {

@@ -131,7 +131,6 @@ export const OrganizerRoutes = {
                 {
                   path: "fixture/:fixtureId",
                   element: <SetScoreForTennis />,
-                  // element: <ScoreBoard />,
                 },
               ],
             },

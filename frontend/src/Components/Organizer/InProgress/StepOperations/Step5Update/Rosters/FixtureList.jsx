@@ -4,10 +4,11 @@ import { useGetFixturesQuery } from "../../../../../../redux/api/organizer/orgAp
 import { Fragment } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import { toast } from "react-toastify";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useParams } from "react-router-dom";
 
-function AllFixturesList({ fixtures }) {
+function AllFixturesList({ params, fixtures }) {
   console.log("fixtures", fixtures);
+
   return (
     <div className="p-6 border w-full rounded-lg shadow-xl ">
       {/* Display the round number */}
@@ -70,7 +71,7 @@ function AllFixturesList({ fixtures }) {
 
               {/* Edit game starts */}
               <div className="hidden group-hover:block">
-                <Link to={`/o/current/step5/rosters/fixture/${fixture?.id}`}>
+                <Link to={`/o/current-tournament/${params.tourId}/tour_game/${params.tour_game_id}/step5/rosters/fixture/${fixture?.id}`}>
                 <Button variant="outlined" color="amber" className="flex items-center gap-2 bg-white font-poppins tracking-wider">
                 <EditIcon/> Update score
                 </Button>
@@ -88,6 +89,7 @@ function AllFixturesList({ fixtures }) {
 }
 
 export default function fixtureList() {
+  const params = useParams()
   const toSend = {
     tournament_id: "HRTirSchGzYehTGx",
     tournament_game_id: "HSohQ8E22JU5oeXQ",
@@ -131,7 +133,7 @@ export default function fixtureList() {
           {/* Render fixtures grouped by rounds */}
           {Object.keys(fixturesByRound).map((roundNo) => (
             <Fragment key={roundNo}>
-              <AllFixturesList fixtures={fixturesByRound[roundNo]} />
+              <AllFixturesList params={params} fixtures={fixturesByRound[roundNo]} />
             </Fragment>
           ))}
 

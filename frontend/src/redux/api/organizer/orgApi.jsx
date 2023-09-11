@@ -80,6 +80,15 @@ export const orgApi = createApi({
       },
     }),
 
+    deleteUmpire: build.mutation({
+      query(data) {
+        return {
+          url: `organizer/tournament/${data.tournament_id}/games/${data.tournament_game_id}/umpire/?umpire_id=${data.umpire_id}&token=${token}`,
+          method: "delete",
+        };
+      },
+    }),
+
     getRgstrdTeams: build.query({
       query(data) {
         return {
@@ -118,6 +127,7 @@ export const orgApi = createApi({
     
     // Fixtures api's ends
 
+    
 
   }),
 });
@@ -128,4 +138,5 @@ export const { useCreateTournamentMutation,
   useGetFixturesQuery, 
   useTeamsApprovalMutation,
   useAddGrndUmpireMutation,
+  useDeleteUmpireMutation,
 } = orgApi;
